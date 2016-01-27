@@ -1,0 +1,74 @@
+{% extends "@User/Template/template.html.twig" %}
+
+{% block title 'Login' %}
+     
+{% block stylesheets %}
+    {% stylesheets  '@UserBundle/Resources/public/css/login.css' filter="cssrewrite" output="compiled/css/login.css" %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {% javascripts '@UserBundle/Resources/public/js/login.js' output="compiled/js/login.js" %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block body %} 
+  
+    {% block login_form %}
+        <div class="login-box">
+            
+            <div class="login-logo">
+                <a href="{{path("homepage")}}"><b>Admin</b>Odonto</a>
+            </div><!-- /.login-logo -->
+            
+            <div class="login-box-body border-top-blue border-bottom-blue">
+                <p class="login-box-msg">
+                    Iniciar sessão de usuário
+                    {% if error %}
+                        <div class="callout callout-danger">
+                            <h4>Alerta</h4>
+                            <p>{{ error.message| replace({
+                                        'Bad credentials.' : 'Usuário ou senha inválidos.',
+                                        'User account is disabled.' : 'Conta desabilitada, caso tenha acabado de cria-la, você pode ainda não tela habilitada, cheque seu e-mail.',
+                                        'User account has expired.' : 'Esta conta de esta expirada, contate o administrador do sistema.',
+                                        'User account is locked.' : 'Sua conta de usuário esta bloqueda, contate o administrador do sistema.',
+                                        'User credentials have expired.' : 'Sua credenciais de acesso expirarão, contate o administrador do sistema.'
+                                    }) 
+                                }}
+                            </p>
+                        </div>
+                    {% endif %}
+                </p>
+                
+                <form name="login" action="{{ path('login_check') }}" method="POST" autocomplete="off">
+                {{ form_start(form) }}    
+                    <div class="form-group has-feedback">
+                        {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'placeholder': 'login ou e-mail'} }) }}
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        {{ form_widget(form.plainPassword, { 'attr': {'class': 'form-control', 'placeholder': 'senha',} }) }}
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-8">
+                           
+                        </div><!-- /.col -->
+                        <div class="col-xs-4">
+                            {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-primary btn-block btn-flat'} }) }}
+                        </div><!-- /.col -->
+                    </div>
+                {{ form_end(form) }}
+                </form>
+                
+                <a href="#">Recuperar senha</a><br/>
+                <a href="{{ path("register_user") }}" class="text-center">Registrar-se</a>
+                
+            </div><!-- /.login-box-body -->
+        </div><!-- /.login-box -->
+    
+    {% endblock %}
+    
+{% endblock %}

@@ -1,0 +1,13 @@
+services:
+#    menu.example:
+#        class: Epsoftware\MenuBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    epsoftware.twig.menu:
+        class: Epsoftware\MenuBundle\Twig\ConstructMenu
+        arguments: ["@doctrine.orm.entity_manager"]
+        calls:
+            - [setTwigEnvironment, ["@Twig"]]
+        public: false
+        tags: 
+            - { name: twig.extension }

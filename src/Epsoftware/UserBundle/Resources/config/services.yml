@@ -1,0 +1,20 @@
+services:
+#    login.example:
+#        class: Epsoftware\UserBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+    epsoftware.user.listener:
+        class: Epsoftware\UserBundle\Listener\UserListener
+        public: false
+        calls: 
+            - [setEncoder, ["@security.encoder_factory"]]
+        tags:
+            - {name: doctrine.event_listener , event: prePersist}
+            - {name: doctrine.event_listener , event: preUpdate}
+            
+    epsoftware.services.mail:
+        class: Epsoftware\UserBundle\Services\MailService
+        arguments: ["@swiftmailer.mailer"]
+        calls:
+            - [setTwigEnvironment, ["@Twig"]]
+        tags: 
+            -  { name: acme_mailer.transport }

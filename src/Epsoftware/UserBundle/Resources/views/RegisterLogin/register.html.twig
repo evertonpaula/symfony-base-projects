@@ -1,0 +1,104 @@
+{% extends "@User/Template/template.html.twig" %}
+{% block title 'Registrar-se' %}
+
+{% block stylesheets %}
+    {% stylesheets 
+        '@UserBundle/Resources/public/css/register.css'
+        '@UserBundle/Resources/public/css/login.css' 
+        'public/adminlte/plugins/iCheck/square/_all.css' filter="cssrewrite" output="compiled/css/register.css"
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+    
+{% endblock %}
+    
+{% block javascripts %}
+    {% javascripts 
+        'public/adminlte/plugins/iCheck/icheck.min.js'
+        '@UserBundle/Resources/public/js/register.js' output="compiled/js/register.js"
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    
+{% endblock %}
+
+{% block body %}
+    
+    
+    <div class="register-box">
+    
+        <div class="register-logo">
+            <a href="../../index2.html"><b>Admin</b>Odonto</a>
+        </div>
+
+        <div class="register-box-body border-top-blue border-bottom-blue">
+            
+            <form action="{{path("register_user")}}" method="POST" autocomplete="off">
+            {{ form_start(form) }}
+            
+                <p class="login-box-msg">
+                    Registrar novo usuário
+                    {% if form_errors(form) %}
+                        <div class="callout callout-danger">
+                            <h4>Alerta</h4>
+                            <p>{{form_errors(form)}}</p>
+                        </div>
+                    {% endif %}
+                </p>
+                
+                <div class="form-group has-feedback">
+                    {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'placeholder': 'Login do usuário'} }) }}
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    {{form_errors(form.username)}}
+                </div>
+                <div class="form-group has-feedback">
+                    {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'E-mail'} }) }}
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    {{form_errors(form.email)}}
+                </div>
+                <div class="form-group has-feedback">
+                    {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control', 'placeholder': 'Senha'} }) }}
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    {{form_errors(form.plainPassword.first)}}
+                </div>
+                <div class="form-group has-feedback">
+                    {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control', 'placeholder': 'Repita a senha'} }) }}
+                    <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="recaptcha">
+                           {{form_widget(form.recaptcha)}}
+                           {{form_errors(form.recaptcha)}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="checkbox icheck">
+                            <label>
+                                {{ form_widget(form.agree) }} Eu concordo com os <a data-toggle="modal" href="{{path("termos_user")}}" data-target="#modal_terms">termos</a>
+                            </label>
+                            {{form_errors(form.agree)}}
+                        </div>
+                    </div><!-- /.col -->
+                    <div class="col-xs-4">
+                        {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-primary btn-block btn-flat'} }) }}
+                    </div><!-- /.col -->
+                </div>
+            {{ form_end(form) }}
+            </form>
+
+            <a href="{{path("login")}}" class="text-center">Eu já tenho uma cadastro</a>
+        </div><!-- /.form-box -->
+        
+    </div><!-- /.register-box -->
+    
+    <div class="modal fade" id="modal_terms" tabindex="-1" role="dialog"    >
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                
+            </div><!-- /modal-content -->
+        </div><!-- /modal-dialog -->
+    </div><!-- /modal_terms -->
+{% endblock %}

@@ -1,0 +1,6 @@
+# security.pt_br.yml
+Bad credentials. : Usuário ou senha inválidos.
+User account is disabled. : Conta desabilitada, caso tenha acabado de cria-la, você pode ainda não tela habilitada, cheque seu e-mail.
+User account has expired. : Esta conta de esta expirada, contate o administrador do sistema.
+User account is locked. : Sua conta de usuário esta bloqueda, contate o administrador do sistema.
+User credentials have expired. : Sua credenciais de acesso expirarão, contate o administrador do sistema.

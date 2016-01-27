@@ -1,0 +1,20 @@
+<h3><b>Parabén!</b> Você está registrado em nosso sistema!</h3>
+<p style="text-align: right"> {{ "now"|date("d/m/Y") }}</p>
+<hr/>
+<p><b><i>Bem Vindo!!!</i></b></p>
+<p>Antes de iniciar como login vamos autenticar sua conta, basta clicar no link a seguir</p><br>
+<a href="{{url('register_user_authentication',{'uri': user.uri})}}">{{url('register_user_authentication',{'uri': user.uri})}}</a>.
+<br>
+<p>Dados cadastrados:</p><br>
+<p><b>login:</b> {{user.username}}</p><br>
+<p><b>e-mail:</b> {{user.email}}</p><br>
+
+<p><b>Observação:</b> se não estiver conseguindo acessar o link, copie cole no vagador</p>
+<br><br>
+<hr/>
+<h5><b>Epsoftware &COPY;</b></h5>
+<h6>(11) 9-8886-4311</h6>
+
+
+
+

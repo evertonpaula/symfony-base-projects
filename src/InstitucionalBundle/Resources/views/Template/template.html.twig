@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include "::meta.base.twig" %}
+        {% block meta %}{% endblock %}
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% include "::stylesheets.base.twig" %}
+        {% block stylesheets %} {% endblock %}
+        
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% include "@Institucional/Menu/menu.html.twig"%}
+        {% block body %}{% endblock %}
+        
+        {% include "::javascripts.base.twig" %}
+        {% block javascripts %} {% endblock %}
+    </body>
+</html>

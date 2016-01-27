@@ -1,0 +1,25 @@
+success:
+    resource: "@SuccessBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+dashboard:
+    resource: "@DashboardBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+institucional:
+    resource: "@InstitucionalBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+menu:
+    resource: "@MenuBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+login:
+    resource: "@UserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+

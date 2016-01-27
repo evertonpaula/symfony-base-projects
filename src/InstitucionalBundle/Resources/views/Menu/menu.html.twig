@@ -1,0 +1,19 @@
+{% block menu %}
+    
+    <menu>
+        <ul>
+            <li><a href="{{path("homepage")}}">Home</a>
+            <li><a href="{{path("about")}}">Sobre</a>
+
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li><a href="{{ path("dashboard") }}">Dashboard</a></li>
+                <li><a href="{{ path("logout") }}">logout</a></li>
+            {% else %}   
+                <li><a href="{{path("login")}}">Login</a>
+                <li><a href="{{path("register_user")}}">Registrar-se</a>
+            {% endif %}            
+        </ul>
+
+    </menu>
+
+{% endblock %}
