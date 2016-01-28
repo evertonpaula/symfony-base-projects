@@ -3,12 +3,14 @@
 {% block title 'Login' %}
      
 {% block stylesheets %}
+    {{ parent() }}
     {% stylesheets  '@UserBundle/Resources/public/css/login.css' filter="cssrewrite" output="compiled/css/login.css" %}
         <link rel="stylesheet" href="{{ asset_url }}">
     {% endstylesheets %}
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     {% javascripts '@UserBundle/Resources/public/js/login.js' output="compiled/js/login.js" %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
@@ -20,7 +22,7 @@
         <div class="login-box">
             
             <div class="login-logo">
-                <a href="{{path("homepage")}}"><b>Admin</b>Odonto</a>
+                <a href="{{path("homepage")}}"><b>Admin</b>sample</a>
             </div><!-- /.login-logo -->
             
             <div class="login-box-body border-top-blue border-bottom-blue">

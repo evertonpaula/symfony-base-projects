@@ -1,6 +1,6 @@
 {% extends "@Institucional/Template/template.html.twig"%}
 {% block title %}{{ success.title }}{% endblock %}
-{% block stylesheets %}<style>body{background-color: #ECF0F5 !important;}</style>{% endblock %}
+{% block stylesheets %}{{ parent() }}<style>body{background-color: #ECF0F5 !important;}</style>{% endblock %}
 {% block body %}
     <!-- Main content -->
     <section class="content">

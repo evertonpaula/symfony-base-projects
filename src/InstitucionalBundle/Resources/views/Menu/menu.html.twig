@@ -1,19 +1,39 @@
+{% block stylesheets %}
+    {% stylesheets 
+        '@InstitucionalBundle/Resources/public/css/menu.css' filter="cssrewrite" output="compiled/css/public_menu.css"
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
 {% block menu %}
-    
-    <menu>
-        <ul>
-            <li><a href="{{path("homepage")}}">Home</a>
-            <li><a href="{{path("about")}}">Sobre</a>
+    <header class="main-header">
+        <nav class="navbar navbar-static-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                  <a href="{{path("homepage")}}" class="navbar-brand"><b>Admin</b>sample</a>
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                    <i class="fa fa-bars"></i>
+                  </button>
+                </div>
 
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <li><a href="{{ path("dashboard") }}">Dashboard</a></li>
-                <li><a href="{{ path("logout") }}">logout</a></li>
-            {% else %}   
-                <li><a href="{{path("login")}}">Login</a>
-                <li><a href="{{path("register_user")}}">Registrar-se</a>
-            {% endif %}            
-        </ul>
-
-    </menu>
-
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-collapse">
+                  <ul class="nav navbar-nav">
+                    <li class="active"><a href="{{path("homepage")}}">home <span class="sr-only">(current)</span></a></li>
+                    <li><a href="{{path("about")}}">sobre</a></li>
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                      <li><a href="{{ path("dashboard") }}">dashboard</a></li>
+                      <li><a href="{{ path("logout") }}">logout</a></li>
+                    {% else %}   
+                      <li><a href="{{path("register_user")}}">registrar-se</a>
+                      <li><a href="{{path("login")}}">login</a>
+                    {% endif %}   
+                  </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+    </header>
 {% endblock %}
