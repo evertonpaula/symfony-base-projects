@@ -48,24 +48,24 @@
                     {% endif %}
                 </p>
                 
-                <div class="form-group has-feedback">
+                <div class="form-group has-feedback {{form_errors(form.username) ? 'has-error' }}">
                     {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'placeholder': 'Login do usuário'} }) }}
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     {{form_errors(form.username)}}
                 </div>
-                <div class="form-group has-feedback">
+                <div class="form-group has-feedback {{form_errors(form.email) ? 'has-error' }}">
                     {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'E-mail'} }) }}
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     {{form_errors(form.email)}}
                 </div>
-                <div class="form-group has-feedback">
+                <div class="form-group has-feedback {{form_errors(form.plainPassword.first) ? 'has-error' }}">
                     {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control', 'placeholder': 'Senha'} }) }}
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     {{form_errors(form.plainPassword.first)}}
                 </div>
-                <div class="form-group has-feedback">
+                <div class="form-group has-feedback {{form_errors(form.plainPassword.second) ? 'has-error' }}">
                     {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control', 'placeholder': 'Repita a senha'} }) }}
-                    <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">

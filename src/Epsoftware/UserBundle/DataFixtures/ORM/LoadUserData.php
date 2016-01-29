@@ -22,7 +22,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $userAdmin->addPermission($this->getReference("permission-ROLE_USER"));
         
         $userAdmin->setAgree(true);
-        $userAdmin->setIsEnable(true);
+        $userAdmin->setIsEnable(false);
         $userAdmin->setIsAccountNonExpired(true);
         $userAdmin->setIsAccountNonLocked(true);
         $userAdmin->setIsCredentialNonExpired(true);

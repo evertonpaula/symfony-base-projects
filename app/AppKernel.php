@@ -24,6 +24,9 @@ class AppKernel extends Kernel
             new InstitucionalBundle\InstitucionalBundle(),
             new Epsoftware\DashboardBundle\DashboardBundle(),
             new Epsoftware\SuccessBundle\SuccessBundle(),
+            new Epsoftware\PerfilBundle\PerfilBundle(),
+            new Epsoftware\MensageriaBundle\MensageriaBundle(),
+            new Epsoftware\AddressBundle\AddressBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

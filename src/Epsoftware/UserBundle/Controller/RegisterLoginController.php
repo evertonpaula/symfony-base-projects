@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Epsoftware\UserBundle\Entity\User;
+use Epsoftware\UserBundle\Entity\Permission;
 use Epsoftware\UserBundle\Form\RegisterFormType;
 
 class RegisterLoginController extends Controller
@@ -24,6 +25,8 @@ class RegisterLoginController extends Controller
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()):
+            $permission = $this->getDoctrine()->getRepository(Permission::class)->findOneBy(array('role' => 'ROLE_USER'));
+            $user->addPermission($permission);
             $user->setIsAccountNonLocked(true);
             $user->setIsAccountNonExpired(true);
             $user->setIsCredentialNonExpired(true);
@@ -36,16 +39,32 @@ class RegisterLoginController extends Controller
     }
     
     /**
-     * @Route("/register/authentication/user/{uri}", 
-     *        name="register_user_authentication",
-     *        
-     *       )
+     * @Route("/register/authentication/user/{uri}", name="register_user_authentication")
      * @Method("GET")
      * @Template()
      */
     public function authenticationAction($uri)
     {
-        return array("uri"=>$uri);
+        try{
+            /**
+             * @var \Epsoftware\UserBundle\Entity\User
+             */
+            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array('uri' => $uri));
+
+            if($user === null):
+                return array("error"=> true);
+            endif;
+            if(!$user->getIsEnable()):
+                $user->setIsEnable(true);
+                $this->getDoctrine()->getManager()->persist($user);
+                $this->getDoctrine()->getManager()->flush();
+            endif;
+            return array("error"=> false, "user" => $user->toArray());
+            
+        }catch (\Exception $ex){
+            throw new \Exception($ex);
+        }
+        
     }
     
     /**

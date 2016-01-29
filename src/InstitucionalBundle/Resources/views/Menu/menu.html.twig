@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block menu %}
+    {% set route = app.request.attributes.get('_route') %}
     <header class="main-header">
         <nav class="navbar navbar-static-top">
             <div class="container-fluid">
@@ -20,16 +21,16 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-collapse">
                   <ul class="nav navbar-nav">
-                    <li class="active"><a href="{{path("homepage")}}">home <span class="sr-only">(current)</span></a></li>
-                    <li><a href="{{path("about")}}">sobre</a></li>
+                    <li {{ route ==  'homepage' ? 'class="active"' }} ><a href="{{path("homepage")}}">home <span class="sr-only">(current)</span></a></li>
+                    <li {{ route ==  'about' ? 'class="active"' }} ><a href="{{path("about")}}">sobre</a></li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                      <li><a href="{{ path("dashboard") }}">dashboard</a></li>
-                      <li><a href="{{ path("logout") }}">logout</a></li>
+                      <li {{ route ==  'dashboard' ? 'class="active"' }} ><a href="{{ path("dashboard") }}">dashboard</a></li>
+                      <li {{ route ==  'logout' ? 'class="active"' }} ><a href="{{ path("logout") }}">logout</a></li>
                     {% else %}   
-                      <li><a href="{{path("register_user")}}">registrar-se</a>
-                      <li><a href="{{path("login")}}">login</a>
+                      <li {{ route ==  'register_user' ? 'class="active"' }} ><a href="{{path("register_user")}}">registrar-se</a>
+                      <li {{ route ==  'login' ? 'class="active"' }} ><a href="{{path("login")}}">login</a>
                     {% endif %}   
                   </ul>
                 </div><!-- /.navbar-collapse -->

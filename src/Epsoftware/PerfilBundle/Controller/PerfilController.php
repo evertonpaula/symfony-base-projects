@@ -1,23 +1,23 @@
 <?php
 
-namespace Epsoftware\DashboardBundle\Controller;
+namespace Epsoftware\PerfilBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class DashboardController extends Controller
+class PerfilController extends Controller
 {
     /**
-     * @Route("/admin/dash", name="dashboard")
+     * @Route("/admin/dash/profile", name="user_profile")
      * @Security("has_role('ROLE_USER')")
+     * @Method({"GET", "POST"})
      * @Template()
-     * 
      */
-    public function dashboardAction()
+    public function profileAction()
     {
-        
         return array();
     }
 }

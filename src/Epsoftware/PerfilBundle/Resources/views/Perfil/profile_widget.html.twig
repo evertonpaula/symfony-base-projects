@@ -1,0 +1,32 @@
+{%block profile %}    
+    <!-- User Account: style can be found in dropdown.less -->
+    <li class="dropdown user user-menu">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            {% image 'images/users/default.png' output='compiled/images/user/default.png' %}
+                <img src="{{ asset_url }}" class="user-image" alt="User image" />
+            {% endimage %}
+            <span class="hidden-xs">{{ app.user.login.name ? app.user.login.name : app.user.username }}</span>
+        </a>
+        <ul class="dropdown-menu">
+        <!-- User image -->
+            <li class="user-header">
+                {% image 'images/users/default.png' output='compiled/images/user/default.png' %}
+                    <img src="{{ asset_url }}" class="img-circle" alt="User image" />
+                {% endimage %}
+                <p>
+                    {{ app.user.email }}
+                    <small>registrado desde {{ app.user.created | date("m/y") }}</small>
+                </p>
+            </li>
+            <!-- Menu Footer-->
+            <li class="user-footer">
+                <div class="pull-left">
+                    <a href="{{path("user_profile")}}" class="btn btn-default btn-flat">perfil</a>
+                </div>
+                <div class="pull-right">
+                    <a href="{{path("logout")}}" class="btn btn-default btn-flat">logout</a>
+                </div>
+            </li>
+        </ul>
+    </li>
+{%endblock%}    

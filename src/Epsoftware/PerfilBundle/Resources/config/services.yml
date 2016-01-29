@@ -1,0 +1,12 @@
+services:
+#    perfil.example:
+#        class: Epsoftware\PerfilBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
+    epsoftware.twig.profile:
+        class: Epsoftware\PerfilBundle\Twig\ConstructProfile
+        arguments: ["@doctrine.orm.entity_manager"]
+        calls:
+            - [setTwigEnvironment, ["@Twig"]]
+        public: false
+        tags: 
+            - { name: twig.extension }

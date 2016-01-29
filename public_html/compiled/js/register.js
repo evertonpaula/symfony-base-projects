@@ -21,6 +21,7 @@ $(function(){
    $("input").focusin(function(){
        var $div = $(this).closest('div');
        $div.find('ul').fadeOut(250);
+       $div.removeClass('has-error');
    });
 });
 

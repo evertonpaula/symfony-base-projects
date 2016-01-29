@@ -1,3 +1,18 @@
+address:
+    resource: "@AddressBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+mensageria:
+    resource: "@MensageriaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+perfil:
+    resource: "@PerfilBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 success:
     resource: "@SuccessBundle/Controller/"
     type:     annotation

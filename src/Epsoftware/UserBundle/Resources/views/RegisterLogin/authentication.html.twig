@@ -2,5 +2,55 @@
 {% block title 'Autenticação' %}
 
 {% block body %}
-    Você foi autenticado {{ uri }}.
+    
+    <!-- Main content -->
+    <section class="content">
+        <div class="error-page">
+          {% if error %}
+            <h2 class="headline text-danger"> <i class="fa fa-exclamation-triangle text-danger"></i></h2>
+          {% else %} 
+            <h2 class="headline text-success"> <i class="fa fa-check text-success"></i></h2>  
+          {% endif %} 
+
+          <div class="error-content">
+                {% if error %}
+                    <h3><i class="fa fa-thumbs-o-down text-danger"></i> </h3>
+                {% else %}          
+                    <h3><i class="fa fa-thumbs-o-up text-success"></i> </h3>
+                {% endif %} 
+            <p>
+                {% block mensagen %}
+                    {% if error %}
+                        Opa... ocorreu algum problema!!!
+                    {% else %}          
+                        Está tudo ok, seu cadastro acaba de ser ativado!!!
+                    {% endif %} 
+                {% endblock %}
+            </p>
+            <p>
+                {% block mensagen_instruction %}
+                    {% if error %}
+                        Você tentou ativar uma conta inexistente, verifique se o link enviado em seu e-mail é igual ao da barra de endereço acima.<hr>
+                        Em caso da verificação ser positiva, ou seja, coincidentes, contate o administrador do sistema. Ele terá que reenviar um link válido para você.
+                    {% else %}          
+                        Você pode acessar a área administrativa agora, basta acessar o link da página de login abaixo e colocar suas credenciais:<br>
+                        login  - {{ user.username }}<br>
+                        e-mail - {{ user.email }}
+                        <hr>
+                        Lembrese-se o seu controle de acesso é mantido pelo administrador do sistema, então as restrições das funções acessadas deverão
+                        ser mantidas pelo mesmo.
+                    {% endif %} 
+                {% endblock %}
+            </p>
+            <p>
+                {% block mensagen_redirect %}
+                    Ir para página de <a href="{{ error ? path("homepage") : path("login") }}"> {{ error ? 'home' : 'login' }}</a>.
+                {% endblock %}
+            </p>
+          </div>
+          <!-- /.error-content -->
+        </div>
+        <!-- /.error-page -->
+    </section>
+    <!-- /.content -->
 {% endblock %}

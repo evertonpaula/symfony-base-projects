@@ -1,6 +1,6 @@
 <?php
 
-namespace Epsoftware\MenuBundle\Twig;
+namespace Epsoftware\MensageriaBundle\Twig;
 
 use Doctrine\ORM\EntityManager;
 use Twig_Environment;
@@ -12,7 +12,7 @@ use Twig_Environment;
  *
  * @author tom
  */
-class ConstructMenu extends \Twig_Extension
+class ConstructMensageria extends \Twig_Extension
 {
     
     /**
@@ -40,22 +40,22 @@ class ConstructMenu extends \Twig_Extension
         
     public function getName()
     {
-        return "ConstructMenu";
+        return "ConstructMensageria";
     }
     
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('aside', array($this, 'getMenuAside')),
+            new \Twig_SimpleFunction('mensageria_widget', array($this, 'getMensageria')),
         );
     }
         
-    public function getMenuAside()
+    public function getMensageria()
     {
         if($this->twig):
-            return $this->twig->render("MenuBundle:Menu:aside.html.twig", array("name" => "everton"));
+            return $this->twig->render("MensageriaBundle:Mensageria:mensageria.html.twig", array());
         endif;
         
-        throw new \Exception('Erro ao tentar carregar o menu principal, renderizador $this->twig não está setado');
+        throw new \Exception('Erro ao tentar carregar a mensageria, renderizador $this->twig não está setado');
     }
 }

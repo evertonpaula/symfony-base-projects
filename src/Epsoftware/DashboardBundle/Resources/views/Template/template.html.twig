@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include "::meta.base.twig" %}
+        {% block meta %}{% endblock %}
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% include "::stylesheets.base.twig" %}
+        {% block stylesheets %} {% endblock %}
+        
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body class="{% block body_template %}skin-blue{%endblock%} fixed sidebar-mini">
+        <!-- Site wrapper -->
+        <div class="wrapper">
+            {% include "@Dashboard/Template/header.html.twig" %}
+            
+            {% include '@Dashboard/Template/aside.html.twig' %}
+            
+            <div class="content-wrapper">
+                {% block content_header_page %}
+                    <!-- Content Header (Page header) -->
+                    <section class="content-header">
+                        <h1>
+                            {% block pageName %}Dashboard{% endblock %}
+                            <small>{% block pageDescripton %} Painel de gerencimento{% endblock %}</small>
+                        </h1>
+
+                        <ol class="breadcrumb">
+                            <li><a href="{{path("dashboard")}}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                            {% block pageRoute %}
+                                <li class="active">Informações</li>
+                            {% endblock %}
+                        </ol>
+                    </section>
+                {% endblock %}
+                <section class="content">
+                    {% block body_content %}{% endblock %}
+                </section>
+            </div>
+            {% include '@Dashboard/Template/footer.html.twig' %}
+            {% include "::javascripts.base.twig" %}
+            {% block javascripts %}{% endblock %}
+        </div>
+    </body>
+</html>

@@ -1,0 +1,12 @@
+services:
+#    mensageria.example:
+#        class: Epsoftware\MensageriaBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
+    epsoftware.twig.mensageria:
+        class: Epsoftware\MensageriaBundle\Twig\ConstructMensageria
+        arguments: ["@doctrine.orm.entity_manager"]
+        calls:
+            - [setTwigEnvironment, ["@Twig"]]
+        public: false
+        tags: 
+            - { name: twig.extension }

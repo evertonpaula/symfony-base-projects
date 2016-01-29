@@ -1,0 +1,56 @@
+{% extends "@Dashboard/Dashboard/dashboard.html.twig"%}
+
+{% block title 'Perfil' %}
+{% block pageName 'Perfil' %}
+{% block pageDescripton 'Informações do usuário' %}
+
+{% block pageRoute %}
+    <li><a href="{{path("user_profile")}}"><i class="fa fa-dashboard"></i> Perfil</a></li>
+    <li class="active">Inf. do usuário</li>
+{% endblock %}
+    
+    
+{% block body_content %}
+    
+    <div class="row">
+        <div class="col-sm-6 col-md-9 col-lg-12">
+            
+            <!--div nav-tab-->
+            <div class="nav-tabs-custom">
+                
+                <!--ul nav-tabs-->
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#perfil" data-toggle="tab">Perfil</a>
+                    </li>
+                    <li>
+                        <a href="#endereco" data-toggle="tab">Endereços</a>
+                    </li>
+                    <li>
+                        <a href="#login" data-toggle="tab">Login</a>
+                    </li>
+                </ul><!--ul nav-tabs-->
+                
+                <!--div tab-content-->
+                <div class="tab-content">
+                    
+                    <!--div tab-pane perfil-->
+                    <div class="active tab-pane" id="perfil">
+                        
+                    </div><!--div tab-pane perfil-->
+                    
+                    <!--div tab-pane endereco-->
+                    <div class="tab-pane" id="endereco">
+                        
+                    </div><!--div tab-pane endereco-->
+                    
+                    <!--div tab-pane login-->
+                    <div class="tab-pane" id="login">
+                        
+                    </div><!--div tab-pane login-->
+                    
+                </div><!--div tab-content-->
+            </div><!--div nav-tab-->
+        </div><!--col-->
+    </div><!--row-->
+{%endblock%}
