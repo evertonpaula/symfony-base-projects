@@ -9,11 +9,17 @@
     <li class="active">Inf. do usuário</li>
 {% endblock %}
     
+{% block javascripts %}
+    {% javascripts '@PerfilBundle/Resources/public/js/*' output='compiled/js/perfil.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {{ parent() ? parent() }}
+{% endblock %}
     
 {% block body_content %}
     
     <div class="row">
-        <div class="col-sm-6 col-md-9 col-lg-12">
+        <div class="col-sm-12 col-md-12 col-lg-8">
             
             <!--div nav-tab-->
             <div class="nav-tabs-custom">
@@ -52,5 +58,29 @@
                 </div><!--div tab-content-->
             </div><!--div nav-tab-->
         </div><!--col-->
+        
+        <div class="col-sm-12 col-md-12 col-lg-4">
+            
+            <!--div nav-tab-->
+            <div class="nav-tabs-custom">
+                
+                <!--ul nav-tabs-->
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#configuracoes" data-toggle="tab">Configurações</a>
+                    </li>
+                </ul><!--ul nav-tabs-->
+                
+                <!--div tab-content-->
+                <div class="tab-content">
+                    
+                    <!--div tab-pane perfil-->
+                    <div class="active tab-pane" id="configuracoes">
+                        {% include '@Perfil/Forms/configuration.html.twig'%}
+                    </div><!--div tab-pane perfil-->
+                </div><!--div tab-content-->
+            </div><!--div nav-tab-->
+        </div><!--col-->
     </div><!--row-->
 {%endblock%}
+

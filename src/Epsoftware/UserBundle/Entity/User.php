@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Serializable;
+use Epsoftware\PerfilBundle\Entity\Profile;
 
 /**
  * User
@@ -163,7 +164,16 @@ class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
     * @Recaptcha\IsTrue(message="Você deve preencher o campo 'Não sou um robô'", groups={"registration", "login"})
     */
     protected $recaptcha;
-        
+    
+    /**
+     * @var \Epsoftware\PerfilBundle\Entity\Profile
+     * 
+     * @ORM\OneToOne(targetEntity="\Epsoftware\PerfilBundle\Entity\Profile", inversedBy="user")
+     * @ORM\JoinColumn(name="profile_id", referencedColumnName="id", nullable=true)
+     */
+    protected $profile;
+    
+    
     public function __construct() 
     {
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
@@ -540,8 +550,25 @@ class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
     {
         $this->recaptcha = $recaptcha;
     }
+    
+    /**
+     * Get recaptcha
+     * @return \Epsoftware\PerfilBundle\Entity\Profile
+     */
+    function getProfile()
+    {
+        return $this->profile;
+    }
+    
+    /**
+     * Set profile
+     * @param \Epsoftware\PerfilBundle\Entity\Profile $profile
+     */
+    function setProfile(Profile $profile)
+    {
+        $this->profile = $profile;
+    }
 
-            
     public function equals(AdvancedUserInterface $user)
     {
         return $this->getId() == $user->getId();

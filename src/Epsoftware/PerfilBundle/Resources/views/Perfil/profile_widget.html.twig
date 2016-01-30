@@ -5,7 +5,7 @@
             {% image 'images/users/default.png' output='compiled/images/user/default.png' %}
                 <img src="{{ asset_url }}" class="user-image" alt="User image" />
             {% endimage %}
-            <span class="hidden-xs">{{ app.user.login.name ? app.user.login.name : app.user.username }}</span>
+            <span class="hidden-xs">{{ app.user.profile ? app.user.profile.nome : app.user.username }}</span>
         </a>
         <ul class="dropdown-menu">
         <!-- User image -->

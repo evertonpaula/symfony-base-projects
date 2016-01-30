@@ -17,7 +17,10 @@ class DashboardController extends Controller
      */
     public function dashboardAction()
     {
-        
+        if(!$this->getUser()->getProfile()):
+            return $this->redirectToRoute("user_profile");
+        endif;
+            
         return array();
     }
 }
