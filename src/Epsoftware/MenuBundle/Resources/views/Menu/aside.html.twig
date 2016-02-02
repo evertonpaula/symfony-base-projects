@@ -1,3 +1,4 @@
+{% set image_user = app.user.image ? app.user.image.path : 'images/users/default.png' %}
 {% block aside %}
     <!-- Left side column. contains the sidebar -->
     <aside class="main-sidebar">
@@ -8,11 +9,9 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    {% image 'images/users/default.png' output='compiled/images/user/default.png' %}
-                        <img src="{{ asset_url }}" class="img-circle" alt="User image" />
-                    {% endimage %}
+                    <img src="{{ asset(image_user) }}" class="user-image" alt="User image" />
                 </div>
-                <div class="pull-left info">
+                <div class="pull-left info">    
                     <p>{{ app.user.profile ? app.user.profile.nome : app.user.username }}</p>
                 </div>
             </div>

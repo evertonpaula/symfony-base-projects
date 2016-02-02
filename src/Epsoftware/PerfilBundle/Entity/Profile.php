@@ -5,12 +5,17 @@ namespace Epsoftware\PerfilBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Epsoftware\PerfilBundle\Entity\Setting;
 use Epsoftware\UserBundle\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Epsoftware\PerfilBundle\Entity\Profissao;
 
 /**
  * Profile
  *
  * @ORM\Table(name="profile")
  * @ORM\Entity(repositoryClass="Epsoftware\PerfilBundle\Repository\ProfileRepository")
+ * @ORM\HasLifecycleCallbacks
+ * @UniqueEntity(fields="cpf", message="Desculpe mas este cpf já foi cadastrado anteriormente.", groups={"profile"})
  */
 class Profile
 {
@@ -26,38 +31,70 @@ class Profile
     /**
      * @var string
      *
-     * @ORM\Column(name="nome", type="string", length=50)
+     * @ORM\Column(name="nome", type="string", length=50,  nullable=false)
+     * @Assert\NotBlank(message="É obrigatório preenchimento do nome", groups={"registration", "profile"})
      */
     private $nome;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="sobrenome", type="string", length=80)
+     * @ORM\Column(name="sobrenome", type="string", length=80,  nullable=false)
+     * @Assert\NotBlank(message="É obrigatório preenchimento do sobrenome", groups={"registration", "profile"})
      */
     private $sobrenome;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="dtNascimento", type="date")
+     * @Assert\NotBlank(message="É obrigatório preenchimento da data de nascimento", groups={"registration", "profile"})
+     * @ORM\Column(name="dtNascimento", type="date",  nullable=false)
      */
     private $dtNascimento;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="cpf", type="bigint")
+     * @ORM\Column(name="cpf", type="bigint", nullable=false)
+     * @Assert\NotBlank(message="É obrigatório preenchimento do cpf", groups={"registration", "profile"})
      */
     private $cpf;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="telefone", type="integer", nullable=true)
+     */
+    private $telefone;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="celular", type="integer", nullable=true)
+     */
+    private $celular;
+    
+    /**
+     * @var int
+     * @Assert\NotBlank(message="É obrigatório preenchimento do campo gênero", groups={"registration", "profile"})
+     * @ORM\Column(name="genero", type="integer", nullable=false)
+     */
+    private $genero;
+    
+     /**
+     * @var \Epsoftware\PerfilBundle\Entity\Profissao
+     * 
+     * @ORM\ManyToOne(targetEntity="Profissao", inversedBy="profile")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $profissao;
+    
     /**
      * @var string
      *
      * @ORM\Column(name="descricao", type="text", nullable=true)
      */
     private $descricao;
-    
+       
     /**
      * @var \Epsoftware\PerfilBundle\Entity\Setting
      * 
@@ -71,7 +108,9 @@ class Profile
      * @ORM\OneToOne(targetEntity="\Epsoftware\UserBundle\Entity\User", mappedBy="profile")
      */
     protected $user;
-
+    
+    
+    
     /**
      * Get id
      *
@@ -177,7 +216,104 @@ class Profile
     {
         return $this->cpf;
     }
+    
+    /**
+     * Get telefone
+     *
+     * @return int
+     */
+    function getTelefone()
+    {
+        return $this->telefone;
+    }
 
+    /**
+     * Get celular
+     *
+     * @return int
+     */
+    function getCelular()
+    {
+        return $this->celular;
+    }
+
+    /**
+     * Set telefone
+     *
+     * @param integer $telefone
+     *
+     * @return Profile
+     */
+    function setTelefone($telefone)
+    {
+        $this->telefone = $telefone;
+        
+        return $this;
+    }
+    
+    /**
+     * Set celular
+     *
+     * @param integer $celular
+     *
+     * @return Profile
+     */
+    function setCelular($celular)
+    {
+        $this->celular = $celular;
+        
+        return $this;
+    }
+        
+    /**
+     * Get genero
+     *
+     * @return int
+     */
+    function getGenero()
+    {
+        return $this->genero;
+    }
+
+    /**
+     * Set genero
+     *
+     * @param int $genero
+     *
+     * @return Profile
+     */
+    function setGenero($genero)
+    {
+        $this->genero = $genero;
+        
+        return $this;
+    }
+    
+    /**
+     * Get profissao
+     *
+     * @return \Epsoftware\PerfilBundle\Entity\Profissao
+     */
+    function getProfissao()
+    {
+        return $this->profissao;
+    }
+
+    /**
+     * Set profissao
+     *
+     * @param \Epsoftware\PerfilBundle\Entity\Profissao  $profissao
+     *
+     * @return Profile
+     */
+    function setProfissao(Profissao $profissao)
+    {
+        $this->profissao = $profissao;
+        
+        return $this;
+    }
+
+        
     /**
      * Set descricao
      *
@@ -249,6 +385,6 @@ class Profile
         
         return $this;
     }
-
-
+    
+   
 }

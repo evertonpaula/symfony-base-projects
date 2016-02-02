@@ -8,9 +8,18 @@
     <li><a href="{{path("user_profile")}}"><i class="fa fa-dashboard"></i> Perfil</a></li>
     <li class="active">Inf. do usuário</li>
 {% endblock %}
-    
+
+{%block stylesheets %}
+    {% stylesheets  'public/adminlte/plugins/datepicker/datepicker3.css' filter='cssrewrite' output='compiled/css/perfil.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
 {% block javascripts %}
-    {% javascripts '@PerfilBundle/Resources/public/js/*' output='compiled/js/perfil.js' %}
+    {% javascripts 'public/adminlte/plugins/datepicker/bootstrap-datepicker.js'
+                   'public/adminlte/plugins/input-mask/jquery.inputmask.js'
+                   '@PerfilBundle/Resources/public/js/*' output='compiled/js/perfil.js'
+    %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
     {{ parent() ? parent() }}
@@ -42,7 +51,7 @@
                     
                     <!--div tab-pane perfil-->
                     <div class="active tab-pane" id="perfil">
-                        
+                         {% include '@Perfil/Forms/profile.html.twig'%}
                     </div><!--div tab-pane perfil-->
                     
                     <!--div tab-pane endereco-->

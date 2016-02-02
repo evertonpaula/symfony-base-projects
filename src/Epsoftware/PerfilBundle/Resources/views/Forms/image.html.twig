@@ -1,0 +1,37 @@
+{% block form_image %}
+    {{ form_start(form_image) }}
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <p class="login-box-msg">
+                    Foto do usuário
+                    {% if form_errors(form_image) %}
+                        <div class="callout callout-danger">
+                            <h4>Alerta</h4>
+                            <p>{{form_errors(form_image)}}</p>
+                        </div>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+                
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">          
+                <div class="form-group has-feedback {{form_errors(form_image.file) ? 'has-error' }}">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-picture-o"></i>
+                        </span>
+                        {{ form_widget(form_image.file, { 'attr': {'class': 'form-control btn btn-default'} }) }}
+                        {{form_errors(form_image.file)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">    
+            <div class="col-lg-10 col-md-10 col-sm-8"></div>
+            <div class="col-lg-2 col-md-2 col-sm-4">
+                {{ form_widget(form_image.submit, {'attr': {'class': 'btn btn-primary btn-block'} }) }}
+            </div>
+        </div>
+    {{ form_end(form_image) }}
+{% endblock %}

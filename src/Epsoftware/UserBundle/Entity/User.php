@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Serializable;
 use Epsoftware\PerfilBundle\Entity\Profile;
+use Epsoftware\PerfilBundle\Entity\ImageUser;
 
 /**
  * User
@@ -172,6 +173,14 @@ class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
      * @ORM\JoinColumn(name="profile_id", referencedColumnName="id", nullable=true)
      */
     protected $profile;
+    
+    /**
+     * @var \Epsoftware\PerfilBundle\Entity\ImageUser
+     * 
+     * @ORM\OneToOne(targetEntity="\Epsoftware\PerfilBundle\Entity\ImageUser", inversedBy="user")
+     * @ORM\JoinColumn(name="image_user_id", referencedColumnName="id", nullable=true)
+    */
+    protected $image;
     
     
     public function __construct() 
@@ -568,7 +577,29 @@ class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
     {
         $this->profile = $profile;
     }
+    
+    /**
+     * Get image
+     * 
+     * @return \Epsoftware\PerfilBundle\Entity\ImageUser
+     */
+    function getImage()
+    {
+        return $this->image;
+    }
+    /**
+     * Set image
+     * @param ImageUser $image
+     * @return \Epsoftware\UserBundle\Entity\User
+     */
+    function setImage(ImageUser $image)
+    {
+        $this->image = $image;
+        
+        return $this;
+    }
 
+        
     public function equals(AdvancedUserInterface $user)
     {
         return $this->getId() == $user->getId();

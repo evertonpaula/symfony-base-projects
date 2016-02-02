@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Epsoftware\PerfilBundle\Entity\Profile;
 
 /**
- * Setting
+ * Profissao
  *
- * @ORM\Table(name="setting")
- * @ORM\Entity(repositoryClass="Epsoftware\PerfilBundle\Repository\SettingRepository")
+ * @ORM\Table(name="profissao")
+ * @ORM\Entity(repositoryClass="Epsoftware\PerfilBundle\Repository\ProfissaoRepository")
  */
-class Setting
+class Profissao
 {
     /**
      * @var int
@@ -23,17 +23,16 @@ class Setting
     private $id;
 
     /**
-     * @var \Epsoftware\PerfilBundle\Entity\Theme
-     * 
-     * @ORM\ManyToOne(targetEntity="Theme", inversedBy="setting")
-     * @ORM\JoinColumn(nullable=true)
+     * @var string
+     *
+     * @ORM\Column(name="profissao", type="string", length=150)
      */
-    private $theme;
-
+    private $profissao;
+    
     /**
      * @var \Epsoftware\PerfilBundle\Entity\Profile
      * 
-     * @ORM\OneToMany(targetEntity="Profile", mappedBy="setting")
+     * @ORM\OneToMany(targetEntity="Profile", mappedBy="profissao")
      */
     private $profile;
 
@@ -48,33 +47,33 @@ class Setting
     }
 
     /**
-     * Set thema
+     * Set profissao
      *
-     * @param string $theme
+     * @param string $profissao
      *
-     * @return Setting
+     * @return Profissao
      */
-    public function setTheme($theme)
+    public function setProfissao($profissao)
     {
-        $this->theme = $theme;
+        $this->profissao = $profissao;
 
         return $this;
     }
 
     /**
-     * Get theme
+     * Get profissao
      *
      * @return string
      */
-    public function getTheme()
+    public function getProfissao()
     {
-        return $this->theme;
+        return $this->profissao;
     }
     
     /**
      * Get profile
      *
-     * @return profile
+     * @return \Epsoftware\PerfilBundle\Entity\Profile
      */
     function getProfile()
     {
@@ -84,9 +83,9 @@ class Setting
     /**
      * Set profile
      *
-     * @param string $profile
+     * @param \Epsoftware\PerfilBundle\Entity\Profile $profile
      *
-     * @return Setting
+     * @return Profissao
      */
     function setProfile(Profile $profile)
     {
@@ -94,4 +93,7 @@ class Setting
         
         return $this;
     }
+
+
 }
+

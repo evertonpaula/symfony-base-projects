@@ -9,7 +9,8 @@
         
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
-    <body class="{% block body_template %}skin-blue{%endblock%} fixed sidebar-mini">
+    {% set theme = app.user.profile ? app.user.profile.setting ? app.user.profile.setting.theme.skin : 'skin-blue' : 'skin-blue' %}
+    <body data-theme='{{theme}}' class="{{ theme }} fixed sidebar-mini">
         <!-- Site wrapper -->
         <div class="wrapper">
             {% include "@Dashboard/Template/header.html.twig" %}

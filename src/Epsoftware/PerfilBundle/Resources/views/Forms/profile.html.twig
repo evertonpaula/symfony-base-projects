@@ -1,0 +1,143 @@
+{% block form_profile %}
+   
+     {{ form_start(form_profile) }}
+    
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <p class="login-box-msg">
+                    Informações sobre o usuário
+                    {% if form_errors(form_profile) %}
+                        <div class="callout callout-danger">
+                            <h4>Alerta</h4>
+                            <p>{{form_errors(form_profile)}}</p>
+                        </div>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="form-group has-feedback {{form_errors(form_profile.nome) ? 'has-error' }}">
+                    <div class="input-group">
+                        {{ form_widget(form_profile.nome, { 'attr': {'class': 'form-control', 'placeholder' : 'primeiro nome'} }) }}
+                        {{form_errors(form_profile.nome)}}
+                        <span class="input-group-addon">
+                          <i class="fa fa-user"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="form-group has-feedback {{form_errors(form_profile.sobrenome) ? 'has-error' }}">
+                    <div class="input-group">
+                        {{ form_widget(form_profile.sobrenome, { 'attr': {'class': 'form-control', 'placeholder' : 'sobrenome'} }) }}
+                        {{form_errors(form_profile.sobrenome)}}
+                        <span class="input-group-addon">
+                          <i class="fa fa-user"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">    
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="form-group has-feedback {{form_errors(form_profile.dtNascimento) ? 'has-error' }}">
+                    <div class="input-group date">
+                        {{ form_widget(form_profile.dtNascimento, { 'attr': {'class': 'form-control', 'placeholder' : 'data de nascimento' } }) }}
+                        {{form_errors(form_profile.dtNascimento)}}
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="form-group has-feedback {{form_errors(form_profile.cpf) ? 'has-error' }}">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-credit-card"></i>
+                        </span>
+                        {{ form_widget(form_profile.cpf, { 'attr': {'class': 'form-control cpf', 'placeholder' : 'cpf' } }) }}
+                        {{form_errors(form_profile.cpf)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+                        
+        <div class="row">    
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="form-group has-feedback {{form_errors(form_profile.telefone) ? 'has-error' }}">
+                    <div class="input-group">
+                        {{ form_widget(form_profile.telefone, { 'attr': {'class': 'form-control telefone', 'placeholder' : 'telefone' } }) }}
+                        {{form_errors(form_profile.telefone)}}
+                        <span class="input-group-addon">
+                            <i class="fa fa-phone"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="form-group has-feedback {{form_errors(form_profile.celular) ? 'has-error' }}">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                           <i class="fa fa-mobile"></i>
+                        </span>
+                        {{ form_widget(form_profile.celular, { 'attr': {'class': 'form-control celular', 'placeholder' : 'celular' } }) }}
+                        {{form_errors(form_profile.celular)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">    
+            <div class="col-lg-6 col-md-6 col-sm-12">          
+                <div class="form-group has-feedback {{form_errors(form_profile.genero) ? 'has-error' }}">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-venus-mars"></i>
+                        </span>
+                        {{ form_widget(form_profile.genero, { 'attr': {'class': 'form-control'} }) }}
+                        {{form_errors(form_profile.genero)}}
+                    </div>
+                </div>
+            </div>
+           <div class="col-lg-6 col-md-6 col-sm-12">          
+                <div class="form-group has-feedback {{form_errors(form_profile.profissao) ? 'has-error' }}">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-briefcase"></i>
+                        </span>
+                        {{ form_widget(form_profile.profissao, { 'attr': {'class': 'form-control'} }) }}
+                        {{form_errors(form_profile.profissao)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">    
+            <div class="col-lg-12 col-md-12 col-sm-12">          
+                <div class="form-group has-feedback {{form_errors(form_profile.descricao) ? 'has-error' }}">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-tasks"></i>
+                        </span>
+                        {{ form_widget(form_profile.descricao, { 'attr': {'class': 'form-control', 'placeholder':'descrições e ou observações'} }) }}
+                        {{form_errors(form_profile.descricao)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">    
+            <div class="col-lg-10 col-md-10 col-sm-8"></div>
+            <div class="col-lg-2 col-md-2 col-sm-4">
+                {{ form_widget(form_profile.submit, {'attr': {'class': 'btn btn-primary btn-block'} }) }}
+            </div>
+        </div>
+    {{ form_end(form_profile) }}
+    
+    
+    
+{% endblock %}
