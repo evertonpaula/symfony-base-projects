@@ -24,6 +24,8 @@ $(function(){
         $('body').removeClass(current_skin);
         $('body').addClass(skinName);
         current_skin = skinName;
+        var form = $(this).closest('form');
+        $.post($(form).attr('action'), $(form).serialize(), callback);
     });
 });
 

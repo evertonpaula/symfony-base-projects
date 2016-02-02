@@ -23,10 +23,16 @@ class PerfilController extends Controller
      */
     public function profileAction()
     {
-        $setting = new Setting();
-        $formSetting = $this->createForm(SettingFormType::class, $setting, array("action" => $this->generateUrl("homepage")));
+        $profile = $this->getUser()->getProfile();
         
-        $profile = new Profile();
+        if( $profile === null):
+            $profile = new Profile();
+            $setting = new Setting();
+        else:
+            $setting = $profile->getSetting();
+        endif;
+        
+        $formSetting = $this->createForm(SettingFormType::class, $setting, array("action" => $this->generateUrl("user_setting_profile_ajax")));
         $formProfile = $this->createForm(ProfileFormType::class, $profile, array("action" => $this->generateUrl("user_profile_ajax")));
         return array('form_conf' => $formSetting->createView(), 'form_profile' => $formProfile->createView());
     }

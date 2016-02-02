@@ -52,24 +52,24 @@ class Profile
     private $dtNascimento;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="cpf", type="bigint", nullable=false)
+     * @ORM\Column(name="cpf", type="string", nullable=false)
      * @Assert\NotBlank(message="É obrigatório preenchimento do cpf", groups={"registration", "profile"})
      */
     private $cpf;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="telefone", type="integer", nullable=true)
+     * @ORM\Column(name="telefone", type="string", nullable=true)
      */
     private $telefone;
     
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="celular", type="integer", nullable=true)
+     * @ORM\Column(name="celular", type="string", nullable=true)
      */
     private $celular;
     
@@ -196,7 +196,7 @@ class Profile
     /**
      * Set cpf
      *
-     * @param integer $cpf
+     * @param string $cpf
      *
      * @return Profile
      */
@@ -210,7 +210,7 @@ class Profile
     /**
      * Get cpf
      *
-     * @return int
+     * @return string
      */
     public function getCpf()
     {
@@ -220,7 +220,7 @@ class Profile
     /**
      * Get telefone
      *
-     * @return int
+     * @return string
      */
     function getTelefone()
     {
@@ -230,7 +230,7 @@ class Profile
     /**
      * Get celular
      *
-     * @return int
+     * @return string
      */
     function getCelular()
     {
@@ -240,7 +240,7 @@ class Profile
     /**
      * Set telefone
      *
-     * @param integer $telefone
+     * @param string $telefone
      *
      * @return Profile
      */
@@ -254,7 +254,7 @@ class Profile
     /**
      * Set celular
      *
-     * @param integer $celular
+     * @param string $celular
      *
      * @return Profile
      */
