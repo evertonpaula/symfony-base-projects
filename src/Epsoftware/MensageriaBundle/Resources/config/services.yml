@@ -10,3 +10,10 @@ services:
         public: false
         tags: 
             - { name: twig.extension }
+    
+    epsoftware.response.json:
+        class: Epsoftware\MensageriaBundle\Services\ResponseJson
+        arguments: ["@serializer"]
+        public: true
+        
+  

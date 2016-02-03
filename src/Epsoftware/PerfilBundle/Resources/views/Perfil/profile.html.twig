@@ -16,6 +16,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     {% javascripts 'public/adminlte/plugins/datepicker/bootstrap-datepicker.js'
                    'public/adminlte/plugins/input-mask/jquery.inputmask.js'
                    '@PerfilBundle/Resources/public/js/*' output='compiled/js/perfil.js'

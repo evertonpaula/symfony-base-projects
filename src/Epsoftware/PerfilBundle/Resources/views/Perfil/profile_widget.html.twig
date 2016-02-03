@@ -9,9 +9,7 @@
         <ul class="dropdown-menu">
         <!-- User image -->
             <li class="user-header">
-                {% image 'images/users/default.png' output='compiled/images/user/default.png' %}
-                    <img src="{{ asset(image_user) }}" class="img-circle" alt="User image" />
-                {% endimage %}
+                <img src="{{ asset(image_user) }}" class="img-circle" alt="User image" />
                 <p>
                     {{ app.user.email }}
                     <small>registrado desde {{ app.user.created | date("m/y") }}</small>

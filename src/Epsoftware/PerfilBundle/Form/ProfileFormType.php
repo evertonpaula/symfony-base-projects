@@ -18,7 +18,7 @@ class ProfileFormType extends AbstractType
     {
         $builder->add('nome', TextType::class)
                 ->add('sobrenome', TextType::class)
-                ->add('dtNascimento', DateType::class, array("widget"=> "single_text", "html5"=> false,"format"=>"dd/M/yyyy"))
+                ->add('dtNascimento', DateType::class, array("widget"=> "single_text", "html5"=> false,"format"=>"dd/M/yyyy", "invalid_message" => "A data de nascimento não é válida."))
                 ->add('cpf', TextType::class)
                 ->add('telefone', TextType::class, array("required"=>false))
                 ->add('celular', TextType::class, array("required"=>false))
@@ -34,8 +34,8 @@ class ProfileFormType extends AbstractType
     {
         $resolver-> setDefaults(array(
                             'data_class' => 'Epsoftware\PerfilBundle\Entity\Profile',
-                            'validation_groups' => array('profile','upload')
-                        )
+                            'validation_groups' => 'profile'
+                        )   
                     );
     }
     

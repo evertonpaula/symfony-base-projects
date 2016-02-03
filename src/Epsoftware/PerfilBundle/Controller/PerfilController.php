@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Epsoftware\PerfilBundle\Entity\Setting;
+use Epsoftware\PerfilBundle\Entity\Setting; 
 use Epsoftware\PerfilBundle\Entity\Profile;
 use Epsoftware\PerfilBundle\Form\SettingFormType;
 use Epsoftware\PerfilBundle\Form\ProfileFormType;

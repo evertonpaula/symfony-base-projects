@@ -40,7 +40,13 @@
             </div>
             {% include '@Dashboard/Template/footer.html.twig' %}
             {% include "::javascripts.base.twig" %}
-            {% block javascripts %}{% endblock %}
+            {% block javascripts %}
+                {% javascripts 
+                    '@DashboardBundle/Resources/public/js/dashboard.js' output='compiled/js/dashboard.js'
+                %}
+                    <script src="{{ asset_url }}"></script>
+                {% endjavascripts %}
+            {% endblock %}
         </div>
     </body>
 </html>

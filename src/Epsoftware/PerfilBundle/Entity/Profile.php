@@ -32,7 +32,7 @@ class Profile
      * @var string
      *
      * @ORM\Column(name="nome", type="string", length=50,  nullable=false)
-     * @Assert\NotBlank(message="É obrigatório preenchimento do nome", groups={"registration", "profile"})
+     * @Assert\NotBlank(message="É obrigatório preenchimento do nome", groups={"profile"})
      */
     private $nome;
 
@@ -40,13 +40,15 @@ class Profile
      * @var string
      *
      * @ORM\Column(name="sobrenome", type="string", length=80,  nullable=false)
-     * @Assert\NotBlank(message="É obrigatório preenchimento do sobrenome", groups={"registration", "profile"})
+     * @Assert\NotBlank(message="É obrigatório preenchimento do sobrenome", groups={"profile"})
      */
     private $sobrenome;
 
     /**
      * @var \DateTime
-     * @Assert\NotBlank(message="É obrigatório preenchimento da data de nascimento", groups={"registration", "profile"})
+     * 
+     * @Assert\Date(message="A data de nascimento preenchida não é inválida", groups={"profile"})
+     * @Assert\NotBlank(message="É obrigatório preenchimento da data de nascimento", groups={"profile"})
      * @ORM\Column(name="dtNascimento", type="date",  nullable=false)
      */
     private $dtNascimento;
@@ -55,7 +57,7 @@ class Profile
      * @var string
      *
      * @ORM\Column(name="cpf", type="string", nullable=false)
-     * @Assert\NotBlank(message="É obrigatório preenchimento do cpf", groups={"registration", "profile"})
+     * @Assert\NotBlank(message="É obrigatório preenchimento do cpf", groups={"profile"})
      */
     private $cpf;
 
@@ -83,6 +85,7 @@ class Profile
      /**
      * @var \Epsoftware\PerfilBundle\Entity\Profissao
      * 
+     * @Assert\NotBlank(message="É obrigatório a escolha de uma profissão", groups={"profile"})
      * @ORM\ManyToOne(targetEntity="Profissao", inversedBy="profile")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -306,7 +309,7 @@ class Profile
      *
      * @return Profile
      */
-    function setProfissao(Profissao $profissao)
+    function setProfissao(Profissao $profissao = null)
     {
         $this->profissao = $profissao;
         

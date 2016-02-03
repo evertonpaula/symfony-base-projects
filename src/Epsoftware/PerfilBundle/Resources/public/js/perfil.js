@@ -1,7 +1,3 @@
-var callback = function(data){
-    console.log(data);
-};
-
 $(function(){
    $('.date').datepicker({
         format: 'dd/mm/yyyy',
@@ -25,14 +21,13 @@ $(function(){
         $('body').addClass(skinName);
         current_skin = skinName;
         var form = $(this).closest('form');
-        $.post($(form).attr('action'), $(form).serialize(), callback);
+        ajax($(form).attr('action'),$(form).attr('method'),$(form).serialize());
     });
 });
-
 
 $(function(){
     $('form[name=profile_form]').submit(function(e){
        e.preventDefault();
-       $.post($(this).attr('action'), $(this).serialize(), callback);
+       ajax($(this).attr('action'),$(this).attr('method'),$(this).serialize());
     });
 });

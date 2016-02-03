@@ -13,7 +13,6 @@ use Epsoftware\PerfilBundle\Entity\Setting;
 use Epsoftware\PerfilBundle\Form\ProfileFormType;
 use Epsoftware\PerfilBundle\Form\SettingFormType;
 
-
 class AjaxPerfilController extends Controller
 {
     /**
@@ -23,7 +22,6 @@ class AjaxPerfilController extends Controller
      */
     public function ajaxProfileAction(Request $request)
     {
-        
         $profile = $this->getUser()->getProfile();
     
         if( $profile === null):
@@ -33,22 +31,15 @@ class AjaxPerfilController extends Controller
         $form = $this->createForm(ProfileFormType::class, $profile);
         $form->handleRequest($request);
         
-        $response = new Response();
-        $response->headers->set('Content-Type', 'application/json');
-        
         if ($form->isSubmitted() && $form->isValid()):
             $em = $this->getDoctrine()->getManager();
             $em->persist($profile);
             $this->getUser()->setProfile($profile);
             $em->flush();
-            $output = array('success' => true, 'mensagem' => 'Sucesso ao inserir perfil');
-            $response->setContent(json_encode($output));
-            return $response;
+            return $this->get("epsoftware.response.json")->getSuccess("Dados do perfil inseridos com sucesso.");
         endif;
         
-        $output = array('error' => true, 'form_error');
-        $response->setContent(json_encode($output));
-        return $response;
+        return $this->get("epsoftware.response.json")->getErrors($form);
     }
     
     
@@ -59,16 +50,10 @@ class AjaxPerfilController extends Controller
      */
     public function ajaxSettingProfileAction(Request $request)
     {
-        
-        $response = new Response();
-        $response->headers->set('Content-Type', 'application/json');
-        
         $profile = $this->getUser()->getProfile();
         
         if( $profile === null):
-            $output = array('error' => true, 'form_error');
-            $response->setContent(json_encode($output));
-            return $response;
+            return $this->get("epsoftware.response.json")->getWarning("Aviso, você precisa preencher e salvar seu perfil antes de selecionar uma aparência.");
         endif;
         
         $setting = $profile->getSetting();
@@ -86,14 +71,10 @@ class AjaxPerfilController extends Controller
             $profile->setSetting($setting);
             $em->persist($profile);
             $em->flush();
-            $output = array('success' => true, 'mensagem' => 'Sucesso ao inserir perfil');
-            $response->setContent(json_encode($output));
-            return $response;
+            return $this->get("epsoftware.response.json")->getSuccess("Aparência atualizada com sucesso.");
         endif;
         
-        $output = array('error' => true, 'form_error');
-        $response->setContent(json_encode($output));
-        return $response;
+        return $this->get("epsoftware.response.json")->getErrors($form);
     }
     
 }
