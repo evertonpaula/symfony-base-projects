@@ -20,7 +20,7 @@ use Epsoftware\PerfilBundle\Entity\ImageUser;
  *
  * @ORM\Table(name="users_login")
  * @ORM\Entity(repositoryClass="Epsoftware\UserBundle\Repository\UserRepository")
- * @UniqueEntity(fields="email", message="Desculpe mas este e-mail já foi cadastrado anteriormente, tente outro e-mail.", groups={"registration"})
+ * @UniqueEntity(fields="email", message="Desculpe mas este e-mail já foi cadastrado anteriormente, tente outro e-mail.", groups={"registration","update_user"})
  * @UniqueEntity(fields="username", message="Desculpe mas este usuário já foi cadastrado anteriormente, tente outro usuário.", groups={"registration"})
  */
 class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
@@ -46,11 +46,11 @@ class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
     /**
      * @var string
      * 
-     * @Assert\NotBlank(message = "É obrigatório o uso de um e-mail válido.", groups={"registration"})
+     * @Assert\NotBlank(message = "É obrigatório o uso de um e-mail válido.", groups={"registration", "update_user"})
      * @Assert\Email(
      *     message = "O e-mail '{{ value }}' não é um tipo válido.",
      *     checkMX = true,
-     *     groups={"registration"}
+     *     groups={"registration","update_user"}
      * )
      * @ORM\Column(name="email", type="string", length=255)
      */
@@ -66,8 +66,8 @@ class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
     /**
      * 
      * @var string
-     * @Assert\NotBlank(message = "Use uma senha válida.", groups={"registration", "login"})
-     * @Assert\Regex(pattern="/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{6,20}/",message = "Sua senha deve conter entre 6 e 20 caracteres alfanuméricos diferenciando letras maiúsculas de minúscalas.", groups={"registration"})
+     * @Assert\NotBlank(message = "Use uma senha válida.", groups={"registration", "login", "update_user"})
+     * @Assert\Regex(pattern="/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{6,20}/",message = "Sua senha deve conter entre 6 e 20 caracteres alfanuméricos diferenciando letras maiúsculas de minúscalas.", groups={"registration", "update_user"})
      */
     protected $plainPassword;
     

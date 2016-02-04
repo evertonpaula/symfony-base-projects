@@ -12,6 +12,7 @@ use Epsoftware\PerfilBundle\Entity\Profile;
 use Epsoftware\PerfilBundle\Entity\Setting;
 use Epsoftware\PerfilBundle\Form\ProfileFormType;
 use Epsoftware\PerfilBundle\Form\SettingFormType;
+use Epsoftware\UserBundle\Form\UpdateUserFormType;
 
 class AjaxPerfilController extends Controller
 {
@@ -43,7 +44,7 @@ class AjaxPerfilController extends Controller
     }
     
     
-     /**
+    /**
      * @Route("/ajax/setting/profile", name="user_setting_profile_ajax")
      * @Method({"POST"})
      * @Security("has_role('ROLE_USER')")
@@ -72,6 +73,28 @@ class AjaxPerfilController extends Controller
             $em->persist($profile);
             $em->flush();
             return $this->get("epsoftware.response.json")->getSuccess("Aparência atualizada com sucesso.");
+        endif;
+        
+        return $this->get("epsoftware.response.json")->getErrors($form);
+    }
+    
+    /**
+     * @Route("/ajax/user", name="user_update_ajax")
+     * @Method({"POST"})
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function ajaxUserAction(Request $request)
+    {
+        $user = $this->getUser();
+        
+        $form = $this->createForm(UpdateUserFormType::class, $user);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()):
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            return $this->get("epsoftware.response.json")->getSuccess("Dados de acesso atualizado com sucesso.");
         endif;
         
         return $this->get("epsoftware.response.json")->getErrors($form);

@@ -11,6 +11,7 @@ use Epsoftware\PerfilBundle\Entity\Setting;
 use Epsoftware\PerfilBundle\Entity\Profile;
 use Epsoftware\PerfilBundle\Form\SettingFormType;
 use Epsoftware\PerfilBundle\Form\ProfileFormType;
+use Epsoftware\UserBundle\Form\UpdateUserFormType;
 
 
 class PerfilController extends Controller
@@ -34,6 +35,7 @@ class PerfilController extends Controller
         
         $formSetting = $this->createForm(SettingFormType::class, $setting, array("action" => $this->generateUrl("user_setting_profile_ajax")));
         $formProfile = $this->createForm(ProfileFormType::class, $profile, array("action" => $this->generateUrl("user_profile_ajax")));
-        return array('form_conf' => $formSetting->createView(), 'form_profile' => $formProfile->createView());
+        $formUser = $this->createForm(UpdateUserFormType::class, $this->getUser(), array("action" => $this->generateUrl("user_update_ajax")));
+        return array('form_conf' => $formSetting->createView(), 'form_profile' => $formProfile->createView(), 'form_user' => $formUser->createView());
     }
 }

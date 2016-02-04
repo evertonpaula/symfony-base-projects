@@ -8,6 +8,8 @@ use Epsoftware\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Epsoftware\PerfilBundle\Entity\Profissao;
+use Epsoftware\AddressBundle\Entity\Address;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Profile
@@ -56,14 +58,16 @@ class Profile
     /**
      * @var string
      *
-     * @ORM\Column(name="cpf", type="string", nullable=false)
+     * @Assert\Regex(pattern="/^[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}$/",message="Número do cpf inválido", groups={"profile"})
      * @Assert\NotBlank(message="É obrigatório preenchimento do cpf", groups={"profile"})
+     * @ORM\Column(name="cpf", type="string", nullable=false)
      */
     private $cpf;
 
     /**
      * @var string
      *
+     * @Assert\Regex(pattern="/^\([1-9]{2}\) [2-9][0-9]{3,4}\-[0-9]{4}$/",message="Número de telefone inválido", groups={"profile"})
      * @ORM\Column(name="telefone", type="string", nullable=true)
      */
     private $telefone;
@@ -71,6 +75,7 @@ class Profile
     /**
      * @var string
      *
+     * @Assert\Regex(pattern="/^\([1-9]{2}\) [2-9][0-9]{3,4}\-[0-9]{4}$/",message="Número de celular inválido", groups={"profile"})
      * @ORM\Column(name="celular", type="string", nullable=true)
      */
     private $celular;
@@ -112,7 +117,23 @@ class Profile
      */
     protected $user;
     
-    
+    /**
+     *
+     * @var \Epsoftware\AddressBundle\Entity\Address
+     * 
+     * @ORM\ManyToMany(targetEntity="\Epsoftware\AddressBundle\Entity\Address")
+     * @ORM\JoinTable(name="profile_address",
+     *      joinColumns={@ORM\JoinColumn(name="profile_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="address_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $address;
+
+    public function __construct()   
+    {
+        $this->address = new ArrayCollection();
+    }
+
     
     /**
      * Get id
@@ -315,7 +336,6 @@ class Profile
         
         return $this;
     }
-
         
     /**
      * Set descricao
@@ -388,6 +408,31 @@ class Profile
         
         return $this;
     }
+    
+    /**
+     * Get address
+     * 
+     * @return \Epsoftware\AddressBundle\Entity\Address
+     */
+    function getAddress()
+    {
+        return $this->address;
+    }
+    
+    
+    /**
+     * Set address
+     * 
+     * @param \Epsoftware\AddressBundle\Entity\Address $address
+     * @return \Epsoftware\PerfilBundle\Entity\Profile
+     */
+    function setAddress(Address $address) {
+        $this->address = $address;
+        
+        return $this;
+    }
+
+
     
    
 }

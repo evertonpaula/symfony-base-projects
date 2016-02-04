@@ -95,7 +95,7 @@ var callback = function(data){
         for(var i = 0; i < message.length; i++){
             error(message[i]);
         }
-    }
+    }       
 };
 
 

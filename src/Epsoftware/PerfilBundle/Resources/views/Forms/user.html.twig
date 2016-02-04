@@ -1,0 +1,71 @@
+{% block form_user %}
+   
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <p class="login-box-msg">
+                Informações de acesso do usuário
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <h3 class="pull-right"><label class="label label-danger" >{{app.user.username}}</label></h3>
+        </div>
+    </div>
+            
+    {{ form_start(form_user) }}       
+        
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="form-group has-feedback {{form_errors(form_user.email) ? 'has-error' }}">
+                    <div class="input-group">
+                        {{ form_widget(form_user.email, { 'attr': {'class': 'form-control', 'placeholder': 'E-mail'} }) }}
+                        <span class="input-group-addon">
+                            <i class="fa fa-envelope"></i>
+                        </span>
+                        {{form_errors(form_user.email)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+                
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">                
+                <div class="form-group has-feedback {{form_errors(form_user.plainPassword.first) ? 'has-error' }}">
+                    <div class="input-group">
+                        {{ form_widget(form_user.plainPassword.first, { 'attr': {'class': 'form-control', 'placeholder': 'Nova senha'} }) }}
+                        <span class="input-group-addon">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                        {{form_errors(form_user.plainPassword.first)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+                
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">                
+                <div class="form-group has-feedback {{form_errors(form_user.plainPassword.second) ? 'has-error' }}">
+                    <div class="input-group">
+                        {{ form_widget(form_user.plainPassword.second, { 'attr': {'class': 'form-control', 'placeholder': 'Repita a nova senha'} }) }}
+                        <span class="input-group-addon">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    
+        <div class="row">    
+            <div class="col-lg-10 col-md-10 col-sm-8"></div>
+            <div class="col-lg-2 col-md-2 col-sm-4">
+                {{ form_widget(form_user.submit, {'attr': {'class': 'btn btn-primary btn-block'} }) }}
+            </div>
+        </div>
+        
+    {{ form_end(form_user)}}
+    
+    
+    
+{% endblock %}
