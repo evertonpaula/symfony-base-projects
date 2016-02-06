@@ -67,6 +67,6 @@ class LoadProfissaoData extends AbstractFixture implements OrderedFixtureInterfa
     
     public function getOrder()
     {
-        return 50;
+        return 60;
     }
 }

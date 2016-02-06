@@ -1,4 +1,4 @@
-{% extends "@Dashboard/Dashboard/dashboard.html.twig"%}
+{% extends "@Dashboard/Dashboard/dashboard.html.twig" %}
 
 {% block title 'Perfil' %}
 {% block pageName 'Perfil' %}
@@ -16,20 +16,19 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
     {% javascripts 'public/adminlte/plugins/datepicker/bootstrap-datepicker.js'
                    'public/adminlte/plugins/input-mask/jquery.inputmask.js'
                    '@PerfilBundle/Resources/public/js/*' output='compiled/js/perfil.js'
     %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
-    {{ parent() ? parent() }}
+    {{ parent() }}
 {% endblock %}
     
 {% block body_content %}
     
     <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-8">
+        <div class="col-sm-12 col-md-12 col-lg-9">
             
             <!--div nav-tab-->
             <div class="nav-tabs-custom">
@@ -52,24 +51,25 @@
                     
                     <!--div tab-pane perfil-->
                     <div class="active tab-pane" id="perfil">
-                         {% include '@Perfil/Forms/profile.html.twig'%}
+                        {% embed '@Perfil/Forms/profile.html.twig' %}{% endembed %}
                     </div><!--div tab-pane perfil-->
                     
                     <!--div tab-pane endereco-->
                     <div class="tab-pane" id="endereco">
-                        
+                        {% embed '@Address/Template/template.html.twig' %}{% endembed %}
+                        {{ (app.user.profile) ? address(app.user.profile) | raw  }}
                     </div><!--div tab-pane endereco-->
                     
                     <!--div tab-pane login-->
                     <div class="tab-pane" id="login">
-                         {% include '@Perfil/Forms/user.html.twig'%}
+                        {% embed '@Perfil/Forms/user.html.twig' %}{% endembed %}
                     </div><!--div tab-pane login-->
                     
                 </div><!--div tab-content-->
             </div><!--div nav-tab-->
         </div><!--col-->
         
-        <div class="col-sm-12 col-md-12 col-lg-4">
+        <div class="col-sm-12 col-md-12 col-lg-3">
             
             <!--div nav-tab-->
             <div class="nav-tabs-custom">
@@ -86,7 +86,7 @@
                     
                     <!--div tab-pane perfil-->
                     <div class="active tab-pane" id="configuracoes">
-                        {% include '@Perfil/Forms/configuration.html.twig'%}
+                        {% embed '@Perfil/Forms/configuration.html.twig' %}{% endembed %}
                     </div><!--div tab-pane perfil-->
                 </div><!--div tab-content-->
             </div><!--div nav-tab-->

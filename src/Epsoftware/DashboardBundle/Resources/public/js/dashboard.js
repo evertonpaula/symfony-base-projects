@@ -56,6 +56,7 @@ var warning = function(data){
         type: 'warning', // alert, success, error, information, warning
         theme: 'bootstrapTheme',
         closeWith: ['click'],
+        timeout: 10000,
          animation: {
             open: {right: 'toggle'}, // jQuery animate function property object
             close: {left: 'toggle'}, // jQuery animate function property object
@@ -72,7 +73,7 @@ var alert = function(data){
         type: 'alert', // alert, success, error, information, warning
         theme: 'bootstrapTheme',
         closeWith: ['click'],
-         animation: {
+        animation: {
             open: {right: 'toggle'}, // jQuery animate function property object
             close: {left: 'toggle'}, // jQuery animate function property object
             easing: 'swing', // easing

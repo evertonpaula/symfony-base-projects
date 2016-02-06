@@ -7,12 +7,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Epsoftware\PerfilBundle\Entity\Profile;
 use Epsoftware\PerfilBundle\Entity\Setting;
+use Epsoftware\AddressBundle\Entity\Address;
 use Epsoftware\PerfilBundle\Form\ProfileFormType;
 use Epsoftware\PerfilBundle\Form\SettingFormType;
 use Epsoftware\UserBundle\Form\UpdateUserFormType;
+use Epsoftware\AddressBundle\Form\AddressFormType;
+use Epsoftware\AddressBundle\Entity\Estado;
+use Epsoftware\AddressBundle\Entity\Cidade;
 
 class AjaxPerfilController extends Controller
 {
@@ -100,4 +103,33 @@ class AjaxPerfilController extends Controller
         return $this->get("epsoftware.response.json")->getErrors($form);
     }
     
+    /**
+     * @Route("/ajax/address/profile", name="address_profile_ajax")
+     * @Method({"POST"})
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function ajaxAddressProfileAction(Request $request)
+    {
+        $profile = $this->getUser()->getProfile();
+        
+        if( $profile === null):
+            return $this->get("epsoftware.response.json")->getWarning("Aviso, você precisa preencher e salvar seu perfil antes de adicionar um endereço.");
+        endif;
+        
+        $address = new Address();
+        
+        $form = $this->createForm(AddressFormType::class, $address);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()):
+            $em = $this->getDoctrine()->getManager();                                               
+            $em->persist($address);
+            $profile->addAddress($address);
+            $em->persist($profile);
+            $em->flush();
+            return $this->get("epsoftware.response.json")->getSuccess("Endereço adicionado com sucesso.");
+        endif;
+
+        return $this->get("epsoftware.response.json")->getErrors($form);
+    }
 }

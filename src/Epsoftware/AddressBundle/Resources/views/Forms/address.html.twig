@@ -1,0 +1,115 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">Endereço</h4>
+</div>
+<div class="modal-body">
+    {% block form_address %}
+    {{ form_start(form_address) }}
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group has-feedback {{form_errors(form_address.categoria) ? 'has-error' }}">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-filter"></i>   
+                        </span>
+                        {{ form_widget(form_address.categoria, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group has-feedback {{form_errors(form_address.cep) ? 'has-error' }}">
+                    <div class="input-group">
+                        {{ form_widget(form_address.cep, { 'attr': {'class': 'form-control cep', 'placeholder' : 'CEP'} }) }}
+                        <span class="input-group-addon">
+                          <i class="fa fa-location-arrow"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-12">
+                <div class="form-group has-feedback {{form_errors(form_address.logradouro) ? 'has-error' }}">
+                    <div class="input-group">
+                        {{ form_widget(form_address.logradouro, { 'attr': {'class': 'form-control', 'placeholder' : 'logradouro'} }) }}
+                        <span class="input-group-addon">
+                          <i class="fa fa-map-o"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group has-feedback {{form_errors(form_address.numero) ? 'has-error' }}">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-map-marker"></i>
+                        </span>
+                        {{ form_widget(form_address.numero, { 'attr': {'class': 'form-control', 'placeholder' : 'número' } }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">    
+            <div class="col-lg-8 col-md-8 col-sm-12">
+                <div class="form-group has-feedback {{form_errors(form_address.complemento) ? 'has-error' }}">
+                    <div class="input-group">
+                        {{ form_widget(form_address.complemento, { 'attr': {'class': 'form-control', 'placeholder' : 'complemento' } }) }}
+                        <span class="input-group-addon">
+                            <i class="fa fa-location-arrow"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group has-feedback {{form_errors(form_address.bairro) ? 'has-error' }}">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-location-arrow"></i>
+                        </span>
+                        {{ form_widget(form_address.bairro, { 'attr': {'class': 'form-control', 'placeholder' : 'bairro' } }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">    
+            <div class="col-lg-4 col-md-4 col-sm-12">          
+                <div class="form-group has-feedback {{form_errors(form_address.pais) ? 'has-error' }}">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-location-arrow"></i>
+                        </span>
+                        {{ form_widget(form_address.pais, { 'attr': {'data-url' : path('get_estados_ajax'), 'data-method': 'POST' } }) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">          
+                <div class="form-group has-feedback {{form_errors(form_address.estado) ? 'has-error' }}">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-location-arrow"></i>
+                        </span>
+                        {{ form_widget(form_address.estado, { 'attr': { 'data-url' : path('get_cidades_ajax'), 'data-method': 'POST' } }) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">          
+                <div class="form-group has-feedback {{form_errors(form_address.cidade) ? 'has-error' }}">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-location-arrow"></i>
+                        </span>
+                        {{ form_widget(form_address.cidade) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">    
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                {{ form_widget(form_address.submit, {'attr': {'class': 'btn btn-primary pull-right'} }) }}
+            </div>
+        </div>
+    {{ form_end(form_address) }}
+    {% endblock %}
+</div>

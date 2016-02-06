@@ -2,6 +2,7 @@
 
 namespace Epsoftware\PerfilBundle\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Epsoftware\PerfilBundle\Entity\Setting;
 use Epsoftware\UserBundle\Entity\User;
@@ -9,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Epsoftware\PerfilBundle\Entity\Profissao;
 use Epsoftware\AddressBundle\Entity\Address;
+use Epsoftware\PerfilBundle\Entity\Genero;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -80,10 +82,13 @@ class Profile
      */
     private $celular;
     
+    
     /**
-     * @var int
+     * @var \Epsoftware\PerfilBundle\Entity\Genero
+     * 
      * @Assert\NotBlank(message="É obrigatório preenchimento do campo gênero", groups={"registration", "profile"})
-     * @ORM\Column(name="genero", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Genero", inversedBy="profile")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $genero;
     
@@ -128,12 +133,27 @@ class Profile
      *      )
      */
     protected $address;
+    
+    /**
+     * @var \DateTime $created
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
+     * @var \DateTime $updated
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+    */
+    private $updated;
 
     public function __construct()   
     {
         $this->address = new ArrayCollection();
     }
-
     
     /**
      * Get id
@@ -292,7 +312,7 @@ class Profile
     /**
      * Get genero
      *
-     * @return int
+     * @return \Epsoftware\PerfilBundle\Entity\Genero
      */
     function getGenero()
     {
@@ -302,11 +322,11 @@ class Profile
     /**
      * Set genero
      *
-     * @param int $genero
+     * @param \Epsoftware\PerfilBundle\Entity\Genero $genero
      *
      * @return Profile
      */
-    function setGenero($genero)
+    function setGenero(Genero $genero = null)
     {
         $this->genero = $genero;
         
@@ -431,8 +451,76 @@ class Profile
         
         return $this;
     }
-
-
     
-   
+    /**
+     * Add Address
+     * @param Address $address
+     */
+    public function addAddress(Address $address)
+    {
+        if (!$this->address->contains($address))
+        {
+            $this->address->add($address);
+        }
+    }
+    
+    /**
+     * Remove Address
+     * 
+     * @param Address $address
+     */
+    public function removeAddress(Address $address)
+    {
+        if ($this->address->contains($address)) {
+            $this->address->removeElement($address);
+        }
+    }
+        
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     *
+     * @return User
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+    
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     *
+     * @return User
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
 }

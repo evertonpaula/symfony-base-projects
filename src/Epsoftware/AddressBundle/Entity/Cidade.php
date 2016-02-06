@@ -11,6 +11,7 @@ use Epsoftware\AddressBundle\Entity\Address;
  *
  * @ORM\Table(name="cidade")
  * @ORM\Entity(repositoryClass="Epsoftware\AddressBundle\Repository\CidadeRepository")
+ * 
  */
 class Cidade
 {

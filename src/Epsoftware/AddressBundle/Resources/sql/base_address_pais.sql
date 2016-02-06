@@ -1,0 +1,1 @@
+INSERT INTO `pais` (`id`, `pais`, `sigla`) VALUES (1, 'Brasil', 'BR');

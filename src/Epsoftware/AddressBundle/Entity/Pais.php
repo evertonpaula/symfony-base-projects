@@ -3,18 +3,16 @@
 namespace Epsoftware\AddressBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Epsoftware\AddressBundle\Entity\Cidade;
+use Epsoftware\AddressBundle\Entity\Estado;
 use Epsoftware\AddressBundle\Entity\Address;
-use Epsoftware\AddressBundle\Entity\Pais;
 
 /**
  * Estado
  *
- * @ORM\Table(name="estado")
- * @ORM\Entity(repositoryClass="Epsoftware\AddressBundle\Repository\EstadoRepository")
- * 
+ * @ORM\Table(name="pais")
+ * @ORM\Entity(repositoryClass="Epsoftware\AddressBundle\Repository\PaisRepository")
  */
-class Estado
+class Pais
 {
     /**
      * @var int
@@ -28,9 +26,9 @@ class Estado
     /**
      * @var string
      *
-     * @ORM\Column(name="estado", type="string", length=255),
-    */
-    private $estado;
+     * @ORM\Column(name="pais", type="string", length=255)
+     */
+    private $pais;
 
     /**
      * @var string
@@ -40,24 +38,16 @@ class Estado
     private $sigla;
     
     /**
-     * @var \Epsoftware\AddressBundle\Entity\Cidade 
+     * @var \Epsoftware\AddressBundle\Entity\Estado 
      * 
-     * @ORM\OneToMany(targetEntity="Cidade", mappedBy="estado")
+     * @ORM\OneToMany(targetEntity="Estado", mappedBy="pais")
      */
-    private $cidade;
-    
-    /**
-     * @var \Epsoftware\AddressBundle\Entity\Pais
-     *
-     * @ORM\ManyToOne(targetEntity="Pais", inversedBy="estado")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $pais;
+    private $estado;
     
      /**
      * @var \Epsoftware\AddressBundle\Entity\Address
      * 
-     * @ORM\OneToMany(targetEntity="Address", mappedBy="estado")
+     * @ORM\OneToMany(targetEntity="Address", mappedBy="pais")
      */
     private $address;
     
@@ -72,27 +62,27 @@ class Estado
     }
 
     /**
-     * Set estado
+     * Set pais
      *
-     * @param string $estado
+     * @param string $pais
      *
-     * @return Estado
+     * @return Pais
      */
-    public function setEstado($estado)
+    public function setPais($pais)
     {
-        $this->estado = $estado;
+        $this->pais = $pais;
 
         return $this;
     }
 
     /**
-     * Get estado
+     * Get pais
      *
      * @return string
      */
-    public function getEstado()
+    public function getPais()
     {
-        return $this->estado;
+        return $this->pais;
     }
 
     /**
@@ -100,7 +90,7 @@ class Estado
      *
      * @param string $sigla
      *
-     * @return Estado
+     * @return Pais
      */
     public function setSigla($sigla)
     {
@@ -120,52 +110,28 @@ class Estado
     }
     
     /**
-     * Get cidade
+     * Get estado
      * 
-     * @return \Epsoftware\AddressBundle\Entity\Cidade
+     * @return \Epsoftware\AddressBundle\Entity\Estado
      */
-    function getCidade()
+    function getEstado()
     {
-        return $this->cidade;
+        return $this->estado;
     }
 
     /**
-     * Set cidade
+     * Set estado
      * 
-     * @param \Epsoftware\AddressBundle\Entity\Cidade $cidade
+     * @param \Epsoftware\AddressBundle\Entity\Estado $estado
      * @return \Epsoftware\AddressBundle\Entity\Estado
      */
-    function setCidade(Cidade $cidade)
+    function setEstado(Estado $estado)
     {
-        $this->cidade = $cidade;
+        $this->estado = $estado;
         
         return $this;
     }
     
-    /**
-     * Get pais
-
-     * @return \Epsoftware\AddressBundle\Entity\Pais
-     */
-    function getPais()
-    {
-        return $this->pais;
-    }
-
-    /**
-     * Set pais
-     * 
-     * @param \Epsoftware\AddressBundle\Entity\Pais $pais
-     * @return \Epsoftware\AddressBundle\Entity\Estado
-     */
-    function setPais(Pais $pais)
-    {
-        $this->pais = $pais;
-        
-        return $this;
-    }
-
-        
     /**
      * Get address
      * 
@@ -180,7 +146,7 @@ class Estado
      * Set address
      * 
      * @param \Epsoftware\AddressBundle\Entity\Address  $address
-     * @return \Epsoftware\AddressBundle\Entity\Estado
+     * @return \Epsoftware\AddressBundle\Entity\Pais
      */
     function setAddress(Address $address)
     {

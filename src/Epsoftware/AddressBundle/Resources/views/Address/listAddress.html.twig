@@ -1,0 +1,17 @@
+<div class="row">
+    {% for add in address %}
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="info-box bg-gray-light listAddress" data-url="{{path("form_edit_address_ajax")}}" data-id="{{add.id}}" data-target="#modal_address_edit" data-toggle="modal" style="cursor:pointer;">
+                <span class="info-box-icon {{add.categoria.bgcolor}}"><i class="fa fa-map-marker"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-number">{{add.categoria.categoria}}<a title="Deletar Endereço" href="#" class="close pull-right">x</a></span>
+                    <span class="info-box-text">{{add.logradouro}}, <small> {{add.numero}}</small></span>
+                    <span class="info-box-text">{{add.complemento}}</span>
+                    <span class="info-box-text">{{add.bairro}}</span>
+                    <span class="info-box-text">{{add.cidade.cidade}} - <small>{{add.estado.sigla}}</small></span>
+                    <span class="info-box-number">CEP <small>{{add.cep}}</small></span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div><!-- /.col -->
+    {% endfor %}
+</div>

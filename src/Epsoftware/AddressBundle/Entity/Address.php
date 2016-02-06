@@ -2,10 +2,13 @@
 
 namespace Epsoftware\AddressBundle\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Epsoftware\AddressBundle\Entity\Cidade;
 use Epsoftware\AddressBundle\Entity\Estado;
+use Epsoftware\AddressBundle\Entity\Pais;
+use Epsoftware\AddressBundle\Entity\Categoria;
 
 /**
  * Address
@@ -23,7 +26,16 @@ class Address
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
+    
+    /**
+     * @var \Epsoftware\AddressBundle\Entity\Categoria
+     * 
+     * @Assert\NotBlank(message="É obrigatório a escolha de uma categoria para o endereço.", groups={"address"})
+     * @ORM\ManyToOne(targetEntity="Categoria", inversedBy="address")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $categoria;
+    
     /**
      * @var string
      * 
@@ -49,7 +61,7 @@ class Address
 
     /**
      * @var string
-     *
+     * 
      * @ORM\Column(name="complemento", type="string", length=255, nullable=true)
      */
     private $complemento;
@@ -64,6 +76,7 @@ class Address
     /**
      * @var \Epsoftware\AddressBundle\Entity\Cidade
      *
+     * @Assert\NotBlank(message="É obrigatório informar a cidade", groups={"address"})
      * @ORM\ManyToOne(targetEntity="Cidade", inversedBy="address")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -71,12 +84,21 @@ class Address
     
     /**
      * @var \Epsoftware\AddressBundle\Entity\Estado
-     *
+     * 
+     * @Assert\NotBlank(message="É obrigatório informar o estado", groups={"address"})
      * @ORM\ManyToOne(targetEntity="Estado", inversedBy="address")
      * @ORM\JoinColumn(nullable=false)
      */
     private $estado;
-        
+    
+    /**
+     * @var \Epsoftware\AddressBundle\Entity\Pais
+     *
+     * @ORM\ManyToOne(targetEntity="Pais", inversedBy="address")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $pais;
+    
     /**
      * @var string
      *
@@ -97,6 +119,22 @@ class Address
      * @ORM\Column(name="googleFormat", type="string", length=255, nullable=true)
      */
     private $googleFormat;
+    
+    /**
+     * @var \DateTime $created
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
+     * @var \DateTime $updated
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+    */
+    private $updated;
         
     /**
      * Get id
@@ -116,7 +154,31 @@ class Address
     {
         return $this->cep;
     }
+    
+    /**
+     * 
+     * Get categoria
+     * 
+     * @return \Epsoftware\AddressBundle\Entity\Categoria
+     */
+    function getCategoria()
+    {
+        return $this->categoria;
+    }
 
+    /**
+     * Set categoria
+     * 
+     * @param \Epsoftware\AddressBundle\Entity\Categoria $categoria
+     * @return \Epsoftware\AddressBundle\Entity\Address
+     */
+    function setCategoria(Categoria $categoria)
+    {
+        $this->categoria = $categoria;
+        
+        return $this;
+    }
+        
     /**
      * Set cep
      * @param type $cep
@@ -273,6 +335,27 @@ class Address
     }
     
     /**
+     * Get pais
+     * @return \Epsoftware\AddressBundle\Entity\Pais
+     */
+    function getPais()
+    {
+        return $this->pais;
+    }
+    
+    /**
+     * Set pais
+     * @param \Epsoftware\AddressBundle\Entity\Pais $pais
+     * @return \Epsoftware\AddressBundle\Entity\Address
+     */
+    function setPais(Pais $pais)
+    {
+        $this->pais = $pais;
+        
+        return $this;
+    }
+    
+    /**
      * Get longitude
      *
      * @return string
@@ -337,7 +420,54 @@ class Address
         
         return $this;
     }
+    
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     *
+     * @return User
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
 
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+    
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     *
+     * @return User
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
 
 }
 

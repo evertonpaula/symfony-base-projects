@@ -2018,13 +2018,14 @@ a:focus {
   background: #fff;
 }
 .info-box-icon {
+  position: absolute;
   border-top-left-radius: 2px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 2px;
   display: block;
   float: left;
-  height: 90px;
+  height: calc(100% - 15px);
   width: 90px;
   text-align: center;
   font-size: 45px;
