@@ -40,7 +40,7 @@ class Address
      * @var string
      * 
      * @Assert\NotBlank(message="É obrigatório informar valor para CEP", groups={"address"})
-     * @Assert\Regex(pattern="/^[0-9]{5}\-[0-9]{3}$/",message="Número do cpf inválido", groups={"address"})
+     * @Assert\Regex(pattern="/^[0-9]{5}\-[0-9]{3}$/",message="O CEP foi digitado incorretamente", groups={"address"})
      * @ORM\Column(name="cep", type="string", length=20)
      */
     private $cep;

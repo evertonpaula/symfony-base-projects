@@ -1994,13 +1994,14 @@ a:focus {
  * -------------------
  */
 .info-box {
-  display: block;
+  display: flex;
   min-height: 90px;
   background: #fff;
   width: 100%;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1);
   border-radius: 2px;
   margin-bottom: 15px;
+  flex-wrap: nowrap;
 }
 .info-box small {
   font-size: 14px;
@@ -2018,26 +2019,27 @@ a:focus {
   background: #fff;
 }
 .info-box-icon {
-  position: absolute;
+  position: relative;
   border-top-left-radius: 2px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 2px;
   display: block;
   float: left;
-  height: calc(100% - 15px);
-  width: 90px;
+  width: 130px;
   text-align: center;
-  font-size: 45px;
+  font-size: 50px;
   line-height: 90px;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0,0,0,0.2);
 }
 .info-box-icon > img {
   max-width: 100%;
 }
 .info-box-content {
   padding: 5px 10px;
-  margin-left: 90px;
+  margin-left: 0;
+  display: block;
+  width: 100%;
 }
 .info-box-number {
   display: block;

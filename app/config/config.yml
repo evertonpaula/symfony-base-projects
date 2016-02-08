@@ -6,7 +6,6 @@ imports:
     - { resource: "@MenuBundle/Resources/config/services.yml" }
     - { resource: "@InstitucionalBundle/Resources/config/services.yml" }
     - { resource: "@DashboardBundle/Resources/config/services.yml" }
-    - { resource: "@SuccessBundle/Resources/config/services.yml" }
     - { resource: "@PerfilBundle/Resources/config/services.yml" }
     - { resource: "@MensageriaBundle/Resources/config/services.yml" }
     - { resource: "@AddressBundle/Resources/config/services.yml" }

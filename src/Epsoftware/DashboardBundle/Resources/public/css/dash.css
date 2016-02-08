@@ -1,0 +1,4 @@
+/*notificação confirmações de exclusões*/
+.noty_buttons{text-align: right;}
+.comfirm-button{ margin-bottom: 10px; margin-right: 8px;/* width: 60px; */ text-align: center;}
+.confirm-hr{margin-top: 5px;margin-bottom: 5px;border: 0;border-top: 1px solid #eee;}

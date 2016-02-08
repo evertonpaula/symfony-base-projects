@@ -18,3 +18,9 @@ services:
             - [setTwigEnvironment, ["@Twig"]]
         tags: 
             -  { name: acme_mailer.transport }
+
+    epsoftware.encrypt:
+        class: Epsoftware\UserBundle\Services\EncryptsBaseCode
+        arguments: ["@Twig"]
+        tags: 
+            - { name: twig.extension }

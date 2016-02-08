@@ -13,11 +13,6 @@ perfil:
     type:     annotation
     prefix:   /
 
-success:
-    resource: "@SuccessBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 dashboard:
     resource: "@DashboardBundle/Controller/"
     type:     annotation

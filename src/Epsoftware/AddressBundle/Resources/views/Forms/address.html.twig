@@ -79,7 +79,7 @@
                         <span class="input-group-addon">
                             <i class="fa fa-location-arrow"></i>
                         </span>
-                        {{ form_widget(form_address.pais, { 'attr': {'data-url' : path('get_estados_ajax'), 'data-method': 'POST' } }) }}
+                        {{ form_widget(form_address.pais, { 'attr': {'data-url' : path('get_states'), 'data-method': 'POST' } }) }}
                     </div>
                 </div>
             </div>
@@ -89,7 +89,7 @@
                         <span class="input-group-addon">
                             <i class="fa fa-location-arrow"></i>
                         </span>
-                        {{ form_widget(form_address.estado, { 'attr': { 'data-url' : path('get_cidades_ajax'), 'data-method': 'POST' } }) }}
+                        {{ form_widget(form_address.estado, { 'attr': { 'data-url' : path('get_cities'), 'data-method': 'POST' } }) }}
                     </div>
                 </div>
             </div>

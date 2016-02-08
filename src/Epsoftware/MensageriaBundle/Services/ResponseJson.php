@@ -20,8 +20,9 @@ class ResponseJson
     private $keyWarning = "warning";
     private $keyInfo = "info";
     private $keyMessage = "message";
+    private $callback = "callback";
     private $response;
-    private $output;
+    private $output = array();
     private $serializer;
     
     public function __construct(Serializer $serializer)
@@ -32,9 +33,15 @@ class ResponseJson
         return $this;
     }
     
-    private function setOutput($key, $message)
+    private function setOutput($key, $message, $keyContent = null)
     {
-        $this->output = array($key => true, $this->keyMessage => $message);
+        $this->output[$key] = true; 
+        if($keyContent):
+            $this->output[$keyContent] = $message;
+        else:
+            $this->output[$this->keyMessage] = $message;
+        endif;
+        
     }
     
     private function setResponseContent()
@@ -42,28 +49,55 @@ class ResponseJson
         return $this->response->setContent(json_encode($this->output));
     }
     
-    public function getErrors(Form $form)
+    public function getFormErrors(Form $form, array $parameters = null)
     {
         $this->setOutput($this->keyError, $this->serializer->serialize($form->getErrors(true, true), 'json'));
+        if($parameters):
+            $this->setOutput($this->callback, $parameters);
+        endif;
         return $this->setResponseContent();
     }
     
-    public function getWarning($message)
+    public function getErrors($message, array $parameters = null)
+    {
+        $this->setOutput($this->keyError, $message);
+        if($parameters):
+            $this->setOutput($this->callback, $parameters);
+        endif;
+        return $this->setResponseContent();
+    }
+    
+    public function getWarning($message, array $parameters = null)
     {
         $this->setOutput($this->keyWarning, $message);
+        if($parameters):
+            $this->setOutput($this->callback, $parameters);
+        endif;
         return $this->setResponseContent();
     }
     
-    public function getInfo($message)
+    public function getInfo($message, array $parameters = null)
     {
         $this->setOutput($this->keyInfo, $message);
+        if($parameters):
+            $this->setOutput($this->callback, $parameters);
+        endif;
         return $this->setResponseContent();
     }
     
-    public function getSuccess($message)
+    public function getSuccess($message, array $parameters = null )
     {
         $this->setOutput($this->keySuccess, $message);
+        if($parameters):
+          $this->setCallbackParametersExtra($parameters);
+        endif;
         return $this->setResponseContent();
     }
 
+    private function setCallbackParametersExtra(array $parameters)
+    {
+        foreach ($parameters as $key => $value):
+            $this->setOutput($this->callback, $value, $key);
+        endforeach;
+    }
 }

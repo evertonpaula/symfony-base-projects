@@ -128,8 +128,8 @@ class Profile
      * 
      * @ORM\ManyToMany(targetEntity="\Epsoftware\AddressBundle\Entity\Address")
      * @ORM\JoinTable(name="profile_address",
-     *      joinColumns={@ORM\JoinColumn(name="profile_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="address_id", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="profile_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="address_id", referencedColumnName="id", onDelete="CASCADE")}
      *      )
      */
     protected $address;

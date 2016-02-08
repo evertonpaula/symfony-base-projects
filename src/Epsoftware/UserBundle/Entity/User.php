@@ -134,14 +134,14 @@ class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
     /**
      * @var \Doctrine\Common\Collections\Collection|UserGroup[]
      *
-     * @ORM\ManyToMany(targetEntity="Permission", inversedBy="user", cascade={"remove"})
+     * @ORM\ManyToMany(targetEntity="Permission", inversedBy="user", cascade={"remove"}, orphanRemoval=true)
      * @ORM\JoinTable(
      *  name="user_permission",
      *  joinColumns={
      *      @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      *  },
      *  inverseJoinColumns={
-     *      @ORM\JoinColumn(name="permission_id", referencedColumnName="id")
+     *      @ORM\JoinColumn(name="permission_id", referencedColumnName="id", onDelete="CASCADE")
      *  }
      * )
      */
@@ -169,15 +169,15 @@ class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
     /**
      * @var \Epsoftware\PerfilBundle\Entity\Profile
      * 
-     * @ORM\OneToOne(targetEntity="\Epsoftware\PerfilBundle\Entity\Profile", inversedBy="user")
-     * @ORM\JoinColumn(name="profile_id", referencedColumnName="id", nullable=true)
+     * @ORM\OneToOne(targetEntity="\Epsoftware\PerfilBundle\Entity\Profile", inversedBy="user", orphanRemoval=true)
+     * @ORM\JoinColumn(name="profile_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $profile;
     
     /**
      * @var \Epsoftware\PerfilBundle\Entity\ImageUser
      * 
-     * @ORM\OneToOne(targetEntity="\Epsoftware\PerfilBundle\Entity\ImageUser", inversedBy="user")
+     * @ORM\OneToOne(targetEntity="\Epsoftware\PerfilBundle\Entity\ImageUser", inversedBy="user", orphanRemoval=true)
      * @ORM\JoinColumn(name="image_user_id", referencedColumnName="id", nullable=true)
     */
     protected $image;

@@ -5,7 +5,13 @@
         {% block meta %}{% endblock %}
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% include "::stylesheets.base.twig" %}
-        {% block stylesheets %} {% endblock %}
+        {% block stylesheets %}
+            {% stylesheets  '@DashboardBundle/Resources/public/css/animate.css'
+                            '@DashboardBundle/Resources/public/css/loader.css'
+                            '@DashboardBundle/Resources/public/css/dash.css' filter='cssrewrite' output='compiled/css/dashboard.css' %}
+                <link rel="stylesheet" href="{{ asset_url }}">
+            {% endstylesheets %}
+        {% endblock %}
         
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>

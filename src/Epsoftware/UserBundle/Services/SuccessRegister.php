@@ -1,6 +1,6 @@
 <?php
 
-namespace Epsoftware\SuccessBundle\Services;
+namespace Epsoftware\UserBundle\Services;
 /**
  * Criando mensagem sucesso do registro
  *

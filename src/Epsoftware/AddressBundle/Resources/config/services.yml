@@ -3,10 +3,12 @@ services:
 #        class: Epsoftware\AddressBundle\Example
 #        arguments: ["@service_id", "plain_value", %parameter%]
     epsoftware.twig.list.address:
-        class: Epsoftware\AddressBundle\Twig\ListAddress
+        class: Epsoftware\AddressBundle\Twig\TwigFunctionsAddress
         arguments: ["@doctrine.orm.entity_manager"]
         calls:
             - [setTwigEnvironment, ["@Twig"]]
+            - [setFormFactory, ["@form.factory"]]
+            - [setRouter, ["@router"]]
         public: false
         tags: 
             - { name: twig.extension }

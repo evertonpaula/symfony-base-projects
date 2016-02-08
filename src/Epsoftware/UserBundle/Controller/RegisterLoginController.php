@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Epsoftware\UserBundle\Services\SuccessRegister;
 use Epsoftware\UserBundle\Entity\User;
 use Epsoftware\UserBundle\Entity\Permission;
 use Epsoftware\UserBundle\Form\RegisterFormType;
@@ -65,6 +66,17 @@ class RegisterLoginController extends Controller
             throw new \Exception($ex);
         }
         
+    }
+    
+    /**
+     * @Route("/register/success", name="success_register")
+     * @Template()
+     * @Method({"GET"})
+     */
+    public function successRegisterAction()
+    {
+        $success = new SuccessRegister();
+        return $success->getTwigParameters();
     }
     
     /**

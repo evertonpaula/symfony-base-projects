@@ -10,21 +10,22 @@
 {% endblock %}
 
 {%block stylesheets %}
+    {{ parent()}}
     {% stylesheets  'public/adminlte/plugins/datepicker/datepicker3.css' filter='cssrewrite' output='compiled/css/perfil.css' %}
         <link rel="stylesheet" href="{{ asset_url }}">
     {% endstylesheets %}
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent()}}
     {% javascripts 'public/adminlte/plugins/datepicker/bootstrap-datepicker.js'
                    'public/adminlte/plugins/input-mask/jquery.inputmask.js'
                    '@PerfilBundle/Resources/public/js/*' output='compiled/js/perfil.js'
     %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
-    {{ parent() }}
 {% endblock %}
-    
+
 {% block body_content %}
     
     <div class="row">
@@ -56,8 +57,7 @@
                     
                     <!--div tab-pane endereco-->
                     <div class="tab-pane" id="endereco">
-                        {% embed '@Address/Template/template.html.twig' %}{% endembed %}
-                        {{ (app.user.profile) ? address(app.user.profile) | raw  }}
+                        {{ (app.user.profile) ? address(app.user.profile) | raw }}
                     </div><!--div tab-pane endereco-->
                     
                     <!--div tab-pane login-->
