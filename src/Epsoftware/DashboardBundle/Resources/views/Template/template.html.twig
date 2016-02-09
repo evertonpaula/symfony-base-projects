@@ -6,7 +6,8 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% include "::stylesheets.base.twig" %}
         {% block stylesheets %}
-            {% stylesheets  '@DashboardBundle/Resources/public/css/animate.css'
+            {% stylesheets  'public/adminlte/plugins/jQueryUI/jquery-ui.min.css'
+                            '@DashboardBundle/Resources/public/css/animate.css'
                             '@DashboardBundle/Resources/public/css/loader.css'
                             '@DashboardBundle/Resources/public/css/dash.css' filter='cssrewrite' output='compiled/css/dashboard.css' %}
                 <link rel="stylesheet" href="{{ asset_url }}">
@@ -48,7 +49,8 @@
             {% include '::javascripts.base.twig' %}
             {% block javascripts %}
                 {% javascripts 
-                    '@DashboardBundle/Resources/public/js/dashboard.js' output='compiled/js/dashboard.js'
+                        '@DashboardBundle/Resources/public/js/dashboard.js'                    
+                        'public/adminlte/plugins/jQueryUI/jquery-ui.min.js' output='compiled/js/dashboard.js'
                 %}
                     <script src="{{ asset_url }}"></script>
                 {% endjavascripts %}

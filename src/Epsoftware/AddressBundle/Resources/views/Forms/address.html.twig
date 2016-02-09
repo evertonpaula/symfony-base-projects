@@ -19,7 +19,7 @@
             <div class="col-lg-4 col-md-4 col-sm-12">
                 <div class="form-group has-feedback {{form_errors(form_address.cep) ? 'has-error' }}">
                     <div class="input-group">
-                        {{ form_widget(form_address.cep, { 'attr': {'class': 'form-control cep', 'placeholder' : 'CEP'} }) }}
+                        {{ form_widget(form_address.cep, { 'attr': {'placeholder' : 'CEP' } }) }}
                         <span class="input-group-addon">
                           <i class="fa fa-location-arrow"></i>
                         </span>
@@ -29,12 +29,14 @@
         </div>
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-12">
-                <div class="form-group has-feedback {{form_errors(form_address.logradouro) ? 'has-error' }}">
-                    <div class="input-group">
-                        {{ form_widget(form_address.logradouro, { 'attr': {'class': 'form-control', 'placeholder' : 'logradouro'} }) }}
-                        <span class="input-group-addon">
-                          <i class="fa fa-map-o"></i>
-                        </span>
+                <div class="ui-widget">    
+                    <div class="form-group has-feedback {{form_errors(form_address.logradouro) ? 'has-error' }}">
+                        <div class="input-group">
+                            {{ form_widget(form_address.logradouro, { 'attr': {'placeholder' : 'logradouro'} }) }}
+                            <span class="input-group-addon">
+                                <i class="fa fa-map-o"></i>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -66,7 +68,7 @@
                         <span class="input-group-addon">
                             <i class="fa fa-location-arrow"></i>
                         </span>
-                        {{ form_widget(form_address.bairro, { 'attr': {'class': 'form-control', 'placeholder' : 'bairro' } }) }}
+                        {{ form_widget(form_address.bairro, { 'attr': {'placeholder' : 'bairro' } }) }}
                     </div>
                 </div>
             </div>

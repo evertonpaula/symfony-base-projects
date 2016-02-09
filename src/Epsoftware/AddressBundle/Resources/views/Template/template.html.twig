@@ -1,5 +1,6 @@
 {% block javascripts %}
-    {% javascripts '@AddressBundle/Resources/public/js/*' output='compiled/js/address.js' %}
+    {% javascripts '@AddressBundle/Resources/public/js/*' 
+                   'https://maps.googleapis.com/maps/api/js?sensor=true' output='compiled/js/address.js' %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
@@ -13,7 +14,7 @@
 </div>
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <button data-target="#modal_address_map" data-toggle="modal" type="button" class="btn btn-danger pull-right">Visualizar mapa</button>
+        <button data-target="#modal_address_map" data-toggle="modal" type="button" class="map btn btn-danger pull-right">Visualizar mapa</button>
         <button data-target="#modal_address_add" data-toggle="modal" type="button" class="btn btn-primary pull-left">Adiconar endereço</button>
     </div>
 </div>
@@ -26,7 +27,7 @@
     </div>
 </div>
     
-<div class="modal fade" data-width="800" id="modal_address_add" tabindex="-1" role="dialog"    >
+<div class="modal fade" id="modal_address_add" tabindex="-1" role="dialog"    >
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             {{ getFormNewAddress(object) |raw }}
@@ -34,7 +35,7 @@
     </div><!-- /modal-dialog -->
 </div><!-- /modal_address_add -->
 
-<div class="modal fade" data-width="800" id="modal_address_edit" tabindex="-1" role="dialog">
+<div class="modal fade" id="modal_address_edit" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             
@@ -42,10 +43,23 @@
     </div><!-- /modal-dialog -->
 </div><!-- /modal_address_add -->
 
-<div class="modal fade" data-width="800" id="modal_address_map" tabindex="-1" role="dialog">
+<div class="modal fade" id="modal_address_map" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Mapa</h4>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="marker-info" value="{{asset("images/system/markers/marker-info.png")}}">
+                <input type="hidden" id="marker-success" value="{{asset("images/system/markers/marker-sucess.png")}}">
+                <section id="text-map"></section>
+                <section id="map">
+                    <article >
+                        <p class="text-center"><span id="status">Por favor aguarde enquanto nós tentamos localizar você...</span></p>
+                    </article>
+                </section>
+            </div>    
         </div><!-- /modal-content -->
     </div><!-- /modal-dialog -->
 </div><!-- /modal_address_add -->

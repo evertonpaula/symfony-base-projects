@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormEvent;
@@ -18,15 +19,18 @@ class AddressFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('cep', TextType::class)
+        $builder->add('cep', TextType::class, array("attr" => array("class"=> "cep form-control")))
                 ->add('categoria', EntityType::class, array("placeholder" => "Categoria", "class" => "AddressBundle:Categoria","choice_label" => "categoria"))
-                ->add('logradouro', TextType::class)
+                ->add('logradouro', TextType::class, array("attr" => array("class"=> "txtLogradouro form-control")))
                 ->add('numero', TextType::class, array("required"=>false))
                 ->add('complemento', TextType::class, array("required"=>false))
-                ->add('bairro', TextType::class, array("required"=>false))
+                ->add('bairro', TextType::class, array("required"=>false, "attr" => array("class"=> "bairro form-control")))
                 ->add('pais', EntityType::class, array("class" => "AddressBundle:Pais","choice_label" => "pais", "attr" => array("class" => "address_form_pais form-control")))
                 ->add('estado', EntityType::class, array("placeholder" => "Estados", "class" => "AddressBundle:Estado", "choice_label" => "estado", "attr" => array("class"=> "address_form_estado form-control")))
                 ->add('cidade', EntityType::class, array("placeholder" => "Cidades", "class" => "AddressBundle:Cidade", "choice_label" => "cidade", "attr" => array("class"=> "address_form_cidade form-control")))
+                ->add('longitude', HiddenType::class, array("attr" => array("class"=> "longitude")))
+                ->add('latitude', HiddenType::class, array("attr" => array("class"=> "latitude")))
+                ->add('googleFormat', HiddenType::class, array("attr" => array("class"=> "googleFormat")))
                 ->add('submit', SubmitType::class,array("label" => "salvar"))
                 ->setMethod("POST")
                 ->getForm();

@@ -1,5 +1,5 @@
 window.onload = function(){
-    
+
     var errorAddress = function(data){
         console.warn('ERRO FATAL: ',data);
     };
@@ -119,4 +119,206 @@ window.onload = function(){
         });
     });
     
+    $(function(){
+       $('body').on('click', ".map", function(){
+           loader($("#map"));
+            var position = [
+                {
+                    latitude: 40.6386333,
+                    longitude: -8.745,
+                    categoria: "Residencial",
+                    address:"Rua Diogo Cão, 125",
+                    cep: "3830-772 Gafanha da Nazaré" // não colocar virgula no último item de cada marcador
+                },
+                {
+                    latitude: 40.59955,
+                    longitude: -8.7498167,
+                    categoria: "Comercial",
+                    address:"Quinta dos Patos, n.º 2",
+                    cep: "3830-453 Gafanha da Encarnação" // não colocar virgula no último item de cada marcador
+                },
+                {
+                    latitude: 40.6247167,
+                    longitude: -8.7129167,
+                    categoria: "Outros",
+                    address: "Rua dos Balneários do Complexo Desportivo",
+                    cep: "3830-225 Gafanha da Nazaré" // não colocar virgula no último item de cada marcador
+                } // não colocar vírgula no último marcador
+            ];
+           map(position);
+       });
+    });
+};
+
+var map = function(parameters){
+
+    'use strict';
+    
+    var map;
+    var directionsDisplay = new google.maps.DirectionsRenderer();// Instanciaremos ele mais tarde, que será o nosso google.maps.DirectionsRenderer
+    var directionsService = new google.maps.DirectionsService();
+    var infoWindow = new google.maps.InfoWindow();
+    var myatlng;
+
+   
+    
+    var myOptions = function(){
+        return {
+            zoom: 15,
+            center: myatlng,
+            mapTypeControl: true,
+            navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+    };
+    
+    
+    var mapcanvas = function(){
+        var mapcanvas = document.createElement('div');
+            mapcanvas.id = 'mapcanvas';
+            mapcanvas.style.height = (window.innerHeight - 120 ) + "px";
+            mapcanvas.style.width = '100%';
+            window.addEventListener('resize', function(){
+                mapcanvas.style.height = (window.innerHeight - 120 ) + "px";
+            });
+        return mapcanvas;
+    };
+    
+    var panel = function(){
+        var panel = document.createElement('div');
+            panel.id = 'panel';
+            panel.style.float = "left";
+        return panel;
+    };
+    
+    var addressAddDirection = function(origem, destiny){
+        
+        directionsDisplay.setMap(map);
+        
+        for(var i = 0; i < parameters.length ; i ++){
+            var request = { // Novo objeto google.maps.DirectionsRequest, contendo:
+                origin: origem, // origem
+                destination: new google.maps.LatLng(destiny.latitude, destiny.longitude),
+                travelMode: google.maps.TravelMode.DRIVING // meio de transporte, nesse caso, de carro
+            };
+            
+            directionsService.route(request, function(result, status){
+                if (status === google.maps.DirectionsStatus.OK) { // Se deu tudo certo
+                   directionsDisplay.setDirections(result); // Renderizamos no mapa o resultado
+                }
+            });
+        }
+        directionsDisplay.setPanel(document.getElementById("panel"));
+    };
+    
+    // Esta função vai percorrer a informação contida na variável markersData
+    // e cria os marcadores através da função createMarker
+    var displayMarkers = function(){
+
+        // esta variável vai definir a área de mapa a abranger e o nível do zoom
+        // de acordo com as posições dos marcadores
+        var bounds = new google.maps.LatLngBounds();
+
+        // Loop que vai percorrer a informação contida em markersData 
+        // para que a função createMarker possa criar os marcadores 
+        for (var i = 0; i < parameters.length; i++){
+
+            var latlng = new google.maps.LatLng(parameters[i].latitude, parameters[i].longitude);
+            var categoria = parameters[i].categoria;
+            var address = parameters[i].address;
+            var codPostal = parameters[i].cep;
+
+            createMarker(latlng, categoria, address, codPostal, false);
+
+            // Os valores de latitude e longitude do marcador são adicionados à
+            // variável bounds
+            bounds.extend(latlng); 
+        }
+        
+        createMarker(myatlng, "Você esta aqui!!!", "", "", true);
+        // Os valores de latitude e longitude do marcador são adicionados à
+        // variável bounds
+        
+        bounds.extend(myatlng);
+            
+        // Depois de criados todos os marcadores,
+        // a API, através da sua função fitBounds, vai redefinir o nível do zoom
+        // e consequentemente a área do mapa abrangida de acordo com    
+        // as posições dos marcadores
+        map.fitBounds(bounds);
+    };
+    
+    // Função que cria os marcadores e define o conteúdo de cada Info Window.
+    var createMarker = function(latlng, categoria, address, codPostal, myaddress){
+        
+        if(!myaddress){
+            var marker = new google.maps.Marker({
+                map: map,
+                position: latlng,
+                title: categoria,
+                icon: '<i sytle="color:#4CAF50" class="fa fa-map-marker"></i>'
+            });
+
+           // Evento que dá instrução à API para estar alerta ao click no marcador.
+            // Define o conteúdo e abre a Info Window.
+            google.maps.event.addListener(marker, 'click', function() {
+
+                // Variável que define a estrutura do HTML a inserir na Info Window.
+                var iwContent = '<div id="iw_container">'+
+                                    '<div class="iw_title">' + categoria + '</div>'+
+                                    '<div class="iw_content">' + address + '<br />' + codPostal + '</div>'+
+                                    '<hr>'+
+                                    '<div><button onclick="addressAddDirection('+myatlng+', '+latlng+')" class="btn btn-sm btn-info pull-right">traçar rota</button>'+
+                                '</div>';
+
+                // O conteúdo da variável iwContent é inserido na Info Window.
+                infoWindow.setContent(iwContent);
+
+                // A Info Window é aberta com um click no marcador.
+                infoWindow.open(map, marker);
+            });
+        }else{
+            var marker = new google.maps.Marker({
+                map: map,
+                position: latlng,
+                title: categoria,
+                icon: '<i sytle="color:#2196F3" class="fa fa-map-marker"></i>'
+            });
+            
+        }
+    };
+    
+    var success = function (position) {
+        
+        myatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        
+        $('#map').html(mapcanvas).fadeIn();
+        $('#text-map').html(panel).fadeIn();
+        
+        map = new google.maps.Map(document.getElementById("mapcanvas"), myOptions);
+        
+        // Evento que fecha a infoWindow com click no mapa.
+        google.maps.event.addListener(map, 'click', function() {
+           infoWindow.close();
+        });
+        
+        displayMarkers();
+    };
+
+    var error = function () {
+        var position = {
+            //Bragança Paulista
+            coords: {
+                latitude: -22.9527754,
+                longitude: -46.5410751
+            }
+        };
+        success(position);
+    };
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+        error("Seu navegador não suporta localização geográfica.");
+    }
 };

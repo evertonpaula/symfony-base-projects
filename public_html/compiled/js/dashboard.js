@@ -1,3 +1,10 @@
+var animateNoty = {
+    open: 'animated bounceInRight', // Animate.css class names
+    close: 'animated bounceOutRight', // Animate.css class names
+    easing: 'swing', // unavailable - no need
+    speed: 500 // unavailable - no need
+};
+
 var loader = function(local){
     var $data = $('<div class="loader"><div class="battery"><div class="liquid"></div></div><h5 class="loader-h5">carregando</h5></div>');
     $(local).html($data);
@@ -11,10 +18,10 @@ var confirm = function(message, callback, parameters){
         theme: 'bootstrapTheme',
         modal: true,
         animation: {
-            open: {right: 'toggle'}, // jQuery animate function property object
-            close: {left: 'toggle'}, // jQuery animate function property object
-            easing: 'swing', // easing
-            speed: 500 // opening & closing animation speed
+            open: 'animated bounceInUp', // Animate.css class names
+            close: 'animated bounceOutDown', // Animate.css class names
+            easing: 'swing', // unavailable - no need
+            speed: 500 // unavailable - no need
         },
         buttons: [
             { addClass: 'comfirm-button btn btn-sm btn-danger', text: 'Cancelar', onClick: function($noty) {
@@ -38,12 +45,7 @@ var success = function (data){
         theme: 'bootstrapTheme',
         timeout: 4000,
         closeWith: ['click'],
-         animation: {
-            open: {right: 'toggle'}, // jQuery animate function property object
-            close: {left: 'toggle'}, // jQuery animate function property object
-            easing: 'swing', // easing
-            speed: 500 // opening & closing animation speed
-        }
+        animation: animateNoty
     });
 };
  
@@ -55,12 +57,7 @@ var error = function(data){
         theme: 'bootstrapTheme',
         closeWith: ['click','backdrop'],
         timeout: 10000,
-         animation: {
-            open: {right: 'toggle'}, // jQuery animate function property object
-            close: {bottow: 'toggle'}, // jQuery animate function property object
-            easing: 'swing', // easing
-            speed: 500 // opening & closing animation speed
-        }
+        animation: animateNoty
     });
 };
  
@@ -72,12 +69,7 @@ var info = function(data){
         theme: 'bootstrapTheme',
         timeout: 10000,
         closeWith: ['click'],
-         animation: {
-            open: {right: 'toggle'}, // jQuery animate function property object
-            close: {left: 'toggle'}, // jQuery animate function property object
-            easing: 'swing', // easing
-            speed: 500 // opening & closing animation speed
-        }
+        animation: animateNoty
     });
  };
  
@@ -89,28 +81,18 @@ var warning = function(data){
         theme: 'bootstrapTheme',
         closeWith: ['click'],
         timeout: 10000,
-         animation: {
-            open: {right: 'toggle'}, // jQuery animate function property object
-            close: {left: 'toggle'}, // jQuery animate function property object
-            easing: 'swing', // easing
-            speed: 500 // opening & closing animation speed
-        }
+        animation: animateNoty
     });
  };
  
 var alert = function(data){
     return noty({
         text: data.message,
-        layout: 'top',
+        layout: 'topCenter',
         type: 'alert', // alert, success, error, information, warning
         theme: 'bootstrapTheme',
         closeWith: ['click'],
-        animation: {
-            open: {right: 'toggle'}, // jQuery animate function property object
-            close: {left: 'toggle'}, // jQuery animate function property object
-            easing: 'swing', // easing
-            speed: 500 // opening & closing animation speed
-        }
+        animation: animateNoty
     });
  };
  
