@@ -1,8 +1,8 @@
 var callbackInsertProfile = function(data){
-    if(data.message){
-        callback(data);
-    }else{
+    if(data.info){
         window.location.reload();
+    }else{
+        callback(data);
     }
 };
 

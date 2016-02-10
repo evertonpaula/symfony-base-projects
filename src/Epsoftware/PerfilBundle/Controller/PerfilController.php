@@ -10,10 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Epsoftware\PerfilBundle\Entity\Setting; 
 use Epsoftware\PerfilBundle\Entity\Profile;
-use Epsoftware\AddressBundle\Entity\Address;
 use Epsoftware\PerfilBundle\Form\SettingFormType;
 use Epsoftware\PerfilBundle\Form\ProfileFormType;
-use Epsoftware\AddressBundle\Form\AddressFormType;
 use Epsoftware\UserBundle\Form\UpdateUserFormType;
 
 
@@ -68,7 +66,7 @@ class PerfilController extends Controller
             $em->flush();
             
             if($firstime):
-                return $this->get("epsoftware.response.json")->getSuccess("Perfil criado com sucesso.");
+                return $this->get("epsoftware.response.json")->getInfo("Perfil criado com sucesso.");
             endif;
                 
             return $this->get("epsoftware.response.json")->getSuccess("Perfil atualizado com sucesso.");
@@ -149,6 +147,25 @@ class PerfilController extends Controller
         endif;
             
         return $this->get("epsoftware.response.json")->getWarning("Antes de cadastrar um endereço  é preciso ter um perfil criado.");
+        
+    }
+    
+    /**
+     * @Route("/admin/profile/address/map", name="profile_address_map")
+     * @Method({"POST"})
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function mapProfileAddressAction(Request $request)
+    {
+        $profile = $this->getUser()->getProfile();
+       
+        if($profile):
+            $request->request->add(array('object' => $profile));
+            $path = $request->attributes->all();
+            return $this->forward("AddressBundle:Address:mapAddress", $path);
+        endif;
+            
+        return $this->get("epsoftware.response.json")->getWarning("Antes de visualizar endereços é preciso ter um perfil criado.");
         
     }
 }

@@ -5,7 +5,7 @@
 {% block pageDescripton 'Informações do usuário' %}
 
 {% block pageRoute %}
-    <li><a href="{{path("user_profile")}}"><i class="fa fa-dashboard"></i> Perfil</a></li>
+    <li><a href="{{path("user_profile")}}"><i class="fa fa-user"></i> Perfil</a></li>
     <li class="active">Inf. do usuário</li>
 {% endblock %}
 
@@ -45,6 +45,11 @@
                     <li>
                         <a href="#login" data-toggle="tab">Login</a>
                     </li>
+                    <li class="pull-right">
+                        <a class="text-muted">
+                            <i class="fa fa-gear"></i>
+                        </a>
+                    </li>
                 </ul><!--ul nav-tabs-->
                 
                 <!--div tab-content-->
@@ -78,6 +83,11 @@
                 <ul class="nav nav-tabs">
                     <li class="active">
                         <a href="#configuracoes" data-toggle="tab">Configurações</a>
+                    </li>
+                    <li class="pull-right">
+                        <a class="text-muted">
+                            <i class="fa fa-gear"></i>
+                        </a>
                     </li>
                 </ul><!--ul nav-tabs-->
                 

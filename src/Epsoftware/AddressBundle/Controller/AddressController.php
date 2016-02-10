@@ -13,6 +13,7 @@ use Epsoftware\AddressBundle\Entity\Cidade;
 use Epsoftware\AddressBundle\Entity\Estado;
 use Epsoftware\AddressBundle\Entity\Address;
 use Epsoftware\AddressBundle\Form\AddressFormType;
+use Epsoftware\AddressBundle\Services\ResponseJsonMap;
 
 class AddressController extends Controller
 {
@@ -74,6 +75,18 @@ class AddressController extends Controller
         endif;
 
         return $this->get("epsoftware.response.json")->getFormErrors($form);
+    }
+    
+    /**
+     * @Route("/admin/address/new", name="new_address" )
+     * @Method({"POST"})
+     * @Security("has_role('ROLE_USER')")
+    */
+    public function mapAddressAction(Request $request)
+    {
+        $object = $request->get("object");
+        $jsonMap = new ResponseJsonMap();
+        return $jsonMap->getJsonMap($object);
     }
     
     /**

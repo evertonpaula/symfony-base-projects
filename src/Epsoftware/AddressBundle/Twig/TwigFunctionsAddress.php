@@ -78,7 +78,13 @@ class TwigFunctionsAddress extends \Twig_Extension
     
     public function getTemplateAddress($object)
     {
-        return $this->twig->render("AddressBundle:Template:template.html.twig", array("object" => $object));
+        $url = null;
+        
+        if($object instanceof Profile):
+            $url = $this->router->generate('profile_address_map');
+        endif;
+        
+        return $this->twig->render("AddressBundle:Template:template.html.twig", array("object" => $object, "url" => $url));
     }
     
     public function getFormNewAddress($object)

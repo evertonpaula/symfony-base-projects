@@ -88,7 +88,7 @@ class Profile
      * 
      * @Assert\NotBlank(message="É obrigatório preenchimento do campo gênero", groups={"registration", "profile"})
      * @ORM\ManyToOne(targetEntity="Genero", inversedBy="profile")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="SET NULL")
      */
     private $genero;
     
@@ -97,7 +97,7 @@ class Profile
      * 
      * @Assert\NotBlank(message="É obrigatório a escolha de uma profissão", groups={"profile"})
      * @ORM\ManyToOne(targetEntity="Profissao", inversedBy="profile")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $profissao;
     
@@ -112,7 +112,7 @@ class Profile
      * @var \Epsoftware\PerfilBundle\Entity\Setting
      * 
      * @ORM\ManyToOne(targetEntity="Setting", inversedBy="profile")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     protected $setting;
     
@@ -126,7 +126,7 @@ class Profile
      *
      * @var \Epsoftware\AddressBundle\Entity\Address
      * 
-     * @ORM\ManyToMany(targetEntity="\Epsoftware\AddressBundle\Entity\Address")
+     * @ORM\ManyToMany(targetEntity="\Epsoftware\AddressBundle\Entity\Address", cascade={"remove"})
      * @ORM\JoinTable(name="profile_address",
      *      joinColumns={@ORM\JoinColumn(name="profile_id", referencedColumnName="id", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="address_id", referencedColumnName="id", onDelete="CASCADE")}

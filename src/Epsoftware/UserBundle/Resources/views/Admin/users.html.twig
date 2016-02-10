@@ -1,0 +1,103 @@
+{% extends "@Dashboard/Dashboard/dashboard.html.twig" %}
+
+{% block title 'Controle Usuários' %}
+{% block pageName 'Controles Usuários' %}
+{% block pageDescripton 'gerenciamento' %}
+
+{% block pageRoute %}
+    <li><a href="{{path("user_admin")}}"><i class="fa fa-user-plus"></i> Controle Usuários</a></li>
+    <li class="active">Gerencimaneto usuários</li>
+{% endblock %}
+
+{%block stylesheets %}
+    {{ parent()}}
+    {% stylesheets  'public/adminlte/plugins/iCheck/all.css'
+                    'public/adminlte/plugins/datatables/dataTables.bootstrap.css'
+                    'public/adminlte/plugins/datatables/jquery.dataTables_themeroller.css' 
+                    'public/adminlte/plugins/datatables/extensions/Responsive/css/dataTables.responsive.css' 
+                    '@UserBundle/Resources/public/css/user.css'filter='cssrewrite' output='compiled/css/user.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent()}}
+    {% javascripts 
+            'public/adminlte/plugins/iCheck/icheck.min.js'
+            'public/adminlte/plugins/datatables/language/pt_br.js'            
+            'public/adminlte/plugins/datatables/jquery.dataTables.js'
+            'public/adminlte/plugins/datatables/dataTables.bootstrap.min.js'
+            'public/adminlte/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js'
+            '@UserBundle/Resources/public/js/users.js' output='compiled/js/user.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% set url_delete = path("user_admin_delete") %}
+{% set url_permissions = path("user_admin_delete") %}
+{% set url_logs = path("user_admin_delete") %}
+{% set url_profile = path("user_admin_get_profile") %}
+
+{% block body_content %}
+   
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
+            
+            <div class="box box-danger">
+                <div class="box-header">
+                    <h3 class="box-title">Tabela de usuários</h3><i class="pull-right fa fa-user-secret"></i>
+                </div>
+                <div class="box-body">
+                    <table id="users" data-order="[2]" class="display responsive nowrap" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>e-mail</th>
+                                <th>Dt Criação</th>
+                                <th>Habilitado</th>
+                                <th>Locked</th>
+                                <th>Conta</th>
+                                <th>Credenciais</th>
+                                <th class="text-center">Ações</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                                {% set id = encrypt(user.id) %}
+                                <tr>
+                                    <td>{{ (user.profile) ? user.profile.nome : "Sem perfil" }} {{ (user.profile) ? user.profile.sobrenome}}</td>
+                                    <td>{{user.email}}</td>
+                                    <td>{{user.created | date('d-m-Y')}}</td>
+                                    <td>{{ (user.isEnable) ? "Habilidatado" : "Desesabilidatado" }}</td>
+                                    <td>{{ (user.isAccountNonLocked) ? "Desbloqueada" : "Bloqueada" }}</td>
+                                    <td>{{ (user.isAccountNonExpired) ? "Ativa" : "Expirada"}}</td> 
+                                    <td>{{ (user.isCredentialNonExpired) ? "Ativa" : "Expiradas"}}</td>
+                                    <td class="text-center">
+                                        <a data-id="{{id}}" data-url="{{url_profile}}" title="Ver perfil do usuário" class="action perfil" href="#"><i  class="fa fa-info-circle"></i></a>
+                                        <a data-id="{{id}}" data-url="{{url_permissions}}" title="Abrir área de permissões" class="action permission" href="#"><i  class="fa fa-lock"></i></a>
+                                        <a data-id="{{id}}" data-url="{{url_logs}}" title="Abrir área de logs" class="action logs" href="#"><i class="fa fa-exchange"></i></a>
+                                        <a data-id="{{id}}" data-url="{{url_delete}}" title="Deletar usuário" class="action delete" href="#"><i class="fa fa-trash"></i></a>
+                                    </td>
+                               </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+                        
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                
+                
+                    
+            </div><!-- /modal-content -->
+        </div><!-- /modal-dialog -->
+    </div><!-- /modal_address_add -->
+    
+    
+{% endblock %}

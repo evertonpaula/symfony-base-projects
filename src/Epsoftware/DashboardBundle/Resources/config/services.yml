@@ -2,3 +2,11 @@ services:
 #    dashboard.example:
 #        class: Epsoftware\DashboardBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
+
+    epsoftware.paginator:
+        class: Epsoftware\DashboardBundle\Services\Paginator
+        calls:
+            - [setTwigEnvironment, ["@Twig"]]
+        public: false
+        tags: 
+            - { name: twig.extension }

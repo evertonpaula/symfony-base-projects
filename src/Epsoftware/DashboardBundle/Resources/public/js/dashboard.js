@@ -106,11 +106,19 @@ var callback = function(data){
     }else if(data.info){
         info(data);
     }else if(data.error){
-        var message = JSON.parse(data.message);
-        for(var i = 0; i < message.length; i++){
-            error(message[i]);
+        if(isString(data.message)){
+            error(data);
+        }else{
+            var message = JSON.parse(data.message);
+            for(var i = 0; i < message.length; i++){
+                error(message[i]);
+            }
         }
     }       
+};
+
+var isString = function(string){
+    return (typeof(string) === "string") ? true : false;
 };
 
 var errorCallback = function(data){

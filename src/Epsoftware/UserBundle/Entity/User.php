@@ -134,7 +134,7 @@ class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
     /**
      * @var \Doctrine\Common\Collections\Collection|UserGroup[]
      *
-     * @ORM\ManyToMany(targetEntity="Permission", inversedBy="user", cascade={"remove"}, orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity="Permission", inversedBy="user")
      * @ORM\JoinTable(
      *  name="user_permission",
      *  joinColumns={

@@ -19,7 +19,7 @@
             <!-- search form -->
             <form action="#" method="get" class="sidebar-form">
                 <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search...">
+                    <input type="text" name="q" class="form-control" placeholder="Pesquisar...">
                         <span class="input-group-btn">
                             <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
                         </span>
@@ -35,6 +35,21 @@
                 <li class="treeview">
                     <a href="{{path("dashboard")}}">
                         <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="pull-right"></i>
+                    </a>
+                </li>
+                
+                 <!-- each menu option -->
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-user-plus"></i> <span>Controle Usuários</span> <i class="pull-right fa fa-angle-left"></i>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="{{path("user_admin")}}" ><i class="pull-left fa fa-user-secret"></i>Manter usuários</a>
+                            </li>
+                            <li>
+                                <a href="{{path("user_admin")}}" ><i class="pull-left fa fa-exchange"></i> Logs</a>
+                            </li>
+                        </ul>
                     </a>
                 </li>
 

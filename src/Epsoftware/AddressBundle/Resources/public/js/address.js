@@ -1,5 +1,7 @@
 window.onload = function(){
-
+    
+    var geocoder = geocoder = new google.maps.Geocoder();
+    
     var errorAddress = function(data){
         console.warn('ERRO FATAL: ',data);
     };
@@ -15,6 +17,18 @@ window.onload = function(){
             var $modal = $("#modal_address_edit").find('.modal-content');
             var $html = $(data);
             $($modal).html($html).fadeIn();
+            var $fieldTxt = $html.find('.txtLogradouro');
+            var $fieldCep = $html.find('.cep');
+            $fieldTxt.autocomplete(    {
+                minLength: 4, 
+                source: function(request, response){
+                    callbackSource(request, response);
+                },
+                select: function (event, ui){
+                    callbackAutocomplete(event, ui, $(this));
+                }
+            });
+            $fieldCep.inputmask({"mask": "99999-999"});
         }
     };
 
@@ -76,6 +90,10 @@ window.onload = function(){
         getListAddress($this.data('url'), $this.data('method'), $this.serialize(), setOptionsAddress, $select);
     };
     
+    var setMap = function(data){
+        window.map(data); 
+    };
+    
     $(function(){
         $('.cep').inputmask({"mask": "99999-999"}); 
     });
@@ -120,8 +138,10 @@ window.onload = function(){
         $("body").on('click', '.deleteAddress', function(){
             var parameters = {url: $(this).data('url'), divToRemove :$(this).closest('div.col-sm-12')};
             var deleteAddress = function(parameters){
-                ajax(parameters.url, "POST", null);
-                $(parameters.divToRemove).remove();
+                $.post(parameters.url, null, function(data){
+                    if(data.success){$(parameters.divToRemove).remove();}
+                    callback(data);
+                });
             };
             confirm("Você realmente deseja excluir este endereço?", deleteAddress, parameters);
         });
@@ -130,92 +150,73 @@ window.onload = function(){
     $(function(){
        $('body').on('click', ".map", function(){
            loader($("#map"));
-            var position = [
-                {
-                    latitude: 40.6386333,
-                    longitude: -8.745,
-                    categoria: "Residencial",
-                    address:"Rua Diogo Cão, 125",
-                    cep: "3830-772 Gafanha da Nazaré" // não colocar virgula no último item de cada marcador
-                },
-                {
-                    latitude: 40.59955,
-                    longitude: -8.7498167,
-                    categoria: "Comercial",
-                    address:"Quinta dos Patos, n.º 2",
-                    cep: "3830-453 Gafanha da Encarnação" // não colocar virgula no último item de cada marcador
-                },
-                {
-                    latitude: 40.6247167,
-                    longitude: -8.7129167,
-                    categoria: "Outros",
-                    address: "Rua dos Balneários do Complexo Desportivo",
-                    cep: "3830-225 Gafanha da Nazaré" // não colocar virgula no último item de cada marcador
-                } // não colocar vírgula no último marcador
-            ];
-           window.map(position);
-       });
+           $.post($(this).data('url'), null, setMap);
+        });
     });
     
-    $(function(){
-        var geocoder = geocoder = new google.maps.Geocoder();
-        $(".txtLogradouro").autocomplete({
-            minLength: 4, 
-            source: function(request, response){
-                geocoder.geocode({ 'address': request.term + ', Brasil', 'region': 'BR' }, function (results, status){
-                    response($.map(results, function (item){
-                        var response = getAddressFromGoogle(item.address_components);
-                        return {
-                            label: item.formatted_address,
-                            value: response.route,
-                            bairro: (response.sublocality) ? response.sublocality :response.sublocality_level_1,
-                            pais: response.country,
-                            estado: response.administrative_area_level_1,
-                            cidade: response.locality,
-                            googleFormat: item.formatted_address,
-                            latitude: item.geometry.location.lat(),
-                            longitude: item.geometry.location.lng(),
-                            cep: (response.postal_code)
-                        };
-                    }));
-                });
-            },
-            select: function (event, ui){
-                var $form = $(this).closest('form');
-                $form.find(".latitude").val(ui.item.latitude);
-                $form.find(".longitude").val(ui.item.longitude);
-                $form.find(".googleFormat").val(ui.item.googleFormat);
-                var cep = ui.item.cep;
-                $form.find(".cep").val( (cep)   ? cep.replace("-", "") : '');
-                $form.find(".bairro").val(ui.item.bairro);
-                ui.item.pais;
-                ui.item.estado;
-                ui.item.cidade;
-            }
+    var callbackAutocomplete = function(event, ui, $field){
+        var $form = $field.closest('form');
+        $form.find(".latitude").val(ui.item.latitude);
+        $form.find(".longitude").val(ui.item.longitude);
+        $form.find(".googleFormat").val(ui.item.googleFormat);
+        var cep = ui.item.cep;
+        $form.find(".cep").val( (cep)   ? cep.replace("-", "") : '');
+        $form.find(".bairro").val(ui.item.bairro);
+        ui.item.pais;
+        ui.item.estado;
+        ui.item.cidade;
+    };
+    
+    var callbackSource = function(request, response){
+        geocoder.geocode({ 'address': request.term + ', Brasil', 'region': 'BR' }, function (results, status){
+            response($.map(results, function (item){
+                var response = getAddressFromGoogle(item.address_components);
+                return {
+                    label: item.formatted_address,
+                    value: response.route,
+                    bairro: (response.sublocality) ? response.sublocality :response.sublocality_level_1,
+                    pais: response.country,
+                    estado: response.administrative_area_level_1,
+                    cidade: response.locality,
+                    googleFormat: item.formatted_address,
+                    latitude: item.geometry.location.lat(),
+                    longitude: item.geometry.location.lng(),
+                    cep: (response.postal_code)
+                };
+            }));
         });
-        
-        var getAddressFromGoogle = function (item){
-            
-            var optionsType = ['street_number', 'route', 'locality', 'sublocality_level_1', 'sublocality', 'administrative_area_level_2', 'administrative_area_level_1', 'country', 'postal_code'];
-            var arrayRet = [];
-            
-            for(var i = 0; i < optionsType.length; i++){
-                for(var b = 0; b < item.length ; b++){
-                    for(var c = 0 ; c < item[b].types.length; c++){
-                        if(item[b].types[c] === optionsType[i]){
-                            if(optionsType[i] === "administrative_area_level_1"){
-                                arrayRet[optionsType[i]] = item[b].long_name;
-                            }else{
-                                arrayRet[optionsType[i]] = item[b].short_name;
-                            }
+    };
+    
+    var getAddressFromGoogle = function (item){
+        var optionsType = ['street_number', 'route', 'locality', 'sublocality_level_1', 'sublocality', 'administrative_area_level_2', 'administrative_area_level_1', 'country', 'postal_code'];
+        var arrayRet = [];
+        for(var i = 0; i < optionsType.length; i++){
+            for(var b = 0; b < item.length ; b++){
+                for(var c = 0 ; c < item[b].types.length; c++){
+                    if(item[b].types[c] === optionsType[i]){
+                        if(optionsType[i] === "administrative_area_level_1"){
+                            arrayRet[optionsType[i]] = item[b].long_name;
+                        }else{
+                            arrayRet[optionsType[i]] = item[b].short_name;
                         }
                     }
                 }
             }
-            return arrayRet;
-        };
-    });
+        }
+        return arrayRet;
+    };
     
+    $(function(){
+        $(".txtLogradouro").autocomplete({
+            minLength: 4, 
+            source: function(request, response){
+                callbackSource(request, response);
+            },
+            select: function (event, ui){
+                callbackAutocomplete(event, ui, $(this));
+            }
+        });
+    });
 };
 
 window.map = function(parameters){
@@ -287,17 +288,17 @@ window.map = function(parameters){
         // Loop que vai percorrer a informação contida em markersData 
         // para que a função createMarker possa criar os marcadores 
         for (var i = 0; i < parameters.length; i++){
-
-            var latlng = new google.maps.LatLng(parameters[i].latitude, parameters[i].longitude);
-            var categoria = parameters[i].categoria;
-            var address = parameters[i].address;
-            var codPostal = parameters[i].cep;
-
-            createMarker(latlng, categoria, address, codPostal, false);
-
-            // Os valores de latitude e longitude do marcador são adicionados à
-            // variável bounds
-            bounds.extend(latlng); 
+            
+            if( parameters[i].latitute && parameters[i].longitude ){
+                var latlng = new google.maps.LatLng(parameters[i].latitute, parameters[i].longitude);
+                var categoria = parameters[i].categoria;
+                var address = parameters[i].address;
+                var codPostal = parameters[i].cep;
+                createMarker(latlng, categoria, address, codPostal, false);
+                // Os valores de latitude e longitude do marcador são adicionados à
+                // variável bounds
+                bounds.extend(latlng); 
+            }
         }
         
         createMarker(myatlng, "Você esta aqui!!!", "", "", true);

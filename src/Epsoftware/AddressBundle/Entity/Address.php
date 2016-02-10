@@ -9,6 +9,7 @@ use Epsoftware\AddressBundle\Entity\Cidade;
 use Epsoftware\AddressBundle\Entity\Estado;
 use Epsoftware\AddressBundle\Entity\Pais;
 use Epsoftware\AddressBundle\Entity\Categoria;
+use Epsoftware\PerfilBundle\Entity\Profile;
 
 /**
  * Address
@@ -98,6 +99,13 @@ class Address
      * @ORM\JoinColumn(nullable=false)
      */
     private $pais;
+    
+    /**
+     * @var \Epsoftware\PerfilBundle\Entity\Profile
+     * 
+     * @ORM\ManyToMany(targetEntity="\Epsoftware\PerfilBundle\Entity\Profile", mappedBy="address")
+     */
+    private $profile;
     
     /**
      * @var string
@@ -355,6 +363,28 @@ class Address
         return $this;
     }
     
+    /**
+     * Get profile
+     * @return \Epsoftware\PerfilBundle\Entity\Profile
+     */
+    function getProfile()
+    {
+        return $this->profile;
+    }
+    
+    /**
+     * Set profile
+     * @param \Epsoftware\PerfilBundle\Entity\Profile $profile
+     * @return \Epsoftware\AddressBundle\Entity\Address
+     */
+    function setProfile(Profile $profile)
+    {
+        $this->profile = $profile;
+        
+        return $this;
+    }
+
+        
     /**
      * Get longitude
      *
