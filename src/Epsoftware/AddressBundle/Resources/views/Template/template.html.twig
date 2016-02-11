@@ -1,7 +1,7 @@
 {% block javascripts %}
     {% javascripts '@AddressBundle/Resources/public/js/*' 
-                   'https://maps.googleapis.com/maps/api/js?sensor=true' output='compiled/js/address.js' %}
-        <script src="{{ asset_url }}"></script>
+                   'https://maps.googleapis.com/maps/api/js?key=AIzaSyCDVqxLq2M-pJ7jTrA6Zf9G2RxcZe8vaPw&libraries=visualization&sensor=true' output='compiled/js/address.js' %}
+        <script async defer src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
 

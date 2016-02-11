@@ -1,1 +1,3 @@
 a.action{margin:10px;}
+.icheck>label{padding-left: 15px!important;}
+.icheck>label span{width: 150px;display: inline-block;}

@@ -1,0 +1,115 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">Gerenciamento de acessos</h4>
+</div>
+<div class="modal-body">
+    
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+            <!--div nav-tab-->
+            <div class="nav-tabs-custom">
+                <!--ul nav-tabs-->
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#conta" data-toggle="tab">Conta e acessos</a>
+                    </li>
+                    <li>
+                        <a href="#permissao" data-toggle="tab">Permissões</a>
+                    </li>
+                    <li class="pull-right">
+                        <a class="text-muted">
+                            <i class="fa fa-gear"></i>
+                        </a>
+                    </li>
+                </ul><!--ul nav-tabs-->
+                
+                <!--div tab-content-->
+                <div class="tab-content">
+                    
+                    <!--div tab-pane perfil-->
+                    <div class="active tab-pane" id="conta">
+                        
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <h4 class="text-blue text-uppercase"> Alterar acesso do usuário</h4>
+                                <p>Lembre-se as alterações neste formulário iram impactar no acesso ao sistema pelo cliente.</p>
+                            </div>
+                        </div>
+                        
+                        {{ form_start(form_user_access)}}
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <div class="checkbox icheck">
+                                        <label class="label label-warning text-uppercase">
+                                            <span>Habilitar Acesso</span>
+                                            {{ form_widget(form_user_access.isEnable)}}
+                                        </label>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <div class="checkbox icheck">
+                                        <label class="label label-warning text-uppercase">
+                                            <span>Conta Ativa</span>
+                                            {{ form_widget(form_user_access.isAccountNonExpired)}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <div class="checkbox icheck">
+                                        <label class="label label-warning text-uppercase">
+                                            <span>Conta Desbloqueada</span>
+                                            {{ form_widget(form_user_access.isAccountNonLocked)}}
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <div class="checkbox icheck">
+                                        <label class="label label-warning text-uppercase">
+                                            <span>Credencias Ativas</span>
+                                            {{ form_widget(form_user_access.isCredentialNonExpired)}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <br class="clear">
+                            <div class="row">    
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <a href title="Enviar nova senha no e-mail do usuário." data-url="{{path("user_refactor_passowrd",{"id":id})}}" class="refactorPassword">Enviar nova senha <i class="fa fa-asterisk"></i></a>
+                                </div>
+                            </div>
+                            <br class="clear">
+                            <div class="row">    
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <p class="text-justify text-bold">Qualquer opção desmarcada impede o acesso do usuário ao sistema, 
+                                    o que diferencia cada opção é a ação pela qual o usuário será impedido de ter acesso.</p>
+                                </div>
+                            </div>
+                            <div class="row">    
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    {{ form_widget(form_user_access.submit, {'attr': {'class': 'btn btn-primary pull-right'} }) }}
+                                </div>
+                            </div>
+                        {{form_end(form_user_access)}}
+                        
+                    </div><!--div tab-pane perfil-->
+                    
+                    <!--div tab-pane endereco-->
+                    <div class="tab-pane" id="permissao">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                
+                            </div><!-- /.col -->
+                        </div>
+                    </div><!--div tab-pane endereco-->
+                    
+                </div><!--div tab-content-->
+            </div><!--div nav-tab-->
+        </div><!--col-->
+    </div>
+</div>

@@ -33,14 +33,7 @@
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
-
-{% set url_delete = path("user_admin_delete") %}
-{% set url_permissions = path("user_admin_delete") %}
-{% set url_logs = path("user_admin_delete") %}
-{% set url_profile = path("user_admin_get_profile") %}
-
 {% block body_content %}
-   
     <div class="row">
         <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
             
@@ -59,30 +52,10 @@
                                 <th>Locked</th>
                                 <th>Conta</th>
                                 <th>Credenciais</th>
-                                <th class="text-center">Ações</th>
-                                
+                                <th>Ações</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {% for user in users %}
-                                {% set id = encrypt(user.id) %}
-                                <tr>
-                                    <td>{{ (user.profile) ? user.profile.nome : "Sem perfil" }} {{ (user.profile) ? user.profile.sobrenome}}</td>
-                                    <td>{{user.email}}</td>
-                                    <td>{{user.created | date('d-m-Y')}}</td>
-                                    <td>{{ (user.isEnable) ? "Habilidatado" : "Desesabilidatado" }}</td>
-                                    <td>{{ (user.isAccountNonLocked) ? "Desbloqueada" : "Bloqueada" }}</td>
-                                    <td>{{ (user.isAccountNonExpired) ? "Ativa" : "Expirada"}}</td> 
-                                    <td>{{ (user.isCredentialNonExpired) ? "Ativa" : "Expiradas"}}</td>
-                                    <td class="text-center">
-                                        <a data-id="{{id}}" data-url="{{url_profile}}" title="Ver perfil do usuário" class="action perfil" href="#"><i  class="fa fa-info-circle"></i></a>
-                                        <a data-id="{{id}}" data-url="{{url_permissions}}" title="Abrir área de permissões" class="action permission" href="#"><i  class="fa fa-lock"></i></a>
-                                        <a data-id="{{id}}" data-url="{{url_logs}}" title="Abrir área de logs" class="action logs" href="#"><i class="fa fa-exchange"></i></a>
-                                        <a data-id="{{id}}" data-url="{{url_delete}}" title="Deletar usuário" class="action delete" href="#"><i class="fa fa-trash"></i></a>
-                                    </td>
-                               </tr>
-                            {% endfor %}
-                        </tbody>
+                        
                     </table>
                 </div>
             </div>
@@ -92,12 +65,7 @@
     <div class="modal fade" id="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                
-                
-                    
             </div><!-- /modal-content -->
         </div><!-- /modal-dialog -->
     </div><!-- /modal_address_add -->
-    
-    
 {% endblock %}

@@ -5,6 +5,7 @@ namespace Epsoftware\UserBundle\Listener;
 use Epsoftware\UserBundle\Entity\User;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 /**
  * Description of UserListener
@@ -36,11 +37,12 @@ class UserListener
      *  Function para setar informações antes do insert
      * @param Doctrine\ORM\Event\LifecycleEventArgs $args
      */
-    public function preUpdate(LifecycleEventArgs $args)
+    public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getEntity();
         if($entity instanceof User):
             $this->handleEventUpdate($entity);
+            $args->setNewValue('password', $entity->getPassword());
         endif;
     }
     
@@ -73,9 +75,11 @@ class UserListener
     private function handleEventUpdate(User $user)
     {
         if($this->encoderFactory):
-            if($user->getPlainPassword() !== null && !empty($user->getPlainPassword())):
+            $plainPassword = $user->getPlainPassword();
+            if(!empty($plainPassword)):
                 $encoder = $this->encoderFactory->getEncoder($user);
-                $user->setPassword($encoder->encodePassword($user->getPlainPassword(), $user->getSalt()));
+                $user->setPassword($encoder->encodePassword($plainPassword, $user->getSalt()));
+                $user->eraseCredentials();
             endif;
         else:
             throw new \Exception('Erro fatal, $this->encoder nao esta setado');

@@ -1,17 +1,9 @@
 {% for add in address %}
-    {% set id = encrypt(add.id) %}
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <div data-address="{{id}}" class="info-box bg-gray-light ">
+        <div class="info-box bg-gray-light ">
             <span class="info-box-icon {{add.categoria.bgcolor}}"><i class="fa fa-map-o"></i></span>
             <div class="info-box-content">
-                <span class="info-box-number">{{add.categoria.categoria}}
-                    <i title="Deletar Endereço" data-url="{{path("delete_address", {"id": id })}}" 
-                       class="deleteAddress pull-right fa fa-trash" style="cursor:pointer;">
-                    </i>
-                    <i title="Editar Endereço" data-url="{{path("edit_address", {"id": id })}}" class="listAddress pull-right fa fa-pencil"
-                       data-target="#modal_address_edit" data-toggle="modal" style="cursor:pointer;">
-                    </i>
-                </span>
+                <span class="info-box-number">{{add.categoria.categoria}}</span>
                 <span class="info-box-text">{{add.logradouro}}, <small> {{add.numero}}</small></span>
                 <span class="info-box-text">{{add.complemento}}</span>
                 <span class="info-box-text">{{add.bairro}}</span>

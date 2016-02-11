@@ -126,7 +126,7 @@ class Profile
      *
      * @var \Epsoftware\AddressBundle\Entity\Address
      * 
-     * @ORM\ManyToMany(targetEntity="\Epsoftware\AddressBundle\Entity\Address", cascade={"remove"})
+     * @ORM\ManyToMany(targetEntity="\Epsoftware\AddressBundle\Entity\Address", inversedBy="profile", cascade={"remove"})
      * @ORM\JoinTable(name="profile_address",
      *      joinColumns={@ORM\JoinColumn(name="profile_id", referencedColumnName="id", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="address_id", referencedColumnName="id", onDelete="CASCADE")}

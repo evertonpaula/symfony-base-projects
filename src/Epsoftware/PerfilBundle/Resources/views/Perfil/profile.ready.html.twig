@@ -3,81 +3,104 @@
     <h4 class="modal-title" id="myModalLabel">Perfil do usuário</h4>
 </div>
 <div class="modal-body">
-    <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <h4 class="text-uppercase text-primary">Dados Pessoais</h4>
-            <hr class="border-top-blue">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <p class="text-bold text-uppercase">Nome completo: <spam>{{profile.nome}} {{profile.sobrenome}}</spam></p>
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <p class="text-bold text-uppercase">Datas Nascimento: <spam>{{profile.dtNascimento | date('d/m/Y')}}</spam></p>
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <p class="text-bold text-uppercase">CPF: <spam>{{profile.cpf}}</spam></p>
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <p class="text-bold text-uppercase">Genero: <spam>{{profile.genero.genero}}</spam></p>
-            </div>
-        </div>
-        
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <h4 class="text-uppercase text-primary">Dados de Acesso</h4>
-            <hr class="border-top-blue">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <p class="text-bold text-uppercase">e-mail: <spam class="text-lowercase">{{profile.user.email}}</spam></p>
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <p class="text-bold text-uppercase">Login: <spam>{{profile.user.username}}</spam></p>
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <p class="text-bold text-uppercase">Última atualização: <spam>{{profile.user.updated | date('d/m/Y H:i:s')}}</spam></p>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <h4 class="text-uppercase text-primary">Dados Profissionais</h4>
-            <hr class="border-top-blue">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <p class="text-bold text-uppercase">Profissão: <spam>{{profile.profissao.profissao}}</spam></p>
-            </div>
-        </div>
-        
-                 
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <h4 class="text-uppercase text-primary">Contato</h4>
-            <hr class="border-top-blue">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <p class="text-bold text-uppercase">telefone: <spam>{{profile.telefone}}</spam></p>
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <p class="text-bold text-uppercase">celular: <spam>{{profile.celular}}</spam></p>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <h4 class="text-uppercase text-primary">Endereços</h4>
-            <hr class="border-top-blue">
-        </div>
-        {% set address =  profile.address %}
-         {% for add in address %}
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <p class="text-bold text-uppercase"><spam>{{add.categoria.categoria}}</spam></p>
-                <hr>
-                <p class="text-bold text-uppercase"><spam>{{add.logradouro}}, {{add.numero}} - {{add.bairro}}</spam></p>
-                <p class="text-bold text-uppercase"><spam>{{add.complemento}}</spam></p>
-                <p class="text-bold text-uppercase"><spam>{{add.cidade.cidade}}</spam></p>
-                <p class="text-bold text-uppercase"><spam>{{add.cidade.estado.estado}}</spam></p>
-                <p class="text-bold text-uppercase"><spam>{{add.cep}}</spam></p>
-                <hr>
-            </div>
-            
-        {% endfor %}
-    </div>
     
-</div>    
-<div class="modal-footer">
-    
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+            <!--div nav-tab-->
+            <div class="nav-tabs-custom">
+                <!--ul nav-tabs-->
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#perfil" data-toggle="tab">Perfil</a>
+                    </li>
+                    <li>
+                        <a href="#endereco" data-toggle="tab">Endereços</a>
+                    </li>
+                    <li class="pull-right">
+                        <a class="text-muted">
+                            <i class="fa fa-gear"></i>
+                        </a>
+                    </li>
+                </ul><!--ul nav-tabs-->
+                
+                <!--div tab-content-->
+                <div class="tab-content">
+                    
+                    <!--div tab-pane perfil-->
+                    <div class="active tab-pane" id="perfil">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="pull-right image">
+                                        <img width="45px" height="45px" src="{{ (profile.user.image) ? asset(profile.user.image.path) : asset('images/users/default.png') }}" alt="User image" class="user-image">
+                                    </div>
+                                <h4 class="text-uppercase text-primary">Dados Pessoais</h4>
+                                <hr class="border-top-blue">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p class="text-bold text-uppercase">Nome completo: <spam>{{profile.nome}} {{profile.sobrenome}}</spam></p>
+                                </div>
+                                
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p class="text-bold text-uppercase">Datas Nascimento: <spam>{{profile.dtNascimento | date('d/m/Y')}}</spam></p>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p class="text-bold text-uppercase">CPF: <spam>{{profile.cpf}}</spam></p>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p class="text-bold text-uppercase">Genero: <spam>{{profile.genero.genero}}</spam></p>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <h4 class="text-uppercase text-primary">Dados de Acesso</h4>
+                                <hr class="border-top-blue">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p class="text-bold text-uppercase">e-mail: <spam class="text-lowercase">{{profile.user.email}}</spam></p>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p class="text-bold text-uppercase">Login: <spam>{{profile.user.username}}</spam></p>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p class="text-bold text-uppercase">Última atualização: <spam>{{profile.user.updated | date('d/m/Y H:i:s')}}</spam></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <h4 class="text-uppercase text-primary">Dados Profissionais</h4>
+                                <hr class="border-top-blue">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p class="text-bold text-uppercase">Profissão: <spam>{{profile.profissao.profissao}}</spam></p>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <h4 class="text-uppercase text-primary">Contato</h4>
+                                <hr class="border-top-blue">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p class="text-bold text-uppercase">telefone: <spam>{{profile.telefone}}</spam></p>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p class="text-bold text-uppercase">celular: <spam>{{profile.celular}}</spam></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--div tab-pane perfil-->
+                    
+                    <!--div tab-pane endereco-->
+                    <div class="tab-pane" id="endereco">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row" style="display: flex; flex-wrap: wrap;">
+                                    {% set address =  profile.address %}
+                                    {% include "@Address/Address/listAddress.ready.html.twig" %}
+                                </div><!-- /.col -->
+                            </div><!-- /.col -->
+                        </div>
+                    </div><!--div tab-pane endereco-->
+                    
+                </div><!--div tab-content-->
+            </div><!--div nav-tab-->
+        </div><!--col-->
+    </div>
 </div>
