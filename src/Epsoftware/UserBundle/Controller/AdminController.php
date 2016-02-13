@@ -141,8 +141,6 @@ class AdminController extends Controller
             $em->flush();
             $this->sendEmail($user, $newPassword);
             return $this->get("epsoftware.response.json")->getSuccess("Nova senha enviada com sucesso {$newPassword}");
-            
-            
         endif;
         return $this->get("epsoftware.response.json")->getErrors("Não foi possível identificar usuário para geração de nova senha.");
     }

@@ -88,7 +88,7 @@ class Profile
      * 
      * @Assert\NotBlank(message="É obrigatório preenchimento do campo gênero", groups={"registration", "profile"})
      * @ORM\ManyToOne(targetEntity="Genero", inversedBy="profile")
-     * @ORM\JoinColumn(nullable=false, onDelete="SET NULL")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $genero;
     

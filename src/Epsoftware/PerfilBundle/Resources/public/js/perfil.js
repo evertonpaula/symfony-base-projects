@@ -1,6 +1,6 @@
 var callbackInsertProfile = function(data){
     if(data.info){
-        window.location.reload();
+        document.location.reload(true);
     }else{
         callback(data);
     }
@@ -35,13 +35,6 @@ $(function(){
 
 $(function(){
     $('form[name=profile_form]').submit(function(e){
-       e.preventDefault();
-       ajax($(this).attr('action'),$(this).attr('method'),$(this).serialize());
-    });
-});
-
-$(function(){
-    $('form[name=update_user_form]').submit(function(e){
        e.preventDefault();
        ajax($(this).attr('action'),$(this).attr('method'),$(this).serialize(), callbackInsertProfile);
     });

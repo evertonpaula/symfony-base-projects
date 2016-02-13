@@ -3,8 +3,8 @@ var dataTable = {
         pt_br: {
             "decimal": "",
             "emptyTable": "Sem dados disponíveis na tabela",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
-            "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
+            "info": "Mostrando _START_ até _END_ de _TOTAL_ entradas",
+            "infoEmpty": "Mostrando 0 até 0 de 0 entradas",
             "infoFiltered": "(filtrada de _MAX_ totais entradas)",
             "infoPostFix": "",
             "thousands": ",",

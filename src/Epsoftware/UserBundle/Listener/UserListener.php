@@ -5,7 +5,6 @@ namespace Epsoftware\UserBundle\Listener;
 use Epsoftware\UserBundle\Entity\User;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 /**
  * Description of UserListener
@@ -37,12 +36,11 @@ class UserListener
      *  Function para setar informações antes do insert
      * @param Doctrine\ORM\Event\LifecycleEventArgs $args
      */
-    public function preUpdate(PreUpdateEventArgs $args)
+    public function preUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
         if($entity instanceof User):
             $this->handleEventUpdate($entity);
-            $args->setNewValue('password', $entity->getPassword());
         endif;
     }
     

@@ -286,10 +286,15 @@ class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
      *
      * @param string $plainPassword
      *
+     * @return User
      */
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
+        
+        $this->setPassword(null);
+        
+        return $this;
     }
 
     /**
