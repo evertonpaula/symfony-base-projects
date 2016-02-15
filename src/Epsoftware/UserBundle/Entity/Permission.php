@@ -37,6 +37,36 @@ class Permission
     */
     private $user;
     
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection|FirstMenu
+     *
+     * @ORM\ManyToMany(targetEntity="\Epsoftware\MenuBundle\Entity\FirstMenu", mappedBy="permission")
+    */
+    private $firstMenu;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection|SecondMenu
+     *
+     * @ORM\ManyToMany(targetEntity="\Epsoftware\MenuBundle\Entity\SecondMenu", mappedBy="permission")
+    */
+    private $secondMenu;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection|ThirdMenu
+     *
+     * @ORM\ManyToMany(targetEntity="\Epsoftware\MenuBundle\Entity\ThirdMenu", mappedBy="permission")
+    */
+    private $thirdMenu;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection|ThirdMenu
+     *
+     * @ORM\ManyToMany(targetEntity="\Epsoftware\MenuBundle\Entity\Forms", mappedBy="permission")
+    */
+    private $forms;
+    
+    
     /**
      * Default constructor, initializes collections
      */
@@ -100,5 +130,135 @@ class Permission
             $user->removePermission($this);
         }
     }
+    
+    /**
+     * @param FirstMenu $firstMenu
+     */
+    public function addFirstMenu(\Epsoftware\MenuBundle\Entity\FirstMenu $firstMenu)
+    {
+        if (!$this->firstMenu->contains($firstMenu)) {
+            $this->firstMenu->add($firstMenu);
+            $firstMenu->addPermission($this);
+        }
+    }
+    
+    /**
+     * @param FirstMenu $firstMenu
+     */
+    public function removeFirstMenu(\Epsoftware\MenuBundle\Entity\FirstMenu $firstMenu)
+    {
+        if ($this->firstMenu->contains($firstMenu)) {
+            $this->firstMenu->removeElement($firstMenu);
+            $firstMenu->removePermission($this);
+        }
+    }
+    
+    /**
+     * @param SecondMenu $secondMenu
+     */
+    public function addSecondMenu(\Epsoftware\MenuBundle\Entity\SecondMenu $secondMenu)
+    {
+        if (!$this->secondMenu->contains($secondMenu)) {
+            $this->secondMenu->add($secondMenu);
+            $secondMenu->addPermission($this);
+        }
+    }
+    
+    /**
+     * @param SecondMenu $secondMenu
+     */
+    public function removeSecondMenu(\Epsoftware\MenuBundle\Entity\SecondMenu $secondMenu)
+    {
+        if ($this->secondMenu->contains($secondMenu)) {
+            $this->secondMenu->removeElement($secondMenu);
+            $secondMenu->removePermission($this);
+        }
+    }
+    
+    /**
+     * @param ThirdMenu $thirdMenu
+     */
+    public function addThirdMenu(\Epsoftware\MenuBundle\Entity\ThirdMenu $thirdMenu)
+    {
+        if (!$this->thirdMenu->contains($thirdMenu)) {
+            $this->thirdMenu->add($thirdMenu);
+            $thirdMenu->addPermission($this);
+        }
+    }
+    
+    /**
+     * @param ThirdMenu $thirdMenu
+     */
+    public function removeThirdMenu(\Epsoftware\MenuBundle\Entity\ThirdMenu $thirdMenu)
+    {
+        if ($this->thirdMenu->contains($thirdMenu)) {
+            $this->thirdMenu->removeElement($thirdMenu);
+            $thirdMenu->removePermission($this);
+        }
+    }
+    
+     /**
+     * @param Forms $forms
+     */
+    public function addForms(\Epsoftware\MenuBundle\Entity\Forms $forms)
+    {
+        if (!$this->forms->contains($forms)) {
+            $this->forms->add($forms);
+            $forms->addPermission($this);
+        }
+    }
+    
+    /**
+     * @param Forms $forms
+     */
+    public function removeForms(\Epsoftware\MenuBundle\Entity\Forms $forms)
+    {
+        if ($this->forms->contains($forms)) {
+            $this->forms->removeElement($forms);
+            $forms->removePermission($this);
+        }
+    }
+    
+    function getFirstMenu()
+    {
+        return $this->firstMenu;
+    }
+
+    function getSecondMenu()
+    {
+        return $this->secondMenu;
+    }
+
+    function getThirdMenu()
+    {
+        return $this->thirdMenu;
+    }
+
+    function getForms()
+    {
+        return $this->forms;
+    }
+
+    function setFirstMenu(\Doctrine\Common\Collections\Collection $firstMenu)
+    {
+        $this->firstMenu = $firstMenu;
+    }
+
+    function setSecondMenu(\Doctrine\Common\Collections\Collection $secondMenu)
+    {
+        $this->secondMenu = $secondMenu;
+    }
+
+    function setThirdMenu(\Doctrine\Common\Collections\Collection $thirdMenu)
+    {
+        $this->thirdMenu = $thirdMenu;
+    }
+
+    function setForms(\Doctrine\Common\Collections\Collection $forms)
+    {
+        $this->forms = $forms;
+    }
+
+
 }
 

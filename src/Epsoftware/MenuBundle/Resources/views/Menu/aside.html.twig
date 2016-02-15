@@ -26,33 +26,73 @@
                 </div>
             </form>
             <!-- /.search form -->
+            {% set rota = app.request.attributes.get('_route') %}
 
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="header">MENU</li>
 
-                <!-- each menu option -->
-                <li class="treeview">
-                    <a href="{{path("dashboard")}}">
-                        <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="pull-right"></i>
-                    </a>
-                </li>
-                
-                 <!-- each menu option -->
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-user-plus"></i> <span>Controle Usuários</span> <i class="pull-right fa fa-angle-left"></i>
-                        <ul class="treeview-menu">
-                            <li>
-                                <a href="{{path("user_admin")}}" ><i class="pull-left fa fa-user-secret"></i>Manter usuários</a>
-                            </li>
-                            <li>
-                                <a href="{{path("user_admin")}}" ><i class="pull-left fa fa-exchange"></i> Logs</a>
-                            </li>
-                        </ul>
-                    </a>
-                </li>
+                {% for menu in menus %}
+                    
+                    <li class="treeview {{ (menu.path == rota ) ? "active " }}" >
+                        
+                        {% if not (menu.path) %}
+                            
+                            <a href="#">
+                                
+                                <i class="{{menu.icon}}"></i><span>{{menu.title}}</span> <i class="pull-right fa fa-angle-left"></i>
 
+                                <ul class="treeview-menu">
+
+                                    {% for subMenu in menu.secondMenu %}
+                                        
+                                        <li class="{{ (subMenu.path == rota ) ? "active" }}">
+                                                
+                                            {% if not (subMenu.path) %}
+
+                                                <a href="#">
+
+                                                    <i class="{{subMenu.icon}}"></i><span>{{subMenu.title}}</span> <i class="pull-right fa fa-angle-left"></i>
+
+                                                    <ul class="treeview-menu">
+
+                                                        {% for thirdMenu in subMenu.thirdMenu %}
+
+                                                            <li class="{{ (thirdMenu.path == rota ) ? "active " }}">
+
+                                                                <a href="{{path(thirdMenu.path)}}">
+
+                                                                    <i class="{{thirdMenu.icon}}"></i><span>{{thirdMenu.title}}</span> <i class="pull-right"></i>
+
+                                                                </a>
+
+                                                            </li>
+
+                                                        {% endfor %}
+
+                                                    </ul>
+                                                </a>
+
+                                            {% else %}
+                                                <a href="{{(subMenu.path)}}">
+                                                    <i class="{{subMenu.icon}}"></i><span>{{subMenu.title}}</span> <i class="pull-right"></i>
+                                                </a>
+                                            {% endif %}
+
+                                        </li>
+
+                                    {% endfor %}
+
+                                </ul>
+                            </a>
+
+                        {% else %}
+                            <a href="{{(menu.path)}}">
+                                <i class="{{menu.icon}}"></i><span>{{menu.title}}</span> <i class="pull-right"></i>
+                            </a>        
+                        {% endif %}
+                    </li>
+                {% endfor%}
             </ul>
 
         </section>

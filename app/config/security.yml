@@ -27,7 +27,7 @@ security:
             form_login:
                 login_path: /login
                 check_path: /login_check
-                default_target_path: /admin/dash
+                default_target_path: /admin/dash/simple
                 username_parameter:  login_form[username]
                 password_parameter:  login_form[plainPassword]
                 csrf_parameter:      login_form[_token]

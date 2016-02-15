@@ -34,27 +34,46 @@ class FirstMenu
     /**
      * @var string
      *
-     * @ORM\Column(name="icon", type="string", length=255)
+     * @ORM\Column(name="icon", type="string", length=255, nullable=true)
      */
     private $icon;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="path", type="string", length=255)
+     * @ORM\Column(name="path", type="string", length=255, nullable=true)
      */
     private $path;
     
     /**
      * @var \Epsoftware\MenuBundle\Entity\SecondMenu 
      * 
-     * @ORM\OneToMany(targetEntity="SecondMenu", mappedBy="firstMenu", cascade={"remove"}) 
+     * @ORM\OneToMany(targetEntity="SecondMenu", mappedBy="firstMenu") 
      */
     protected $secondMenu;
     
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection|FirstMenuGroup[]
+     *
+     * @ORM\ManyToMany(targetEntity="\Epsoftware\UserBundle\Entity\Permission", inversedBy="firstMenu")
+     * @ORM\JoinTable(
+     *  name="first_menu_permission",
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="first_menu_id", referencedColumnName="id", onDelete="CASCADE")
+     *  },
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="permission_id", referencedColumnName="id", onDelete="CASCADE")
+     *  }
+     * )
+     */
+    protected $permission;
+    
+    
     public function __construct()
     {
-        $this->secondMenu = ArrayCollection();
+        $this->secondMenu = new ArrayCollection();
+        $this->permission = new ArrayCollection();
     }
     
     /**
@@ -159,6 +178,53 @@ class FirstMenu
         $this->secondMenu = $secondMenu;
         
         return $this;
+    }
+    
+    /**
+     * @param SecondMenu $secondMenu
+    */
+    public function addSecondMenu(SecondMenu $secondMenu = null)
+    {
+        if($secondMenu !== null){
+            if (!$this->secondMenu->contains($secondMenu)) {
+                $this->secondMenu->add($secondMenu);
+            }
+        }
+
+    }
+    
+    /**
+     * @param SecondMenu $secondMenu
+    */
+    public function removeSecondMenu(SecondMenu $secondMenu)
+    {
+        if ($this->secondMenu->contains($secondMenu)) {
+            $this->secondMenu->removeElement($secondMenu);
+        }
+    }
+    
+    /**
+     * @param Permission $permission
+    */
+    public function addPermission(Permission $permission = null)
+    {
+        if($permission !== null){
+            if (!$this->permission->contains($permission)) {
+                $this->permission->add($permission);
+                $permission->addFirstMenu($this);
+            }
+        }
+    }
+    
+    /**
+     * @param Permission $permission
+    */
+    public function removePermission(Permission $permission)
+    {
+        if ($this->permission->contains($permission)) {
+            $this->permission->removeElement($permission);
+            $permission->removeFirstMenu($this);
+        }
     }
 
 

@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Epsoftware\MenuBundle\Entity\FirstMenu;
 use Epsoftware\MenuBundle\Entity\ThirdMenu;
 use Doctrine\Common\Collections\ArrayCollection;
+use Epsoftware\UserBundle\Entity\Permission;
 
 /**
  * SecondMenu
@@ -34,36 +35,53 @@ class SecondMenu
     /**
      * @var string
      *
-     * @ORM\Column(name="icon", type="string", length=255)
+     * @ORM\Column(name="icon", type="string", length=255, nullable=true)
      */
     private $icon;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="path", type="string", length=255)
+     * @ORM\Column(name="path", type="string", length=255, nullable=true)
      */
     private $path;
     
     /**
      * @var \Epsoftware\MenuBundle\Entity\FirstMenu
      *
-     * @ORM\ManyToOne(targetEntity="FirstMenu", inversedBy="secondMenu")
-     * @ORM\JoinColumn(name="first_menu_id", referencedColumnName="id", onDelete="CASCADE") 
+     * @ORM\ManyToOne(targetEntity="FirstMenu", inversedBy="secondMenu", cascade={"persist"})
+     * @ORM\JoinColumn(name="first_menu_id", referencedColumnName="id", onDelete="CASCADE", nullable=false) 
      */
     protected $firstMenu;
     
      /**
      * @var \Epsoftware\MenuBundle\Entity\ThirdMenu
      * 
-     * @ORM\OneToMany(targetEntity="ThirdMenu", mappedBy="secondMenu", cascade={"remove"}) 
+     * @ORM\OneToMany(targetEntity="ThirdMenu", mappedBy="secondMenu") 
      */
     protected $thirdMenu;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection|SecondMenuGroup[]
+     *
+     * @ORM\ManyToMany(targetEntity="\Epsoftware\UserBundle\Entity\Permission", inversedBy="secondMenu")
+     * @ORM\JoinTable(
+     *  name="second_menu_permission",
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="second_menu_id", referencedColumnName="id", onDelete="CASCADE")
+     *  },
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="permission_id", referencedColumnName="id", onDelete="CASCADE")
+     *  }
+     * )
+     */
+    protected $permission;
 
     
     public function __construct()
     {
-        $this->thirdMenu = ArrayCollection();
+        $this->thirdMenu = new ArrayCollection();
+        $this->permission = new ArrayCollection();
     }
     
     /**
@@ -189,5 +207,53 @@ class SecondMenu
         
         return $this;
     }
+    
+     /**
+     * @param ThirdMenu $thirdMenu
+    */
+    public function addThirdMenu(ThirdMenu $thirdMenu = null)
+    {
+        if($thirdMenu !== null){
+            if (!$this->thirdMenu->contains($thirdMenu)) {
+                $this->thirdMenu->add($thirdMenu);
+            }
+        }
+        
+    }
+    
+    /**
+     * @param ThirdMenu $thirdMenu
+    */
+    public function removeThirdMenu(SecondMenu $thirdMenu)
+    {
+        if ($this->thirdMenu->contains($thirdMenu)) {
+            $this->thirdMenu->removeElement($thirdMenu);
+        }
+    }
+    
+    /**
+     * @param Permission $permission
+    */
+    public function addPermission(Permission $permission = null)
+    {
+        if($permission !== null){
+            if (!$this->permission->contains($permission)) {
+                $this->permission->add($permission);
+                $permission->addSecondMenu($this);
+            }
+        }
+    }
+    
+    /**
+     * @param Permission $permission
+    */
+    public function removePermission(Permission $permission)
+    {
+        if ($this->permission->contains($permission)) {
+            $this->permission->removeElement($permission);
+            $permission->removeSecondMenu($this);
+        }
+    }
+
 }
 

@@ -4,6 +4,8 @@ namespace Epsoftware\MenuBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Epsoftware\MenuBundle\Entity\SecondMenu;
+use Doctrine\Common\Collections\ArrayCollection;
+use Epsoftware\UserBundle\Entity\Permission;
 
 /**
  * ThirdMenu
@@ -32,7 +34,7 @@ class ThirdMenu
     /**
      * @var string
      *
-     * @ORM\Column(name="icon", type="string", length=255)
+     * @ORM\Column(name="icon", type="string", length=255, nullable=true)
      */
     private $icon;
 
@@ -47,12 +49,32 @@ class ThirdMenu
     /**
      * @var \Epsoftware\MenuBundle\Entity\SecondMenu
      * 
-     * @ORM\ManyToOne(targetEntity="SecondMenu", inversedBy="thirdMenu")
-     * @ORM\JoinColumn(name="second_menu_id", referencedColumnName="id", onDelete="CASCADE") 
+     * @ORM\ManyToOne(targetEntity="SecondMenu", inversedBy="thirdMenu", cascade={"persist"})
+     * @ORM\JoinColumn(name="second_menu_id", referencedColumnName="id", onDelete="CASCADE", nullable=false) 
      */
     protected $secondMenu;
 
-
+    /**
+     * @var \Doctrine\Common\Collections\Collection|ThirdMenuGroup[]
+     *
+     * @ORM\ManyToMany(targetEntity="\Epsoftware\UserBundle\Entity\Permission", inversedBy="thirdMenu")
+     * @ORM\JoinTable(
+     *  name="third_menu_permission",
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="third_menu_id", referencedColumnName="id", onDelete="CASCADE")
+     *  },
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="permission_id", referencedColumnName="id", onDelete="CASCADE")
+     *  }
+     * )
+     */
+    protected $permission;
+    
+    public function __construct()
+    {
+        $this->permission = new ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -156,6 +178,27 @@ class ThirdMenu
         return $this;
     }
 
+    /**
+     * @param Permission $permission
+    */
+    public function addPermission(Permission $permission)
+    {
+        if (!$this->permission->contains($permission)) {
+            $this->permission->add($permission);
+            $permission->addThirdMenu($this);
+        }
+    }
+    
+    /**
+     * @param Permission $permission
+    */
+    public function removePermission(Permission $permission)
+    {
+        if ($this->permission->contains($permission)) {
+            $this->permission->removeElement($permission);
+            $permission->removeThirdMenu($this);
+        }
+    }
 
 }
 

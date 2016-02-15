@@ -4,6 +4,7 @@ namespace Epsoftware\MenuBundle\Twig;
 
 use Doctrine\ORM\EntityManager;
 use Twig_Environment;
+use Epsoftware\MenuBundle\Entity\FirstMenu;
 
 
 /**
@@ -53,7 +54,8 @@ class ConstructMenu extends \Twig_Extension
     public function getMenuAside()
     {
         if($this->twig):
-            return $this->twig->render("MenuBundle:Menu:aside.html.twig", array("name" => "everton"));
+            $menu = $this->em->getRepository(FirstMenu::class)->findAll();
+            return $this->twig->render("MenuBundle:Menu:aside.html.twig", array("menus"=> $menu));
         endif;
         
         throw new \Exception('Erro ao tentar carregar o menu principal, renderizador $this->twig não está setado');
