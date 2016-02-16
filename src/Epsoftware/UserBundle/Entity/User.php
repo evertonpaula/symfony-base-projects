@@ -507,6 +507,27 @@ class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
     }
     
     /**
+     * Get permission
+     * @return Collection
+     */
+    function getPermission()
+    {
+        return $this->permission;
+    }
+
+    /**
+     * Set permission
+     * @param \Doctrine\Common\Collections\Collection $permission
+     * @return \Epsoftware\UserBundle\Entity\User
+     */
+    function setPermission(Collection $permission)
+    {
+        $this->permission = $permission;
+        
+        return $this;
+    }
+   
+    /**
      * @param Permission $permission
      */
     public function addPermission(Permission $permission)

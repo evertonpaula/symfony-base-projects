@@ -34,6 +34,14 @@ class ThirdMenu
     /**
      * @var string
      *
+     * @ORM\Column(name="descricao", type="string", length=255)
+     */
+    private $descricao;
+    
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="icon", type="string", length=255, nullable=true)
      */
     private $icon;
@@ -108,7 +116,30 @@ class ThirdMenu
     {
         return $this->title;
     }
+    
+    /**
+     * Get descricao
+     * 
+     * @return string descricao
+    */
+    function getDescricao()
+    {
+        return $this->descricao;
+    }
 
+    /**
+     * Set descricao
+     * 
+     * @param string $descricao
+     * @return \Epsoftware\MenuBundle\Entity\ThirdMenu
+     */
+    function setDescricao($descricao)
+    {
+        $this->descricao = $descricao;
+        
+        return $this;
+    }
+    
     /**
      * Set icon
      *
@@ -177,7 +208,29 @@ class ThirdMenu
         
         return $this;
     }
-
+    
+    /**
+     * Get permission
+     * @return \Doctrine\Common\Collections\Collection 
+    */
+    function getPermission()
+    {
+        return $this->permission;
+    }
+    
+    /**
+     * Set permission
+     * @param \Doctrine\Common\Collections\Collection $permission
+     * @return ThirdMenu
+    */
+    function setPermission(Collection $permission)
+    {
+        $this->permission = $permission;
+        
+        return $this;
+    }
+    
+    
     /**
      * @param Permission $permission
     */

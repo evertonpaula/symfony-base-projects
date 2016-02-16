@@ -1,0 +1,64 @@
+<div class="modal fade" id="modalListarMenus" tabindex="1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="false">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Tabela com listagem de todos os tipos de acessos e regras</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <table id="list-menus-table" class="display responsive nowrap" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Menu</th>
+                                    <th>Descrição</th>
+                                    <th>Regras|Permissões</th>
+                                    <th>Nível</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for first in menus %}
+                                    <tr>
+                                        <td>{{ first.title }}</td>
+                                        <td>{{ first.descricao }}</td>
+                                        <td>
+                                            {% for permission in first.permission %}
+                                                | {{ permission.role }} |
+                                            {% endfor %}
+                                        </td>
+                                        <td>1º</td>
+                                    </tr>
+                                        {% for second in first.secondMenu %}
+                                            <tr>
+                                                <td>{{ second.title }}</td>
+                                                <td>{{ second.descricao }}</td>
+                                                <td>
+                                                    {% for permission in second.permission %}
+                                                        | {{ permission.role }} |
+                                                    {% endfor %}
+                                                </td>
+                                                <td>2º</td>
+                                            </tr>
+                                                {% for third in second.thirdMenu %}
+                                                    <tr>
+                                                        <td>{{ third.title }}</td>
+                                                        <td>{{ third.descricao }}</td>
+                                                        <td>
+                                                            {% for permission in third.permission %}
+                                                                | {{ permission.role }} |
+                                                            {% endfor %}
+                                                        </td>
+                                                        <td>3º</td>
+                                                    </tr>
+                                                {% endfor %}
+                                        {% endfor %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /modal-content -->
+    </div><!-- /modal-dialog -->
+</div><!-- /modal_address_add -->

@@ -31,7 +31,15 @@ class SecondMenu
      * @ORM\Column(name="title", type="string", length=50)
      */
     private $title;
-
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descricao", type="string", length=255)
+     */
+    private $descricao;
+    
+    
     /**
      * @var string
      *
@@ -118,6 +126,28 @@ class SecondMenu
         return $this->title;
     }
 
+     /**
+     * Get descricao
+     * @return string descricao
+     */
+    function getDescricao()
+    {
+        return $this->descricao;
+    }
+
+    /**
+     * Set descricao
+     * 
+     * @param string $descricao
+     * @return \Epsoftware\MenuBundle\Entity\SecondMenu
+     */
+    function setDescricao($descricao)
+    {
+        $this->descricao = $descricao;
+        
+        return $this;
+    }
+    
     /**
      * Set icon
      *
@@ -208,7 +238,28 @@ class SecondMenu
         return $this;
     }
     
-     /**
+    /**
+     * Get permission
+     * @return \Doctrine\Common\Collections\Collection 
+    */
+    function getPermission()
+    {
+        return $this->permission;
+    }
+    
+    /**
+     * Set permission
+     * @param \Doctrine\Common\Collections\Collection $permission
+     * @return SecondMenu
+     */
+    function setPermission(Collection $permission)
+    {
+        $this->permission = $permission;
+        
+        return $this;
+    }
+    
+    /**
      * @param ThirdMenu $thirdMenu
     */
     public function addThirdMenu(ThirdMenu $thirdMenu = null)

@@ -6,5 +6,4 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class MenuController extends Controller
 {
-    
 }

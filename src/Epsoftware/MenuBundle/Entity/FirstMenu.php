@@ -30,7 +30,14 @@ class FirstMenu
      * @ORM\Column(name="title", type="string", length=50)
      */
     private $title;
-
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descricao", type="string", length=255)
+     */
+    private $descricao;
+    
     /**
      * @var string
      *
@@ -111,6 +118,28 @@ class FirstMenu
     }
 
     /**
+     * Get descricao
+     * @return string descricao
+     */
+    function getDescricao()
+    {
+        return $this->descricao;
+    }
+
+    /**
+     * Set descricao
+     * 
+     * @param string $descricao
+     * @return \Epsoftware\MenuBundle\Entity\FirstMenu
+     */
+    function setDescricao($descricao)
+    {
+        $this->descricao = $descricao;
+        
+        return $this;
+    }
+    
+    /**
      * Set icon
      *
      * @param string $icon
@@ -180,6 +209,28 @@ class FirstMenu
         return $this;
     }
     
+    /**
+     * Get permission
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    function getPermission()
+    {
+        return $this->permission;
+    }
+    
+    /**
+     * Set permission
+     * @param \Doctrine\Common\Collections\Collection $permission
+     * @return FirstMenu
+     */
+    function setPermission(Collection $permission)
+    {
+        $this->permission = $permission;
+        
+        return $this;
+    }
+
+        
     /**
      * @param SecondMenu $secondMenu
     */

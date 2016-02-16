@@ -18,6 +18,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $userAdmin->setPlainPassword("Tom123");
         
         $userAdmin->addPermission($this->getReference("permission-ROLE_SUPER_ADMIN"));
+        $userAdmin->addPermission($this->getReference("permission-ROLE_ADMIN"));
+        $userAdmin->addPermission($this->getReference("permission-ROLE_USER"));
         
         $userAdmin->setAgree(true);
         $userAdmin->setIsEnable(true);

@@ -29,6 +29,21 @@ var callbackAccess = function(data){
                 labelHover: true
             });
         });
+        var user_permissions_form = $('form[name=user_permissions_form]');
+        user_permissions_form.find(".icheck-permission").each(function(){
+            $(this).iCheck({
+                checkboxClass: 'icheckbox_square-red',
+                radioClass: 'iradio_square-red',
+                increaseArea: '20%', // optional
+                labelHover: true
+            });
+        });
+        var modal_body = $('.modal-body');
+        var table_list_menus = modal_body.find("#list-menus-table");
+        table_list_menus.DataTable({
+            language: dataTable.laguage.pt_br,
+            responsive: true
+        });
     }
 };
 
@@ -52,6 +67,7 @@ $(document).ready(function(){
             { data: 'action' }
         ]
     });
+        
     //new $.fn.dataTable.Responsive(table);
     
     
@@ -59,6 +75,13 @@ $(document).ready(function(){
        $('body').on('submit', 'form[name=admin_user_access]', function(e){
            e.preventDefault();
            ajax($(this).attr('action'), $(this).attr('method'), $(this).serialize(),callback);
+       });
+    });
+    
+    $(function(){
+       $('body').on('submit', 'form[name=user_permissions_form]', function(e){
+           e.preventDefault();
+           ajax($(this).attr('action'), $(this).attr('method'), $(this).serialize(), callback);
        });
     });
     
@@ -93,7 +116,7 @@ $(document).ready(function(){
         });
     });
     
-     $(function(){
+    $(function(){
         $("body").on('click', '.delete', function(e){
             e.preventDefault();
             var parameters = {url: $(this).data("url"), divToRemove : $(this).closest("tr")};

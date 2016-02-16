@@ -12,6 +12,7 @@ use Epsoftware\UserBundle\Services\EncryptsBaseCode;
 use Epsoftware\UserBundle\Entity\User;
 use Epsoftware\UserBundle\Ajax\UserDataTable;
 use Epsoftware\UserBundle\Form\AdminUserAccess;
+use Epsoftware\UserBundle\Form\UserPermissionsFormType;
 
 
 class AdminController extends Controller
@@ -103,6 +104,7 @@ class AdminController extends Controller
         if($myId != $idDescrypt):
             $user = $this->getDoctrine()->getRepository(User::class)->find($idDescrypt);
             $form = $this->createForm(AdminUserAccess::class, $user, array('action'=> $this->generateUrl("user_admin_edit_access_user",array("id"=>$id))));
+            $formPermission = $this->createForm(UserPermissionsFormType::class, $user, array('action'=> $this->generateUrl("user_admin_update_permission_user",array("id"=>$id))));
             $form->handleRequest($request);
             if($form->isSubmitted()):
                 if($form->isValid()):
@@ -114,10 +116,31 @@ class AdminController extends Controller
                     return $this->get("epsoftware.response.json")->getFormErrors($form);
                 endif;
             else:
-                return array("form_user_access" => $form->createView(), "id" => $id);
+                return array("form_user_access" => $form->createView(), "id" => $id, "form_permission" => $formPermission->createView());
             endif;
         endif;
         return $this->get("epsoftware.response.json")->getWarning("Você não pode alterar os próprios dados de acesso");
+    }
+    
+    /**
+     * @Route("/admin/dash/user/permission/update/{id}", name="user_admin_update_permission_user")
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
+     * @Method({"GET","POST"})
+    */
+    public function updatePermissionUser($id, Request $request)
+    {
+        $descrypt = new EncryptsBaseCode();
+        $user = $this->getDoctrine()->getRepository(User::class)->find($descrypt->descrypt($id));
+        $form = $this->createForm(UserPermissionsFormType::class, $user);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()):
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            return $this->get("epsoftware.response.json")->getSuccess("Dados de Acesso alterados com sucesso.");
+        endif;
+        
+        return $this->get("epsoftware.response.json")->getFormErrors($form);
     }
     
     /**

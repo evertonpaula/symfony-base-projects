@@ -14,24 +14,27 @@ class LoadMenusData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $manager->persist($this->createFirstMenu("Dashboard", "fa fa-dashboard", "dashboard", $this->getReference("permission-ROLE_USER")));
-        $manager->persist($this->createFirstMenu("Dashboard", "fa fa-dashboard", "dashboard_admin", $this->getReference("permission-ROLE_ADMIN")));
+        $manager->persist($this->createFirstMenu("Dashboard", "Área de trabalho" , "fa fa-dashboard", "dashboard", $this->getReference("permission-ROLE_USER")));
         
-        $controleUser = $this->createFirstMenu("Controle Usuário", "fa fa-user-plus", null, false); 
+        $controleUser = $this->createFirstMenu("Controle Usuário", "Controle total para gerenciamento de usuários do sistema",
+                                                "fa fa-user-plus", null, $this->getReference("permission-ROLE_SUPER_ADMIN")); 
         
-        $manter_user =  $this->createSecondMenu("Manter usuários", "pull-left", "user_admin", $controleUser, $this->getReference("permission-ROLE_SUPER_ADMIN"));
+        $manter_user =  $this->createSecondMenu("Manter usuários", "Controle total para gerenciamento de usuários do sistema",
+                                                "pull-left", "user_admin", $controleUser, $this->getReference("permission-ROLE_SUPER_ADMIN"));
         $manager->persist($manter_user);
         
-        $logs = $this->createSecondMenu("Logs", "pull-left", "user_admin", $controleUser, $this->getReference("permission-ROLE_SUPER_ADMIN"));
+        $logs = $this->createSecondMenu("Logs", "Visualizar todos os todos os logs do sistema, o que cada usuário esta fazendo.",
+                                            "pull-left", "user_admin", $controleUser, $this->getReference("permission-ROLE_SUPER_ADMIN"));
         $manager->persist($logs);
         
         $manager->flush();
     }
     
-    public function createFirstMenu($title, $icon, $path, $permission = false)
+    public function createFirstMenu($title, $descricao, $icon, $path, $permission = false)
     {
         $menu = new FirstMenu();
         $menu->setTitle($title)
+             ->setDescricao($descricao)
              ->setIcon($icon)
              ->setPath($path);
         if($permission !== false):
@@ -41,10 +44,11 @@ class LoadMenusData extends AbstractFixture implements OrderedFixtureInterface
     }
     
     
-    public function createSecondMenu($title, $icon, $path, FirstMenu $father = null, $permission = false)
+    public function createSecondMenu($title, $descricao, $icon, $path, FirstMenu $father = null, $permission = false)
     {
         $menu = new SecondMenu();
         $menu->setTitle($title)
+             ->setDescricao($descricao)
              ->setIcon($icon)
              ->setPath($path);
         if($permission !== false):
@@ -59,10 +63,11 @@ class LoadMenusData extends AbstractFixture implements OrderedFixtureInterface
         return $menu;
     }
     
-    public function createThirdMenu($title, $icon, $path, SecondMenu $father = null, $permission = false)
+    public function createThirdMenu($title, $descricao, $icon, $path, SecondMenu $father = null, $permission = false)
     {
         $menu = new ThirdMenu();
         $menu->setTitle($title)
+             ->setDescricao($descricao)
              ->setIcon($icon)
              ->setPath($path);
         if($permission !== false):

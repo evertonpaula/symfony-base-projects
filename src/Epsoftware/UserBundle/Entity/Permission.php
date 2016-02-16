@@ -60,14 +60,6 @@ class Permission
     private $thirdMenu;
     
     /**
-     * @var \Doctrine\Common\Collections\Collection|ThirdMenu
-     *
-     * @ORM\ManyToMany(targetEntity="\Epsoftware\MenuBundle\Entity\Forms", mappedBy="permission")
-    */
-    private $forms;
-    
-    
-    /**
      * Default constructor, initializes collections
      */
     public function __construct()
@@ -197,28 +189,6 @@ class Permission
         }
     }
     
-     /**
-     * @param Forms $forms
-     */
-    public function addForms(\Epsoftware\MenuBundle\Entity\Forms $forms)
-    {
-        if (!$this->forms->contains($forms)) {
-            $this->forms->add($forms);
-            $forms->addPermission($this);
-        }
-    }
-    
-    /**
-     * @param Forms $forms
-     */
-    public function removeForms(\Epsoftware\MenuBundle\Entity\Forms $forms)
-    {
-        if ($this->forms->contains($forms)) {
-            $this->forms->removeElement($forms);
-            $forms->removePermission($this);
-        }
-    }
-    
     function getFirstMenu()
     {
         return $this->firstMenu;
@@ -248,17 +218,4 @@ class Permission
     {
         $this->secondMenu = $secondMenu;
     }
-
-    function setThirdMenu(\Doctrine\Common\Collections\Collection $thirdMenu)
-    {
-        $this->thirdMenu = $thirdMenu;
-    }
-
-    function setForms(\Doctrine\Common\Collections\Collection $forms)
-    {
-        $this->forms = $forms;
-    }
-
-
 }
-

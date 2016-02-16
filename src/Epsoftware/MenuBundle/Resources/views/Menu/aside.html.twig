@@ -27,6 +27,7 @@
             </form>
             <!-- /.search form -->
             {% set rota = app.request.attributes.get('_route') %}
+            {% set permission = app.user.permission %}
 
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
@@ -38,58 +39,71 @@
                         
                         {% if not (menu.path) %}
                             
-                            <a href="#">
-                                
-                                <i class="{{menu.icon}}"></i><span>{{menu.title}}</span> <i class="pull-right fa fa-angle-left"></i>
+                            {% if permission(permission, menu.permission) %}
+                            
+                                <a href="#">
 
-                                <ul class="treeview-menu">
+                                    <i class="{{menu.icon}}"></i><span>{{menu.title}}</span> <i class="pull-right fa fa-angle-left"></i>
 
-                                    {% for subMenu in menu.secondMenu %}
-                                        
-                                        <li class="{{ (subMenu.path == rota ) ? "active" }}">
-                                                
-                                            {% if not (subMenu.path) %}
+                                    <ul class="treeview-menu">
 
-                                                <a href="#">
+                                        {% for subMenu in menu.secondMenu %}
 
-                                                    <i class="{{subMenu.icon}}"></i><span>{{subMenu.title}}</span> <i class="pull-right fa fa-angle-left"></i>
+                                            <li class="{{ (subMenu.path == rota ) ? "active" }}">
 
-                                                    <ul class="treeview-menu">
+                                                {% if not (subMenu.path) %}
+                                                    
+                                                    {% if permission(permission, subMenu.permission) %}
+                                                        
+                                                        <a href="#">
 
-                                                        {% for thirdMenu in subMenu.thirdMenu %}
+                                                            <i class="{{subMenu.icon}}"></i><span>{{subMenu.title}}</span> <i class="pull-right fa fa-angle-left"></i>
 
-                                                            <li class="{{ (thirdMenu.path == rota ) ? "active " }}">
+                                                            <ul class="treeview-menu">
 
-                                                                <a href="{{path(thirdMenu.path)}}">
+                                                                {% for thirdMenu in subMenu.thirdMenu %}
 
-                                                                    <i class="{{thirdMenu.icon}}"></i><span>{{thirdMenu.title}}</span> <i class="pull-right"></i>
+                                                                     {% if permission(permission, thirdMenu.permission) %}
 
-                                                                </a>
+                                                                        <li class="{{ (thirdMenu.path == rota ) ? "active " }}">
 
-                                                            </li>
+                                                                            <a href="{{path(thirdMenu.path)}}">
 
-                                                        {% endfor %}
+                                                                                <i class="{{thirdMenu.icon}}"></i><span>{{thirdMenu.title}}</span> <i class="pull-right"></i>
 
-                                                    </ul>
-                                                </a>
+                                                                            </a>
 
-                                            {% else %}
-                                                <a href="{{(subMenu.path)}}">
-                                                    <i class="{{subMenu.icon}}"></i><span>{{subMenu.title}}</span> <i class="pull-right"></i>
-                                                </a>
-                                            {% endif %}
+                                                                        </li>
+                                                                     {% endif %}
 
-                                        </li>
+                                                                {% endfor %}
 
-                                    {% endfor %}
+                                                            </ul>
+                                                        </a>
+                                                    {% endif %}
 
-                                </ul>
-                            </a>
+                                                {% else %}
+                                                    {% if permission(permission, subMenu.permission) %}
+                                                        <a href="{{path(subMenu.path)}}">
+                                                            <i class="{{subMenu.icon}}"></i><span>{{subMenu.title}}</span> <i class="pull-right"></i>
+                                                        </a>
+                                                    {% endif %}
+                                                {% endif %}
 
+                                            </li>
+
+                                        {% endfor %}
+
+                                    </ul>
+                                </a>
+                            {% endif %}
+                            
                         {% else %}
-                            <a href="{{(menu.path)}}">
-                                <i class="{{menu.icon}}"></i><span>{{menu.title}}</span> <i class="pull-right"></i>
-                            </a>        
+                            {% if permission(permission, menu.permission) %}
+                                <a href="{{path(menu.path)}}">
+                                    <i class="{{menu.icon}}"></i><span>{{menu.title}}</span> <i class="pull-right"></i>
+                                </a>        
+                            {% endif %}
                         {% endif %}
                     </li>
                 {% endfor%}

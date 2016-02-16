@@ -101,13 +101,43 @@
                     
                     <!--div tab-pane endereco-->
                     <div class="tab-pane" id="permissao">
+                        <div class="row">    
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <p class="text-justify text-bold">
+                                    Aqui você gerencia a quais menus e ações o usuário terá permissão, 
+                                    de acesso, lembrando que as permissões são acumulativas e hierarquicas  , ou seja,
+                                    se possuir a permissão ROLE_ADMIN também terá a permissão ROLE_USER.
+                                </p>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                
+                                {{form_start(form_permission)}}
+                                    <div class="row">
+                                        {% for option in form_permission.permission %}
+                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                                    <div class="checkbox icheck-permission">
+                                                        {{ form_label(option , null,  {'label_attr' : {'class': 'label label-danger text-uppercase' } }) }}
+                                                        {{ form_widget(option)}}
+                                                    </div>
+                                                </div>
+
+                                        {% endfor %}
+                                    </div>
+                                    <div class="row">    
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            {{ form_widget(form_permission.submit, {'attr': {'class': 'btn btn-primary pull-right'} }) }}
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <a href title="Abrir lista com todos os menus e suas permissões." data-toggle="modal" data-target="#modalListarMenus">
+                                                Abrir lista de menus <i class="fa fa-gear"></i>
+                                            </a> 
+                                        </div>
+                                    </div>
+                                {{form_end(form_permission)}}
                             </div><!-- /.col -->
                         </div>
                     </div><!--div tab-pane endereco-->
-                    
                 </div><!--div tab-content-->
             </div><!--div nav-tab-->
         </div><!--col-->
