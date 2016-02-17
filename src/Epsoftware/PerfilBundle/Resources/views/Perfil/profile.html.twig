@@ -10,14 +10,14 @@
 {% endblock %}
 
 {%block stylesheets %}
-    {{ parent()}}
+    {{ parent() }}
     {% stylesheets  'public/adminlte/plugins/datepicker/datepicker3.css' filter='cssrewrite' output='compiled/css/perfil.css' %}
         <link rel="stylesheet" href="{{ asset_url }}">
     {% endstylesheets %}
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent()}}
+    {{ parent() }}
     {% javascripts 'public/adminlte/plugins/datepicker/bootstrap-datepicker.js'
                    'public/adminlte/plugins/input-mask/jquery.inputmask.js'
                    '@PerfilBundle/Resources/public/js/*' output='compiled/js/perfil.js'

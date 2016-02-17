@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">Logs do usuário</h4>
+</div>
+<div class="modal-body">
+    <table id="logs" data-url="{{ path("logs_admin_data_table", {"id" : id }) }}" data-order="[0]" class="display responsive nowrap" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Login</th>
+                <th>Nome</th>
+                <th>Local</th>
+                <th>Ação</th>
+                <th>Descrição</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+                

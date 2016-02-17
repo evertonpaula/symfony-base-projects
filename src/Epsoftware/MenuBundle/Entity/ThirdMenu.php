@@ -220,10 +220,10 @@ class ThirdMenu
     
     /**
      * Set permission
-     * @param \Doctrine\Common\Collections\Collection $permission
+     * @param \Epsoftware\UserBundle\Entity\Permission $permission
      * @return ThirdMenu
     */
-    function setPermission(Collection $permission)
+    function setPermission(Permission $permission)
     {
         $this->permission = $permission;
         

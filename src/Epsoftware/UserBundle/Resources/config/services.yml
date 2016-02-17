@@ -18,9 +18,15 @@ services:
             - [setTwigEnvironment, ["@Twig"]]
         tags: 
             -  { name: acme_mailer.transport }
-
+            
+    epsoftware.user.logger:
+        class: Epsoftware\UserBundle\Services\Log
+        calls: 
+            - [setEntityManager, ["@doctrine.orm.entity_manager"]]
+        
     epsoftware.encrypt:
         class: Epsoftware\UserBundle\Services\EncryptsBaseCode
         arguments: ["@Twig"]
         tags: 
             - { name: twig.extension }
+            

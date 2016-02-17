@@ -10,14 +10,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Epsoftware\UserBundle\Services\EncryptsBaseCode;
 use Epsoftware\UserBundle\Entity\User;
+use Epsoftware\UserBundle\Entity\Logger;
 use Epsoftware\UserBundle\Ajax\UserDataTable;
+use Epsoftware\UserBundle\Ajax\LogsDataTable;
 use Epsoftware\UserBundle\Form\AdminUserAccess;
 use Epsoftware\UserBundle\Form\UserPermissionsFormType;
 
 
 class AdminController extends Controller
 {
-     /**
+     
+    private $local = "Controle Usuário";
+    
+    /**
      * @Route("/admin/dash/users", name="user_admin")
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Method({"GET"})
@@ -25,7 +30,54 @@ class AdminController extends Controller
      */
     public function usersAction()
     {
+        $action = "Acessou área administrativa de usuários";
+        $this->logger($action);
         return array();
+    }
+    
+    /**
+     * @Route("/admin/dash/logs/show", name="logs_show")
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function logAction()
+    {
+        $action = "Visualizar Logs";
+        $this->logger($action, "Entrou na área de visualização de logs");
+        return array();
+    }
+    
+    /**
+     * @Route("/admin/dash/users/logs/show/{id}", name="user_logs_show", defaults={"id":"0"})
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function logsUserAction($id)
+    {
+        $action = "Visualizar Logs";
+        $this->logger($action, "Entrou na área de visualização de logs por usuário");
+        return array("id" => $id);
+    }
+    
+    /**
+     * @Route("/api/data/table/logs/{id}", name="logs_admin_data_table", defaults={"id" : "null"})
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function dataTableLogsAction($id)
+    {
+        if($id !== null && $id != "null"):
+            $descrypt = new EncryptsBaseCode();
+            $logs =  $this->getDoctrine()->getRepository(Logger::class)->getLogs($descrypt->descrypt($id));
+        else:
+            $logs = $this->getDoctrine()->getRepository(Logger::class)->getLogs();
+        endif;
+        $api = new LogsDataTable($logs);
+        $api->setSuccess("Logs carregados com sucesso.");
+        return $api->setSource("logs");
     }
     
     /**
@@ -41,7 +93,7 @@ class AdminController extends Controller
                 'url_profile' => $this->generateUrl("user_admin_get_profile"),
                 'url_delete' =>  $this->generateUrl("user_admin_delete"),
                 'url_permissions' => $this->generateUrl("user_admin_edit_access_user"),
-                'url_logs' => $this->generateUrl("user_admin_delete")
+                'url_logs' => $this->generateUrl("user_logs_show")
             );
         $api = new UserDataTable($users);
         $api->setSuccess("Usuário carregados com sucesso.");
@@ -56,18 +108,23 @@ class AdminController extends Controller
      */
     public function deleteUserAction($id)
     {
+        $action = "Exclusão de usuário";
+        
         $descrypt = new EncryptsBaseCode();
         $user = $this->getDoctrine()->getRepository(User::class)->find($descrypt->descrypt($id));
-        
+        $username = $user->getUsername();
         if($user):
             if($user->getId() !== $this->getUser()->getId()):
                 $em = $this->getDoctrine()->getManager();
                 $em->remove($user);
                 $em->flush();
+                $this->logger($action, "Deletou {$username}");
                 return $this->get("epsoftware.response.json")->getSuccess("Usuário deletado com sucesso.");
             endif;
+            $this->logger($action, "Tentou auto delete");
             return $this->get("epsoftware.response.json")->getWarning("Você não pode se auto deletar.");
         endif;
+        $this->logger($action, "Falha na tentativa de delete de {$username}");
         return $this->get("epsoftware.response.json")->getErrors("Erro ao tentar deletar usuário, não foi possivel encontrar o usuário a ser deletado.");
     }
     
@@ -79,14 +136,17 @@ class AdminController extends Controller
      */
     public function showProfilelUserAction($id)
     {
+        $action = "Visualizar info. usuário";
+        
         $descrypt = new EncryptsBaseCode();
         $user = $this->getDoctrine()->getRepository(User::class)->find($descrypt->descrypt($id));
         $profile = $user->getProfile();
         
         if($profile):
+           $this->logger( $action, "Abriu visualização de {$user->getUsername()}");
            return $this->render("PerfilBundle:Perfil:profile.ready.html.twig", array("profile" => $profile));
         endif;
-        
+        $this->logger($action, "Falha ao tentar abrir visualização de {$user->getUsername()}");
         return $this->get("epsoftware.response.json")->getErrors("Erro ao tentar mostrar o perfil, não foi possível encontrar o perfil.");
     }
     
@@ -98,6 +158,8 @@ class AdminController extends Controller
     */
     public function editUserAccessAction($id, Request $request)
     {
+        $action = "Editar acesso do usuário";
+        
         $descrypt = new EncryptsBaseCode();
         $myId = $this->getUser()->getId();
         $idDescrypt = $descrypt->descrypt($id);
@@ -111,8 +173,10 @@ class AdminController extends Controller
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($user);
                     $em->flush();
+                    $this->logger($action, "Auterou dados de acesso de {$user->getUsername()}");
                     return $this->get("epsoftware.response.json")->getSuccess("Dados de Acesso alterados com sucesso.");
                 else:
+                    $this->logger($action, "Falha ao alterar dados de acesso de {$user->getUsername()}");
                     return $this->get("epsoftware.response.json")->getFormErrors($form);
                 endif;
             else:
@@ -129,6 +193,8 @@ class AdminController extends Controller
     */
     public function updatePermissionUser($id, Request $request)
     {
+        $action = "Editar permissões do usuário";
+        
         $descrypt = new EncryptsBaseCode();
         $user = $this->getDoctrine()->getRepository(User::class)->find($descrypt->descrypt($id));
         $form = $this->createForm(UserPermissionsFormType::class, $user);
@@ -137,11 +203,14 @@ class AdminController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+            $this->logger($action,"Auterou permissões de {$user->getUsername()}");
             return $this->get("epsoftware.response.json")->getSuccess("Dados de Acesso alterados com sucesso.");
         endif;
         
         return $this->get("epsoftware.response.json")->getFormErrors($form);
     }
+    
+    
     
     /**
      * @Route("/refactor/password/user/{id}", name="user_refactor_passowrd", defaults={"id":"null"})
@@ -151,6 +220,8 @@ class AdminController extends Controller
      */
     public function refactorPasswortdUserAction($id)
     {
+        $action = "Envio de nova senha";
+        
         $descrypt = new EncryptsBaseCode();
         $idDescrypt = $descrypt->descrypt($id);
         
@@ -163,10 +234,13 @@ class AdminController extends Controller
             $em->persist($user);
             $em->flush();
             $this->sendEmail($user, $newPassword);
-            return $this->get("epsoftware.response.json")->getSuccess("Nova senha enviada com sucesso {$newPassword}");
+            $this->logger($action, "Enviou nova senha para {$user->getEmail()}");
+            return $this->get("epsoftware.response.json")->getSuccess("Nova senha enviada com sucesso");
         endif;
         return $this->get("epsoftware.response.json")->getErrors("Não foi possível identificar usuário para geração de nova senha.");
     }
+    
+   
     
     /**
      * Enviar e-mail para confirmação de conta
@@ -186,6 +260,9 @@ class AdminController extends Controller
         $mail->sendEmail();
     }
     
-    
+    public function logger($action, $observation = null)
+    {
+       $this->get("epsoftware.user.logger")->logger($this->local, $action, $this->getUser(), $observation); 
+    }
     
 }

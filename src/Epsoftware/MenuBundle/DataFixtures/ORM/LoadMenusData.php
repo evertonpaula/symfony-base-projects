@@ -23,8 +23,8 @@ class LoadMenusData extends AbstractFixture implements OrderedFixtureInterface
                                                 "pull-left", "user_admin", $controleUser, $this->getReference("permission-ROLE_SUPER_ADMIN"));
         $manager->persist($manter_user);
         
-        $logs = $this->createSecondMenu("Logs", "Visualizar todos os todos os logs do sistema, o que cada usuário esta fazendo.",
-                                            "pull-left", "user_admin", $controleUser, $this->getReference("permission-ROLE_SUPER_ADMIN"));
+        $logs = $this->createSecondMenu("Logs", "Visualizar todos os logs do sistema e o que cada usuário esta fazendo",
+                                            "pull-left", "logs_show", $controleUser, $this->getReference("permission-ROLE_SUPER_ADMIN"));
         $manager->persist($logs);
         
         $manager->flush();

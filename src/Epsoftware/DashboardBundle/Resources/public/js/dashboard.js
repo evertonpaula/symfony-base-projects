@@ -85,9 +85,9 @@ var warning = function(data){
     });
  };
  
-var alert = function(data){
+var alert = function(message){
     return noty({
-        text: data.message,
+        text: message,
         layout: 'topCenter',
         type: 'alert', // alert, success, error, information, warning
         theme: 'bootstrapTheme',

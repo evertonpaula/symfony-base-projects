@@ -14,6 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Serializable;
 use Epsoftware\PerfilBundle\Entity\Profile;
 use Epsoftware\PerfilBundle\Entity\ImageUser;
+use Epsoftware\UserBundle\Entity\Logger;
 
 /**
  * User
@@ -182,11 +183,18 @@ class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
     */
     protected $image;
     
+    /**
+     * @var ArrayCollection
+     * 
+     * @ORM\OneToMany(targetEntity="Logger", mappedBy="user")
+    */
+    private $logger;
     
     public function __construct() 
     {
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
         $this->permission = new ArrayCollection();
+        $this->logger = new ArrayCollection();
     }
 
     /**
@@ -517,10 +525,10 @@ class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
 
     /**
      * Set permission
-     * @param \Doctrine\Common\Collections\Collection $permission
+     * @param \Epsoftware\UserBundle\Entity\Permission $permission
      * @return \Epsoftware\UserBundle\Entity\User
      */
-    function setPermission(Collection $permission)
+    function setPermission(Permission $permission)
     {
         $this->permission = $permission;
         
@@ -625,7 +633,34 @@ class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
         return $this;
     }
 
-        
+    /**
+     * Get logger
+     * @return Logger
+     */
+    function getLogger()
+    {
+        return $this->logger;
+    }
+
+    /**
+     * Set logger
+     * 
+     * @param Logger $logger
+     */
+    function setLogger(Logger $logger) {
+        $this->logger = $logger;
+    }
+    
+    /**
+     * Add logger
+     * 
+     * @param Logger $logger
+     */
+    public function addLogger(Logger $logger)
+    {
+        $this->logger->add($logger);
+    }
+            
     public function equals(AdvancedUserInterface $user)
     {
         return $this->getId() == $user->getId();

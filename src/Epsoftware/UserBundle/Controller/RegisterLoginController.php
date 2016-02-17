@@ -14,6 +14,8 @@ use Epsoftware\UserBundle\Form\RegisterFormType;
 
 class RegisterLoginController extends Controller
 {
+    private $local = "Registrar";
+    
     /**
      * @Route("/register", name="register_user")
      * @Method({"GET", "POST"})
@@ -21,6 +23,8 @@ class RegisterLoginController extends Controller
      */
     public function registerAction(Request $request)
     {
+        $action = "Novo Registro";
+        
         $user = new User();
         $form = $this->createForm(RegisterFormType::class, $user);
         $form->handleRequest($request);
@@ -34,8 +38,11 @@ class RegisterLoginController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+            
+            $this->logger($action, "Novo registro de usuário no sistema, {$user->getUsername()}");
             return $this->redirectToRoute("success_register");
         endif;
+        
         return array("form" => $form->createView());
     }
     
@@ -46,6 +53,8 @@ class RegisterLoginController extends Controller
      */
     public function authenticationAction($uri)
     {
+        $action = "Autenticação usuário";
+        
         try{
             /**
              * @var \Epsoftware\UserBundle\Entity\User
@@ -53,6 +62,7 @@ class RegisterLoginController extends Controller
             $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array('uri' => $uri));
 
             if($user === null):
+                $this->logger($action, "Tentativa de autenticação no sistema");
                 return array("error"=> true);
             endif;
             if(!$user->getIsEnable()):
@@ -60,9 +70,10 @@ class RegisterLoginController extends Controller
                 $this->getDoctrine()->getManager()->persist($user);
                 $this->getDoctrine()->getManager()->flush();
             endif;
+            $this->logger($action, "Usuário autenticado com sucesso no sistema, {$user->getUsername()}");
             return array("error"=> false, "user" => $user->toArray());
-            
         }catch (\Exception $ex){
+            
             throw new \Exception($ex);
         }
         
@@ -95,5 +106,10 @@ class RegisterLoginController extends Controller
                     array("user" => $user->toArray())
                 );
         $mail->sendEmail();
+    }
+    
+    public function logger($action, $observation = null)
+    {
+       $this->get("epsoftware.user.logger")->logger($this->local, $action, $this->getUser(), $observation); 
     }
 }

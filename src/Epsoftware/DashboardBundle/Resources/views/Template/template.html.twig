@@ -49,8 +49,8 @@
             {% include '::javascripts.base.twig' %}
             {% block javascripts %}
                 {% javascripts 
-                        '@DashboardBundle/Resources/public/js/dashboard.js'                    
-                        'public/adminlte/plugins/jQueryUI/jquery-ui.min.js' output='compiled/js/dashboard.js'
+                        'public/adminlte/plugins/jQueryUI/jquery-ui.min.js'
+                        '@DashboardBundle/Resources/public/js/dashboard.js'  output='compiled/js/dashboard.js'
                 %}
                     <script src="{{ asset_url }}"></script>
                 {% endjavascripts %}

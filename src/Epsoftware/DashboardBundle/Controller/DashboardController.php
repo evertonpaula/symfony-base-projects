@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class DashboardController extends Controller
 {
+    private $local = "Dashboard";
+    
     /**
      * @Route("/admin/dash/simple", name="dashboard")
      * @Security("has_role('ROLE_USER')")
@@ -17,6 +19,8 @@ class DashboardController extends Controller
      */
     public function dashboardAction()
     {
+        $action = "Entrou na dashboard";
+        
         if(!$this->getUser()->getProfile()):
             return $this->redirectToRoute("user_profile");
         endif;
@@ -37,5 +41,10 @@ class DashboardController extends Controller
     public function dashboardAdminAction()
     {
         return array();
+    }
+    
+    public function logger($action, $observation = null)
+    {
+       $this->get("epsoftware.user.logger")->logger($this->local, $action, $this->getUser(), $observation); 
     }
 }

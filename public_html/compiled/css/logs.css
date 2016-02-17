@@ -955,9 +955,3 @@ table.dataTable > tbody > tr.child span.dtr-title {
   min-width: 75px;
   font-weight: bold;
 }
-
-a.action{margin:10px;}
-.icheck>label{padding-left: 15px!important;}
-.icheck>label span{width: 150px;display: inline-block;}
-
-.icheck-permission label{text-align: left;width: 140px!important;position: relative;display: inline-block; padding: 7px!important;}

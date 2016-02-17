@@ -17,6 +17,8 @@ use Epsoftware\UserBundle\Form\UpdateUserFormType;
 
 class PerfilController extends Controller
 {
+    private $local = "Perfil";
+    
     /**
      * @Route("/admin/dash/profile", name="user_profile")
      * @Security("has_role('ROLE_USER')")
@@ -25,6 +27,8 @@ class PerfilController extends Controller
      */
     public function profileAction()
     {
+        $action = "Acessou perfil";
+        
         $profile = $this->getUser()->getProfile();
         
         if( $profile === null):
@@ -38,6 +42,8 @@ class PerfilController extends Controller
         $formProfile = $this->createForm(ProfileFormType::class, $profile, array("action" => $this->generateUrl("profile_new")));
         $formUser = $this->createForm(UpdateUserFormType::class, $this->getUser(), array("action" => $this->generateUrl("profile_user_update")));
         
+        $this->logger($action);
+        
         return array('form_conf' => $formSetting->createView(), 'form_profile' => $formProfile->createView(), 'form_user' => $formUser->createView());
     }
     
@@ -48,6 +54,8 @@ class PerfilController extends Controller
     */
     public function newProfileAction(Request $request)
     {
+        $action = "Perfil Atualização";
+        
         $profile = $this->getUser()->getProfile();
         $firstime = false;
             
@@ -66,12 +74,15 @@ class PerfilController extends Controller
             $em->flush();
             
             if($firstime):
+                $this->logger($action, "Criou perfil com sucesso");
                 return $this->get("epsoftware.response.json")->getInfo("Perfil criado com sucesso.");
             endif;
-                
+            
+            $this->logger($action, "Atualizou perfil com sucesso");
             return $this->get("epsoftware.response.json")->getSuccess("Perfil atualizado com sucesso.");
         endif;
         
+        $this->logger($action, "Erro ao tentar atualizar o perfil");
         return $this->get("epsoftware.response.json")->getFormErrors($form);
     }
     
@@ -82,6 +93,8 @@ class PerfilController extends Controller
      */
     public function saveProfileSettingAction(Request $request)
     {
+        $action = "Personalização Perfil";
+        
         $profile = $this->getUser()->getProfile();
         
         if( $profile === null):
@@ -103,6 +116,8 @@ class PerfilController extends Controller
             $profile->setSetting($setting);
             $em->persist($profile);
             $em->flush();
+            
+            $this->logger($action, "Personalizou perfil com sucesso");
             return $this->get("epsoftware.response.json")->getSuccess("Aparência atualizada com sucesso.");
         endif;
         
@@ -116,6 +131,8 @@ class PerfilController extends Controller
      */
     public function updateProfileUserAction(Request $request)
     {
+        $action = "Atualização dados de acesso";
+        
         $user = $this->getUser();
         
         $form = $this->createForm(UpdateUserFormType::class, $user);
@@ -125,9 +142,11 @@ class PerfilController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+            $this->logger($action, "Atualizou dados de acesso com sucesso");
             return $this->get("epsoftware.response.json")->getSuccess("Dados de acesso atualizado com sucesso.");
         endif;
         
+        $this->logger($action, "Erro ao tentar atualizar dados de acesso");
         return $this->get("epsoftware.response.json")->getFormErrors($form);
     }
     
@@ -138,14 +157,19 @@ class PerfilController extends Controller
      */
     public function newProfileAddressAction(Request $request)
     {
+        $action = "Novo Enderço Perfil";
+        
         $profile = $this->getUser()->getProfile();
        
         if($profile):
             $request->request->add(array('object' => $profile));
             $path = $request->attributes->all();
+            
+            $this->logger($action, "Adicionou novo endereço com sucesso");
             return $this->forward("AddressBundle:Address:newAddress", $path);
         endif;
             
+        $this->logger($action, "Erro ao tentar adicionar novo endereço");
         return $this->get("epsoftware.response.json")->getWarning("Antes de cadastrar um endereço  é preciso ter um perfil criado.");
         
     }
@@ -167,5 +191,10 @@ class PerfilController extends Controller
             
         return $this->get("epsoftware.response.json")->getWarning("Antes de visualizar endereços é preciso ter um perfil criado.");
         
+    }
+    
+    public function logger($action, $observation = null)
+    {
+       $this->get("epsoftware.user.logger")->logger($this->local, $action, $this->getUser(), $observation); 
     }
 }

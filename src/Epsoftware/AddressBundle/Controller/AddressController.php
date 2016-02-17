@@ -17,6 +17,8 @@ use Epsoftware\AddressBundle\Services\ResponseJsonMap;
 
 class AddressController extends Controller
 {
+    private $local = "Endereços";
+    
     /**
      * @Route("/admin/address/edit/{id}", name="edit_address", defaults={"id":"null"})
      * @Method({"POST"})
@@ -24,6 +26,8 @@ class AddressController extends Controller
     */
     public function editAddressAction($id, Request $request)
     {
+        $action = "Editar Endereço";
+        
         $descrypt = new EncryptsBaseCode();
         $url = $this->generateUrl("edit_address", array('id' => $id));
         
@@ -43,8 +47,10 @@ class AddressController extends Controller
                 $em->persist($address);
                 $em->flush();
                 $parameters = $this->renderView("AddressBundle:Address:listAddress.html.twig", array('address' => array($address)));
+                $this->logger($action, "Editou endereço com sucesso");
                 return $this->get("epsoftware.response.json")->getSuccess("Endereço atualizado com sucesso.", array('view'=>$parameters));
             else:
+                $this->logger($action, "Erros ao editar endereço");
                 return $this->get("epsoftware.response.json")->getFormErrors($form);
             endif;
         endif;
@@ -84,8 +90,11 @@ class AddressController extends Controller
     */
     public function mapAddressAction(Request $request)
     {
+        $action = "Visualizou o mapa de endereços";
+        
         $object = $request->get("object");
         $jsonMap = new ResponseJsonMap();
+        $this->logger($action, "Falha ao criar novo endereço");
         return $jsonMap->getJsonMap($object);
     }
     
@@ -96,6 +105,8 @@ class AddressController extends Controller
     */
     public function deleteAddressAction($id)
     {
+        $action = "Deletou endereço";
+        
         $descrypt = new EncryptsBaseCode();
         $address = $this->getDoctrine()->getRepository(Address::class)->find($descrypt->descrypt($id));
         
@@ -103,9 +114,11 @@ class AddressController extends Controller
             $em = $this->getDoctrine()->getManager();                                               
             $em->remove($address);
             $em->flush();
+            $this->logger($action, "Deletou endereço com sucesso");
             return $this->get("epsoftware.response.json")->getSuccess("Endereço deletado com sucesso.");
         endif;
         
+        $this->logger($action, "Erro ao tentar deletar endereço");
         return $this->get("epsoftware.response.json")->getErrors("Erro ao tentar deletar endereço.");
     }
     
@@ -148,5 +161,8 @@ class AddressController extends Controller
         return array("estados" => $estados);
     }
     
-    
+    public function logger($action, $observation = null)
+    {
+       $this->get("epsoftware.user.logger")->logger($this->local, $action, $this->getUser(), $observation); 
+    }
 }

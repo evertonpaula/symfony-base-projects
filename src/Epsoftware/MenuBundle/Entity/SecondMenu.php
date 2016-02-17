@@ -249,10 +249,10 @@ class SecondMenu
     
     /**
      * Set permission
-     * @param \Doctrine\Common\Collections\Collection $permission
+     * @param \Epsoftware\UserBundle\Entity\Permission $permission
      * @return SecondMenu
      */
-    function setPermission(Collection $permission)
+    function setPermission(Permission $permission)
     {
         $this->permission = $permission;
         

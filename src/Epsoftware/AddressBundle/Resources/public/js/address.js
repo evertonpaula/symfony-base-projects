@@ -1,6 +1,4 @@
-window.onload = function(){
-    
-    var geocoder = geocoder = new google.maps.Geocoder();
+$(document).ready(function(){
     
     var errorAddress = function(data){
         console.warn('ERRO FATAL: ',data);
@@ -167,7 +165,9 @@ window.onload = function(){
         ui.item.cidade;
     };
     
-    var callbackSource = function(request, response){
+    var callbackSource = function(request, response)
+    {
+        var geocoder = geocoder = new google.maps.Geocoder();
         geocoder.geocode({ 'address': request.term + ', Brasil', 'region': 'BR' }, function (results, status){
             response($.map(results, function (item){
                 var response = getAddressFromGoogle(item.address_components);
@@ -217,7 +217,7 @@ window.onload = function(){
             }
         });
     });
-};
+});
 
 window.map = function(parameters){
 
