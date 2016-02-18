@@ -78,7 +78,7 @@
                         <a href="{{ path("register_user") }}" class="text-center">Registrar-se</a>
                     </div><!-- /.col -->
                     <div class="text-right col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <a href="#">Recuperar senha</a>
+                        <a href title="Recuperação de acesso em caso de esquecimento de senha" data-toggle="modal" data-target="#forget-password" >Recuperar senha</a>
                     </div><!-- /.col -->
                 </div>
                 
@@ -87,4 +87,36 @@
     
     {% endblock %}
     
+    <div class="modal fade" id="forget-password" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Recuperação de senha</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="text-justify text-uppercase text-bold text-danger">
+                        Para que você recupere a o acesso ao sistema é necessário lembrar de seu e-mail de acesso, é por ele que será efetuada a validação do seu usuário.
+                        Caso também tenha esquecido o e-mail entre em contato com o administrador do sistema, ele poderá reativar sua conta.
+                    </p>
+                    {{form_start(form_recovery_pass)}}
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group has-feedback">
+                                    {{ form_widget(form_recovery_pass.email, { 'attr': {'class': 'form-control', 'placeholder': 'Coloque seu e-mail' } }) }}
+                                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8"></div><!-- /.col -->
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                {{ form_widget(form_recovery_pass.submit, { 'attr': {'class': 'btn btn-primary btn-block btn-flat'} }) }}
+                            </div><!-- /.col -->
+                        </div>
+                    {{form_end(form_recovery_pass)}}
+                </div>
+            </div><!-- /modal-content -->
+        </div><!-- /modal-dialog -->
+    </div><!-- /modal_address_add -->
 {% endblock %}

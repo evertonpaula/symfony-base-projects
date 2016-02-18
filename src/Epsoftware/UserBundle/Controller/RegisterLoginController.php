@@ -100,7 +100,6 @@ class RegisterLoginController extends Controller
         $mail = $this->get("epsoftware.services.mail");
         $mail->createEmail(
                     "Login Criado com Sucesso",
-                    "epsoftware@epsoftware.com.br",
                     array($user->getEmail()),
                     "UserBundle:Mail:authentication.html.twig",
                     array("user" => $user->toArray())

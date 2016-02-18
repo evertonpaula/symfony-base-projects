@@ -252,7 +252,6 @@ class AdminController extends Controller
         $mail = $this->get("epsoftware.services.mail");
         $mail->createEmail(
                     "Nova Senha",
-                    "epsoftware@epsoftware.com.br",
                     array($user->getEmail()),
                     "UserBundle:Mail:newPassword.html.twig",
                     array("user" => $user->toArray(), "newPassword" => $newPassword)

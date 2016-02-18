@@ -29,6 +29,11 @@ class MailService
     private $message;
     
     /**
+     * @var string from
+     */
+    private $from = "epsoftware@epsoftware.com.br";
+    
+    /**
      *
      * @var \Twig_Environment 
     */
@@ -56,12 +61,12 @@ class MailService
         $this->twig = $twig;
     }
     
-    public function createEmail($subject, $from, array $to, $template, array $parameters = array())
+    public function createEmail($subject, array $to, $template, array $parameters = array())
     {
         try{
             $this->getMessage()
                   ->setSubject($subject)
-                  ->setFrom($from)
+                  ->setFrom($this->from)
                   ->setTo($to)
                   ->setBody($this->twig->render($template, $parameters));
         }catch(Exception $ex){

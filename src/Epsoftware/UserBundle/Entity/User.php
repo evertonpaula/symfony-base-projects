@@ -47,11 +47,11 @@ class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
     /**
      * @var string
      * 
-     * @Assert\NotBlank(message = "É obrigatório o uso de um e-mail válido.", groups={"registration", "update_user"})
+     * @Assert\NotBlank(message = "É obrigatório o uso de um e-mail válido.", groups={"registration", "update_user", "recovery_pass"})
      * @Assert\Email(
      *     message = "O e-mail '{{ value }}' não é um tipo válido.",
      *     checkMX = true,
-     *     groups={"registration","update_user"}
+     *     groups={"registration","update_user","recovery_pass"}
      * )
      * @ORM\Column(name="email", type="string", length=255)
      */
