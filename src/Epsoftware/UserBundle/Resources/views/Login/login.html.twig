@@ -102,17 +102,13 @@
                     {{form_start(form_recovery_pass)}}
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <div class="form-group has-feedback">
+                                <div class="input-group">
                                     {{ form_widget(form_recovery_pass.email, { 'attr': {'class': 'form-control', 'placeholder': 'Coloque seu e-mail' } }) }}
-                                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                                    <div class="input-group-btn">
+                                        {{ form_widget(form_recovery_pass.submit, { 'attr': {'class': 'btn btn-primary btn-flat'} }) }}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8"></div><!-- /.col -->
-                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                                {{ form_widget(form_recovery_pass.submit, { 'attr': {'class': 'btn btn-primary btn-block btn-flat'} }) }}
-                            </div><!-- /.col -->
                         </div>
                     {{form_end(form_recovery_pass)}}
                 </div>

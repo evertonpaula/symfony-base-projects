@@ -10,6 +10,11 @@ services:
         public: false
         tags: 
             - { name: twig.extension }
+            
+    epsoftware.mensageria.render.callback:
+        class: Epsoftware\MensageriaBundle\Services\RedirectMessage
+        calls:
+            - [setTwigEnvironment, ["@Twig"]]
     
     epsoftware.response.json:
         class: Epsoftware\MensageriaBundle\Services\ResponseJson

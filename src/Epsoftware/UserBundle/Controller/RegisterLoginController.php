@@ -7,7 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
-use Epsoftware\UserBundle\Services\SuccessRegister;
 use Epsoftware\UserBundle\Entity\User;
 use Epsoftware\UserBundle\Entity\Permission;
 use Epsoftware\UserBundle\Form\RegisterFormType;
@@ -38,9 +37,10 @@ class RegisterLoginController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            
+            $this->sendEmail($user);
             $this->logger($action, "Novo registro de usuário no sistema, {$user->getUsername()}");
-            return $this->redirectToRoute("success_register");
+            return $this->get("epsoftware.mensageria.render.callback")
+                        ->render("Tudo ok, parabéns pelo cadastro.","Seu registro foi efetuado com sucesso.","Em breve você receberá no e-mail as instruções de ativação de seu usuário.");
         endif;
         
         return array("form" => $form->createView());
@@ -79,16 +79,6 @@ class RegisterLoginController extends Controller
         
     }
     
-    /**
-     * @Route("/register/success", name="success_register")
-     * @Template()
-     * @Method({"GET"})
-     */
-    public function successRegisterAction()
-    {
-        $success = new SuccessRegister();
-        return $success->getTwigParameters();
-    }
     
     /**
      * Enviar e-mail para confirmação de conta

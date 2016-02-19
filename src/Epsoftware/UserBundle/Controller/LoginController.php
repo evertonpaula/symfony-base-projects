@@ -46,7 +46,7 @@ class LoginController extends Controller
         $form = $this->createForm(RecoveryPassFormType::class, $user);
         $form->handleRequest($request);
         
-        if($form->isSubmitted() &&  $form->isValid()):
+        if($form->isSubmitted() &&  $form->isValid() && $user):
             $newPassword = "N". base_convert(sha1(uniqid(mt_rand(), true)), 8, 36) . "P";
             $user->setPlainPassword($newPassword);
             $em = $this->getDoctrine()->getManager();
@@ -54,10 +54,13 @@ class LoginController extends Controller
             $em->flush();
             $this->sendEmail($user, $newPassword);
             $this->logger($action, "Enviou nova senha para {$user->getEmail()}");
-            return $this->render("UserBundle:Login:successNewPassword.html.twig");
+            return $this->get("epsoftware.mensageria.render.callback")
+                        ->render("Tudo ok!!! Nova senha gerada com sucesso.","Uma nova senha foi enviada com sucesso para seu e-mail.","Abra seu e-mail confira a nova senha e acesse o sistema.");
         endif;
         
-        return $this->render("UserBundle:Login:errorNewPassword.html.twig");
+         return $this->get("epsoftware.mensageria.render.callback")
+                     ->setCode(100)
+                     ->render("Oops! houve um problema."," Desculpe, mas o e-mail informado não é valído.Caso não você tenha esquecido seu e-mail entre em contato com administrador do sistema para pedir orientação.","", false);
     }
     
     /**

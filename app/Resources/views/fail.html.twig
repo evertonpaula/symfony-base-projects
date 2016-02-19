@@ -1,16 +1,17 @@
 {% extends "@Institucional/Template/template.html.twig"%}
-{% block title %}{{status_code}}{% endblock %}
+{% block title %}{{title}}{% endblock %}
 {% block stylesheets %}<style>body{background-color: #ECF0F5 !important;}</style>{% endblock %}
 {% block body %}
     <!-- Main content -->
     <section class="content">
         <div class="error-page">
-          <h2 class="headline text-blue"> {{ status_code }}</h2>
+          <h2 class="headline text-danger">{{ code }}</h2>
 
           <div class="error-content">
-            <h3><i class="fa fa-warning text-blue"></i> Oops! houve um problema.</h3>
+            <h3><i class="fa fa-warning text-danger"></i> {{header}}</h3>
 
-            <p>{% block mensagen_error %}Desculpe, houve uma falha interna no servidor.{% endblock %}</p>
+            <p class="text-justify text-uppercase">{{message}}</p>
+            <p class="text-justify" >{{instruction}}</p>
             <p>
                 De qualquer maneira você pode retornar a
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
