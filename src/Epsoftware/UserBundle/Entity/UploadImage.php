@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Upload 
+ * @ORM\HasLifecycleCallbacks
 */
 abstract class UploadImage
 {
@@ -19,8 +20,17 @@ abstract class UploadImage
     public $path;
     
     /**
-     * @Assert\File(maxSize="5M", maxSizeMessage="Tamanho maximo para imagem é de 5 megabytes.", groups={"upload"})
-     * @Assert\File(mimeTypes={"image/jp2", "image/png"}, mimeTypesMessage="É somente aceita extensão de imagem jpg, jpeg ou png.", groups={"upload"})
+     * @Assert\File(
+     *          maxSize = "2M", 
+     *          maxSizeMessage="O arquivo é muito grande ({{ size }} {{ suffix }}). O tamnaho máximo é {{ limit }} {{ suffix }}.", 
+     *          mimeTypes = {"image/jp2", "image/png"}, 
+     *          mimeTypesMessage = "É somente aceita extensão de imagem jpg, jpeg ou png.", 
+     *          disallowEmptyMessage = "Obrigatório selecionar um arquivo.", 
+     *          notFoundMessage = "Arquivo não encontrado.",
+     *          uploadIniSizeErrorMessage = "O arquivo é muito grande. Máximo permitido de {{ limit }} {{ suffix }}.", 
+     *          uploadFormSizeErrorMessage = "Arquivo muito grande.", 
+     *          groups={"upload"}
+     *      )
      */
     private $file;
     

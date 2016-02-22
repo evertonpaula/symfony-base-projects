@@ -12,7 +12,7 @@ class UploadImageUser extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('file', FileType::class, array("required" => true, "error_bubbling"=>true))
+        $builder->add('file', FileType::class, array("required" => true))
                 ->add('submit', SubmitType::class,array("label" => "upload"))
                 ->setMethod("POST")
                 ->getForm();

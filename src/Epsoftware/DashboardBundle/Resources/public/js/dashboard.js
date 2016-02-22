@@ -114,7 +114,12 @@ var callback = function(data){
                 error(message[i]);
             }
         }
-    }       
+    }else if(data.upload_error){
+        var message = JSON.parse(data.message);
+        for(var i = 0; i < message.callback.length; i++){
+            error({"message" : message.callback[i]});
+        }
+    }
 };
 
 var isString = function(string){
@@ -168,9 +173,10 @@ $(document).ready(function(){
         if(data.success){
             modalDash.modal("hide");
             $('body').find('img.user').each(function(){
-               $(this).prop('src', '/images/users/'+data.image);
+               $(this).prop('src', data.image);
             });
         }
+        
     };
     
     $(function(){

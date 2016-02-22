@@ -127,7 +127,12 @@ var callback = function(data){
                 error(message[i]);
             }
         }
-    }       
+    }else if(data.upload_error){
+        var message = JSON.parse(data.message);
+        for(var i = 0; i < message.callback.length; i++){
+            error({"message" : message.callback[i]});
+        }
+    }
 };
 
 var isString = function(string){
@@ -151,15 +156,42 @@ var ajax = function(url, method, data, setCallback){
     
 };
 
+var upload = function(url, method, data, setCallback){
+    Pace.track(function(){
+        $.ajax({
+            url: url,
+            method: method,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: (typeof setCallback === 'undefined') ? callback : setCallback,
+            error: errorCallback
+        });
+    });
+};
+
 $(document).ready(function(){
     
     var modalDash = $('#modal_dash');
     var modalDashContent = modalDash.find('.modal-content');
 
-    setModalContent = function(data){
+    var setModalContent = function(data){
         var $html = $(data);
         modalDashContent.html($html);
-}
+    };
+    
+    var setImageUser = function(data){
+        callback(data);
+        if(data.success){
+            modalDash.modal("hide");
+            $('body').find('img.user').each(function(){
+               $(this).prop('src', data.image);
+            });
+        }
+        
+    };
+    
     $(function(){
        $('.alter-image-user').click(function(e){
             e.preventDefault();
@@ -167,5 +199,13 @@ $(document).ready(function(){
             loader(modalDashContent);
             ajax($(this).data('url'), "POST", null, setModalContent);
        });
+    });
+    
+    $(function(){
+        $('body').on('submit', 'form[name=upload_image_user]', function(e){
+            e.preventDefault();
+            var form = new FormData(this);
+            upload($(this).attr('action'), "POST", form, setImageUser);
+        });
     });
 });

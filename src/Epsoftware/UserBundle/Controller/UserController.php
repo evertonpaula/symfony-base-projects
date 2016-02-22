@@ -58,11 +58,12 @@ class UserController extends Controller
             $em->persist($image);
             $em->persist($user);
             $em->flush();
-            $this->logger($action, "imagem alterada com sucesso");    
-            return $this->get("epsoftware.response.json")->getSuccess("Imagem de usuário atualizada com sucesso.", array("image"=>$image->getPath()));
+            $this->logger($action, "imagem alterada com sucesso");
+            $dir = $this->container->get('router')->getContext()->getBaseUrl() . DIRECTORY_SEPARATOR . $image->getUploadDir() . DIRECTORY_SEPARATOR . $image->getPath();
+            return $this->get("epsoftware.response.json")->getSuccess("Imagem de usuário atualizada com sucesso.", array("image"=> $dir));
         endif;
         
-        return $this->get("epsoftware.response.json")->getFormErrors($form);
+        return $this->get("epsoftware.response.json")->uploadGetErrors($form);
     }
     
     public function logger($action, $observation = null)

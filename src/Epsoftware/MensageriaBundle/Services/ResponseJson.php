@@ -5,6 +5,7 @@ namespace Epsoftware\MensageriaBundle\Services;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Form\SubmitButton;
 
 /**
  * ResponseJson
@@ -17,6 +18,7 @@ class ResponseJson
     private $contentType = "application/json";
     private $keySuccess = "success";
     private $keyError = "error";
+    private $keyUploadError = "upload_error";
     private $keyWarning = "warning";
     private $keyInfo = "info";
     private $keyMessage = "message";
@@ -99,5 +101,24 @@ class ResponseJson
         foreach ($parameters as $key => $value):
             $this->setOutput($this->callback, $value, $key);
         endforeach;
+    }
+    
+    public function uploadGetErrors(Form $form)
+    {
+        $local_errors[$this->callback] = array();
+        foreach ($form->getIterator() as $key => $child) {
+
+            foreach ($child->getErrors() as $error){
+                array_push($local_errors[$this->callback], $error->getMessage());
+            }
+
+            if (count($child->getIterator()) > 0) {
+                if (!$child instanceof SubmitButton){
+                    array_push($local_errors[$this->callback], $this->uploadGetErrors($child));
+                }
+            }
+        }
+        $this->setOutput($this->keyUploadError, $this->serializer->serialize($local_errors, "json"));
+        return $this->setResponseContent();
     }
 }
