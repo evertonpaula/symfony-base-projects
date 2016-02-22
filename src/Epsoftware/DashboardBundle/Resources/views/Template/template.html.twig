@@ -17,7 +17,8 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     {% set theme = app.user.profile ? app.user.profile.setting ? app.user.profile.setting.theme.skin : 'skin-blue' : 'skin-blue' %}
-    <body data-theme='{{theme}}' class="{{ theme }} fixed sidebar-mini">
+    {% set collapsed = app.user.profile ? app.user.profile.setting ? (app.user.profile.setting.menuNoCollapsed) ? 'sidebar-collapse' : '' : '' : '' %}
+    <body data-theme='{{theme}}' class="{{ theme }} {{collapsed}} fixed sidebar-mini">
         <!-- Site wrapper -->
         <div class="wrapper">
             {% include "@Dashboard/Template/header.html.twig" %}
@@ -56,5 +57,11 @@
                 {% endjavascripts %}
             {% endblock %}
         </div>
+        <div class="modal fade" id="modal_dash" tabindex="-2" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                </div><!-- /modal-content -->
+            </div><!-- /modal-dialog -->
+        </div><!-- /modal_address_add -->
     </body>
 </html>

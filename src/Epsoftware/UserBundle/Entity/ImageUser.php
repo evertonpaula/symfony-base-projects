@@ -1,6 +1,6 @@
 <?php
 
-namespace Epsoftware\PerfilBundle\Entity;
+namespace Epsoftware\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Epsoftware\UserBundle\Entity\User;
@@ -9,7 +9,8 @@ use Epsoftware\UserBundle\Entity\User;
  * ImageUser
  *
  * @ORM\Table(name="image_user")
- * @ORM\Entity(repositoryClass="Epsoftware\PerfilBundle\Repository\ImageUserRepository")
+ * @ORM\Entity(repositoryClass="Epsoftware\UserBundle\Repository\ImageUserRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class ImageUser extends UploadImage
 {

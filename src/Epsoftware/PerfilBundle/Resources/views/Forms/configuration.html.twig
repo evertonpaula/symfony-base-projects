@@ -3,7 +3,7 @@
     {{ form_start(form_conf) }}
         
         <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <p class="login-box-msg">
                     Opções de configurações da conta do usuário
                     {% if form_errors(form_conf) %}
@@ -17,16 +17,23 @@
         </div>
     
         <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="form-group has-feedback {{form_errors(form_conf) ? 'has-error' }}">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group has-feedback">
                     <label>Aparência</label>
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="fa fa-picture-o"></i>
                         </span>
                         {{ form_widget(form_conf.theme, { 'attr': {'class': 'form-control', 'id': 'layout-skins-list' } }) }}
-                        {{form_errors(form_conf.theme)}}
                     </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="checkbox icheck">
+                    <label class="label label-warning text-uppercase">
+                        <span>Menu Retraido</span>
+                        {{ form_widget(form_conf.menuNoCollapsed) }}
+                    </label>
                 </div>
             </div>
         </div>

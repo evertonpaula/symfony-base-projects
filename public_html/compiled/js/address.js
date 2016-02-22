@@ -95,7 +95,7 @@ $(document).ready(function(){
     $(function(){
         $('.cep').inputmask({"mask": "99999-999"}); 
     });
-
+    
     $(function(){
         $('body').on('submit', 'form.addressAdd', function(e){
             e.preventDefault();
@@ -205,6 +205,37 @@ $(document).ready(function(){
         }
         return arrayRet;
     };
+    
+    $(function(){
+        $('body').on('change','.cep', function(){
+            var geocoder = geocoder = new google.maps.Geocoder();
+            var $form = $(this).closest('form');
+            geocoder.geocode({ 'address': $(this).val() + ', Brasil', 'region': 'BR' }, function (results, status){
+                $.map(results, function (item){
+                    var response = getAddressFromGoogle(item.address_components);
+                    var responser = {
+                        label: item.formatted_address,
+                        value: response.route,
+                        bairro: (response.sublocality) ? response.sublocality :response.sublocality_level_1,
+                        pais: response.country,
+                        estado: response.administrative_area_level_1,
+                        cidade: response.locality,
+                        googleFormat: item.formatted_address,
+                        latitude: item.geometry.location.lat(),
+                        longitude: item.geometry.location.lng(),
+                        cep: (response.postal_code)
+                    };
+                    if(responser !== null){
+                        $form.find(".txtLogradouro").val(responser.value);
+                        $form.find(".latitude").val(responser.latitude);
+                        $form.find(".longitude").val(responser.longitude);
+                        $form.find(".googleFormat").val(responser.googleFormat);
+                        $form.find(".bairro").val(responser.bairro);
+                    }
+                });
+            });
+        });
+    });
     
     $(function(){
         $(".txtLogradouro").autocomplete({

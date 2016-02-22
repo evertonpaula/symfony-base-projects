@@ -15038,4 +15038,11 @@ $(document).ready(function(){
     });
         
     //new $.fn.dataTable.Responsive(table);
+    
+    $(function(){
+       $(".reflash").click(function(e){
+           e.preventDefault();
+           table.ajax.reload();
+       });
+    });
 });

@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">Alterar imagem do usuário</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+            <p class="text-bold text-justify text-info text-uppercase">
+                Aqui você pode trocar a foto do usuário, atente-se para as regras de upload de imagem:
+            </p>
+            <ul class="list-group-item-danger">
+                <li class="text-danger">A extensão do arquivo de imagem deve ser jpg, jpeg ou png.</li>
+                <li class="text-danger">O arquivo deve ter o tamanho máximo de 5mb (megabytes).</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+            {{form_start(form_upload)}}
+            
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                        <div class="input-group">
+                            {{form_widget(form_upload.file, {'attr': {'class' : 'form-control' } })}}
+                            <div class="input-group-btn">
+                                {{form_widget(form_upload.submit, {'attr': {'class' : 'btn btn-flat btn-danger' } })}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{form_end(form_upload)}}
+        </div>
+    </div>
+</div>
+                

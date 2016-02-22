@@ -11,7 +11,9 @@
 
 {%block stylesheets %}
     {{ parent() }}
-    {% stylesheets  'public/adminlte/plugins/datepicker/datepicker3.css' filter='cssrewrite' output='compiled/css/perfil.css' %}
+    {% stylesheets 'public/adminlte/plugins/datepicker/datepicker3.css' 
+                   'public/adminlte/plugins/iCheck/polaris/polaris.css' 
+                   '@PerfilBundle/Resources/public/css/*' filter='cssrewrite' output='compiled/css/perfil.css' %}
         <link rel="stylesheet" href="{{ asset_url }}">
     {% endstylesheets %}
 {% endblock %}
@@ -20,6 +22,7 @@
     {{ parent() }}
     {% javascripts 'public/adminlte/plugins/datepicker/bootstrap-datepicker.js'
                    'public/adminlte/plugins/input-mask/jquery.inputmask.js'
+                   'public/adminlte/plugins/iCheck/icheck.min.js'
                    '@PerfilBundle/Resources/public/js/*' output='compiled/js/perfil.js'
     %}
         <script src="{{ asset_url }}"></script>

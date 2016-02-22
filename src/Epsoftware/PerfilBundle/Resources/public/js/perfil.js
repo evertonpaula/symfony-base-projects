@@ -15,6 +15,14 @@ $(function(){
 });
 
 $(function(){
+   $('.icheck').iCheck({
+        checkboxClass: 'icheckbox_polaris',
+        increaseArea: '-10%', // optional);
+        labelHover: true
+   });
+});
+
+$(function(){
    $('.cpf').inputmask({"mask": "999.999.999-99"});
    $('.telefone').inputmask({"mask": "(99) 9999-9999"});
    $('.celular').inputmask({"mask": "(99) 99999-9999"});
@@ -32,6 +40,22 @@ $(function(){
         ajax($(form).attr('action'),$(form).attr('method'),$(form).serialize());
     });
 });
+
+$(function(){
+    var collpsed = "sidebar-collapse";
+    var process = function($form){
+        ajax($form.attr('action'),$form.attr('method'),$form.serialize());
+    };
+    $('#setting_form_menuNoCollapsed').on('ifChecked', function(event){
+        process($(this).closest('form'));
+        $('body').addClass(collpsed);
+    });
+    $('#setting_form_menuNoCollapsed').on('ifUnchecked', function(event){
+        process($(this).closest('form'));
+        $('body').removeClass(collpsed);
+    });
+});
+
 
 $(function(){
     $('form[name=profile_form]').submit(function(e){

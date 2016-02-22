@@ -31,6 +31,12 @@ class Setting
     private $theme;
 
     /**
+     * @var boolean
+     * @ORM\Column(name="menuNoCollapsed", type="boolean")
+     */
+    private $menuNoCollapsed = false;
+    
+    /**
      * @var \Epsoftware\PerfilBundle\Entity\Profile
      * 
      * @ORM\OneToMany(targetEntity="Profile", mappedBy="setting")
@@ -71,6 +77,28 @@ class Setting
         return $this->theme;
     }
     
+    /**
+     * Get menuNoCollpased
+     * @return boolean
+     */
+    function getMenuNoCollapsed()
+    {
+        return $this->menuNoCollapsed;
+    }
+
+    /**
+     * Set menuNoCollapsed
+     * @param boolean $menuNoCollapsed
+     * @return \Epsoftware\PerfilBundle\Entity\Setting
+     */
+    function setMenuNoCollapsed($menuNoCollapsed)
+    {
+        $this->menuNoCollapsed = $menuNoCollapsed;
+        
+        return $this;
+    }
+
+        
     /**
      * Get profile
      *

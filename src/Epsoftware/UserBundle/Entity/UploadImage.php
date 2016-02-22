@@ -1,28 +1,26 @@
 <?php
 
-namespace Epsoftware\PerfilBundle\Entity;
+namespace Epsoftware\UserBundle\Entity;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Upload
- * 
- * @ORM\HasLifecycleCallbacks
- */
+ * Upload 
+*/
 abstract class UploadImage
 {
     private $temp;
     
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     public $path;
     
     /**
-     * @Assert\File(maxSize="10000000", maxSizeMessage="Tamanho maximo para imagem é de 10 megabytes.", groups={"upload"})
-     * @Assert\File(mimeTypes="image/jpg|jpeg|png", mimeTypesMessage="É somente aceita extensão de imagem jpg, jpeg ou png.", groups={"upload"})
+     * @Assert\File(maxSize="5M", maxSizeMessage="Tamanho maximo para imagem é de 5 megabytes.", groups={"upload"})
+     * @Assert\File(mimeTypes={"image/jp2", "image/png"}, mimeTypesMessage="É somente aceita extensão de imagem jpg, jpeg ou png.", groups={"upload"})
      */
     private $file;
     
@@ -50,19 +48,28 @@ abstract class UploadImage
             $this->temp = $this->path;
             $this->path = null;
         } else {
-            $this->path = 'initial';
+            $this->path = 'default.png';
         }
     }
-
+    
+    /**
+     * Get path
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+    
     /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
     public function preUpload()
     {
-        if (null !== $this->getFile()) {
+        if (null !== $this->getFile()){
             // do whatever you want to generate a unique name
-            $filename = sha1(uniqid(mt_rand($this->getId()), true));
+            $filename = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
             $this->path = $filename.'.'.$this->getFile()->guessExtension();
         }
     }
@@ -83,7 +90,7 @@ abstract class UploadImage
         $this->getFile()->move($this->getUploadRootDir(), $this->path);
 
         // check if we have an old image
-        if (isset($this->temp)) {
+        if (isset($this->temp) && $this->temp !== null && !empty($this->temp) && $this->temp !== "default.png") {
             // delete the old image
             unlink($this->getUploadRootDir().'/'.$this->temp);
             // clear the temp image path
@@ -98,7 +105,7 @@ abstract class UploadImage
     public function removeUpload()
     {
         $file = $this->getAbsolutePath();
-        if ($file) {
+        if ($file && $this->temp !== "default.png") {
             unlink($file);
         }
     }
@@ -126,4 +133,3 @@ abstract class UploadImage
 
     public abstract function getUploadDir();
 }
-

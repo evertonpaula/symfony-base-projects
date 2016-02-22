@@ -150,3 +150,22 @@ var ajax = function(url, method, data, setCallback){
     });
     
 };
+
+$(document).ready(function(){
+    
+    var modalDash = $('#modal_dash');
+    var modalDashContent = modalDash.find('.modal-content');
+
+    setModalContent = function(data){
+        var $html = $(data);
+        modalDashContent.html($html);
+}
+    $(function(){
+       $('.alter-image-user').click(function(e){
+            e.preventDefault();
+            modalDash.modal("show");
+            loader(modalDashContent);
+            ajax($(this).data('url'), "POST", null, setModalContent);
+       });
+    });
+});

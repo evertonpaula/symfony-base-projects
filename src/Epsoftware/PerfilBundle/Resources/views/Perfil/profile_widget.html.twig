@@ -1,15 +1,15 @@
-{% set image_user = app.user.image ? app.user.image.path : 'images/users/default.png' %}
+{% set image_user = app.user.image ? 'images/users/'~ app.user.image.path : 'images/users/default.png' %}
 {%block profile %}    
     <!-- User Account: style can be found in dropdown.less -->
     <li class="dropdown user user-menu">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="{{ asset(image_user) }}" class="user-image" alt="User image" />
+            <img src="{{ asset(image_user) }}" class="user-image user" alt="User image" />
             <span class="hidden-xs">{{ app.user.profile ? app.user.profile.nome : app.user.username }}</span>
         </a>
         <ul class="dropdown-menu">
         <!-- User image -->
             <li class="user-header">
-                <img src="{{ asset(image_user) }}" class="img-circle" alt="User image" />
+                <img data-url="{{path("alter_image_user_show")}}" title="clique para alterar a imagem" src="{{ asset(image_user) }}" class="user alter-image-user img-circle" alt="User image" />
                 <p>
                     {{ app.user.email }}
                     <small>registrado desde {{ app.user.created | date("m/y") }}</small>

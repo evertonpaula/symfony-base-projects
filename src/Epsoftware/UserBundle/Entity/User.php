@@ -13,11 +13,11 @@ use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Serializable;
 use Epsoftware\PerfilBundle\Entity\Profile;
-use Epsoftware\PerfilBundle\Entity\ImageUser;
+use Epsoftware\UserBundle\Entity\ImageUser;
 use Epsoftware\UserBundle\Entity\Logger;
 
 /**
- * User
+ * User 
  *
  * @ORM\Table(name="users_login")
  * @ORM\Entity(repositoryClass="Epsoftware\UserBundle\Repository\UserRepository")
@@ -176,9 +176,9 @@ class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
     protected $profile;
     
     /**
-     * @var \Epsoftware\PerfilBundle\Entity\ImageUser
+     * @var \Epsoftware\UserBundle\Entity\ImageUser
      * 
-     * @ORM\OneToOne(targetEntity="\Epsoftware\PerfilBundle\Entity\ImageUser", inversedBy="user", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="\Epsoftware\UserBundle\Entity\ImageUser", inversedBy="user", orphanRemoval=true)
      * @ORM\JoinColumn(name="image_user_id", referencedColumnName="id", nullable=true)
     */
     protected $image;
@@ -615,7 +615,7 @@ class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
     /**
      * Get image
      * 
-     * @return \Epsoftware\PerfilBundle\Entity\ImageUser
+     * @return \Epsoftware\UserBundle\Entity\ImageUser
      */
     function getImage()
     {

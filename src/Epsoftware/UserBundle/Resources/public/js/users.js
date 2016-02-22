@@ -1,7 +1,7 @@
 $(document).ready(function(){
     
-    var modalContent = $("#modal").find('.modal-content');
-    var modal =  $("#modal");
+    var modalContent = $("#modal_user").find('.modal-content');
+    var modal =  $("#modal_user");
 
     var callbackUsers = function(data){
         if(data.message){
@@ -98,6 +98,12 @@ $(document).ready(function(){
         
     //new $.fn.dataTable.Responsive(table);
     
+    $(function(){
+       $(".reflash").click(function(e){
+           e.preventDefault();
+           table.ajax.reload();
+       });
+    });
     
     $(function(){
        $('body').on('submit', 'form[name=admin_user_access]', function(e){

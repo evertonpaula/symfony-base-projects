@@ -1,6 +1,6 @@
 <?php
 
-namespace Epsoftware\PerfilBundle\Repository;
+namespace Epsoftware\UserBundle\Repository;
 
 /**
  * ImageUserRepository
