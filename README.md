@@ -1,35 +1,63 @@
-symfony-base-projects
-=====================
+#### Base de projeto em symfony 3.0 para servidores compartilhados
 
-A Symfony project created on January 27, 2016, 6:56 pm.
+## Recursos:
+ - Sistema de autenticação completo, com login
+ - Sistema de Endereços (AddressBundle), apenas para compor em objeto que irá utiliza-lo
+ - Sistema de permissões completo
+ - Sistema de load de menus completo por usuário e permissões
+ - Sistema de upload de imagens
+ - Sistema Manter de perfil do usuário
+ - Sistema de doctrine:fixtures para dados base
+ - Serviço de logs
+ - Sistema de termo de uso
+ - Sistema completo para registro de novo usuário
+ - Sistema de envios de e-mail , para novas senhas
+ - Sistema de autenticação de novos usuários através de envios de e-mail
+ - Layout Adminlte 2.3.*, painel administrativo
+ - Layout base área institucional.
 
-Funcões basica para inicio de projeto symfony
+*** Sistema base completo para implementação de regras de negócios de diversas áreas.
 
- - authenticação de usuário
+## Ferramentas utilizadas:
 
-    - sistema de permissões
+- Symfony 3.0.*
+- AdminLte 2.3.*
+- Bootstrap 3.*
+- DataTable *
+- iCheck *
+- Input Mask
+- Date Picker
+- jQuery UI
+- Slim Scroll
+- Pace
+- noty js
+- fastclick
 
-    - sistema de login
+## Ferramentas inclusas (projetos futuros):
 
-    - recuperação de senha
+ - Charts
+  - ChartJS 
+  - Flot
+  - Morris.js
+  - Sparkline
 
-    - criação de usuário
- 
-    - no recaprcha google
+- Form Elements
+ - Bootstrap Slider
+ - Ion Slider
+ - Date Range Picker
+ - Color Picker
+ - Time Picker
 
-  - sistema de menus
+- Editors
+ - Bootstrap WYSIHTML5
+ - CK Editor
 
-   - menus páginas institucional
+- Other
+ - Full Calendar
+ - jQuery Knob
+ - jVector Map
 
-   - sistema para criação de menus para painel administrativo
-   
- - base de funcionameto para painel administrtivo
+###### Site teste: http://evertondepaula.esy.es
 
-   - tema adminlte
+copyright http://www.epsoftware.com.br
 
- - configruações pre estabelecidas para:
- 
-   - swiftmailer
-   - securyt
-   - no recaptcha
-   - rounts (use anottation) 
