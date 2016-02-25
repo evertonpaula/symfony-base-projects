@@ -4,14 +4,17 @@
      
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets  '@UserBundle/Resources/public/css/login.css' filter="cssrewrite" output="compiled/css/login.css" %}
+    {% stylesheets  '@UserBundle/Resources/public/css/login.css' 
+                    'public/adminlte/plugins/iCheck/square/_all.css' filter="cssrewrite" output="compiled/css/login.css" %}
         <link rel="stylesheet" href="{{ asset_url }}">
     {% endstylesheets %}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts '@UserBundle/Resources/public/js/login.js' output="compiled/js/login.js" %}
+    {% javascripts 
+                'public/adminlte/plugins/iCheck/icheck.min.js'
+                '@UserBundle/Resources/public/js/login.js' output="compiled/js/login.js" %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
@@ -64,7 +67,12 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                           
+                            <div class="checkbox icheck">
+                                <label>
+                                    {{ form_widget(form.rememberMe) }} Manter-me conectado
+                                </label>
+                                {{form_errors(form.rememberMe)}}
+                            </div>
                         </div><!-- /.col -->
                         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                             {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-primary btn-block btn-flat'} }) }}

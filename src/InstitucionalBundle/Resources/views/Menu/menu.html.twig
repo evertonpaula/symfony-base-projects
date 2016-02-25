@@ -25,7 +25,7 @@
                     <li {{ route ==  'about' ? 'class="active"' }} ><a href="{{path("about")}}">sobre</a></li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED', 'IS_AUTHENTICATED_FULLY')  %}
                       <li {{ route ==  'dashboard' ? 'class="active"' }} ><a href="{{ path("dashboard") }}">dashboard</a></li>
                       <li {{ route ==  'logout' ? 'class="active"' }} ><a href="{{ path("logout") }}">logout</a></li>
                     {% else %}   

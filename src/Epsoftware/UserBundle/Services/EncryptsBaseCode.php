@@ -15,7 +15,7 @@ class EncryptsBaseCode extends \Twig_Extension
      *
      * @var string 
      */
-    private $salt = "de21f6d7b34fb624189bd67f72d1647b";
+    private $salts = array("de21f6d7b34fb624189bd67f72d1647b", "94458cdf7508b0b3d1f15cf97e94f820");
     
     /**
      *
@@ -30,12 +30,12 @@ class EncryptsBaseCode extends \Twig_Extension
     
     public function encrypt($value)
     {
-        return base64_encode($value.$this->salt);
+        return base64_encode($this->salts[0].$value.$this->salts[1]);
     }
     
     public function descrypt($value)
     {
-        return str_replace($this->salt, "", base64_decode($value));
+        return str_replace($this->salts, "", base64_decode($value));
     }
     
     public function getName()

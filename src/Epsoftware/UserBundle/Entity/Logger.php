@@ -55,7 +55,7 @@ class Logger
     /**
      * @var \Epsoftware\PerfilBundle\Entity\User
      * 
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="logger")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="logger", cascade={"persist"})
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="SET NULL", nullable=true)
     */
     protected $user;

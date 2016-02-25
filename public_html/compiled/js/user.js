@@ -15092,7 +15092,7 @@ $(document).ready(function(){
     };
     
     
-    var table_list_menus = $("#list-menus-table").DataTable({
+    var table_list_menus = $("#tableListMenus").DataTable({
         responsive: true,
         language: dataTable.laguage.pt_br
     });

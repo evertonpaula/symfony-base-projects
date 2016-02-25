@@ -34,6 +34,12 @@ security:
             logout:
                 path:   /logout
                 target: /
+            remember_me:
+                secret: '%secret%'
+                lifetime: 604800
+                path: /
+                remember_me_parameter: login_form[rememberMe]
+                domain: ~
                 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

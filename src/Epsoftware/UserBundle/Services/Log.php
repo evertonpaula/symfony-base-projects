@@ -35,6 +35,6 @@ class Log
             ->setObservacao($observation);
         
         $this->em->persist($log);
-        $this->em->flush();
+        $this->em->flush($log);
     }
 }

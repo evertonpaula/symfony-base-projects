@@ -63,6 +63,7 @@ class UserController extends Controller
             return $this->get("epsoftware.response.json")->getSuccess("Imagem de usuário atualizada com sucesso.", array("image"=> $dir));
         endif;
         
+        $this->logger($action, "Falha ao tentar editar imagem do usuário.");
         return $this->get("epsoftware.response.json")->uploadGetErrors($form);
     }
     

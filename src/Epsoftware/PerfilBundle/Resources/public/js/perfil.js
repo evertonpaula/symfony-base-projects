@@ -56,6 +56,12 @@ $(function(){
     });
 });
 
+$(function(){
+    $('form[name=update_user_form]').submit(function(e){
+        e.preventDefault();
+        ajax($(this).attr('action'),$(this).attr('method'),$(this).serialize(), callback);
+    });
+});
 
 $(function(){
     $('form[name=profile_form]').submit(function(e){

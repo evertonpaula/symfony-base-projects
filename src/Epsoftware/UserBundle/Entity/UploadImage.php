@@ -23,7 +23,7 @@ abstract class UploadImage
      * @Assert\File(
      *          maxSize = "2M", 
      *          maxSizeMessage="O arquivo é muito grande ({{ size }} {{ suffix }}). O tamnaho máximo é {{ limit }} {{ suffix }}.", 
-     *          mimeTypes = {"image/jp2", "image/png"}, 
+     *          mimeTypes = {"image/pjpeg","image/jpeg","image/png"}, 
      *          mimeTypesMessage = "É somente aceita extensão de imagem jpg, jpeg ou png.", 
      *          disallowEmptyMessage = "Obrigatório selecionar um arquivo.", 
      *          notFoundMessage = "Arquivo não encontrado.",

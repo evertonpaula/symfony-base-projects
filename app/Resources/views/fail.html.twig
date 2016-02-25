@@ -14,7 +14,7 @@
             <p class="text-justify" >{{instruction}}</p>
             <p>
                 De qualquer maneira você pode retornar a
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% if  is_granted('IS_AUTHENTICATED_REMEMBERED', 'IS_AUTHENTICATED_FULLY') %}
                     <a href="{{ path("dashboard") }}">Dashboard</a>
                 {% else %}
                     <a href="{{ path("homepage") }}">Home</a>

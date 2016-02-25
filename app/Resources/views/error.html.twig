@@ -13,7 +13,7 @@
             <p>{% block mensagen_error %}Desculpe, houve uma falha interna no servidor.{% endblock %}</p>
             <p>
                 De qualquer maneira você pode retornar a
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED', 'IS_AUTHENTICATED_FULLY') %}
                     <a href="{{ path("dashboard") }}">Dashboard</a>
                 {% else %}
                     <a href="{{ path("homepage") }}">Home</a>

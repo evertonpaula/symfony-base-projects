@@ -106,24 +106,37 @@ var callback = function(data){
     }else if(data.info){
         info(data);
     }else if(data.error){
-        if(isString(data.message)){
-            error(data);
-        }else{
-            var message = JSON.parse(data.message);
+        var message = convertJson(data.message);
+        if(message !== false){
             for(var i = 0; i < message.length; i++){
                 error(message[i]);
             }
+        }else{
+            error(data);
         }
     }else if(data.upload_error){
-        var message = JSON.parse(data.message);
-        for(var i = 0; i < message.callback.length; i++){
-            error({"message" : message.callback[i]});
+        var message = convertJson(data.message);
+        if(message !== false){
+            for(var i = 0; i < message.callback.length; i++){
+                error({"message" : message.callback[i]});
+            }
+        }else{
+            error(data);
         }
     }
 };
 
 var isString = function(string){
     return (typeof(string) === "string") ? true : false;
+};
+
+var convertJson = function(str){
+    try {
+        var converted = JSON.parse(str);
+        return converted;
+    }catch(e){
+        return false;
+    }
 };
 
 var errorCallback = function(data){

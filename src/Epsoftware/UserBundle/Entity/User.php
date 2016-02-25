@@ -131,7 +131,12 @@ class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
      * @ORM\Column(name="isCredentialNonExpired", type="boolean")
      */
     private $isCredentialNonExpired = false;
-
+    
+    /**
+     * @var bool 
+     */
+    private $rememberMe = false;
+    
     /**
      * @var \Doctrine\Common\Collections\Collection|UserGroup[]
      *
@@ -514,6 +519,28 @@ class User implements AdvancedUserInterface, Serializable, EncoderAwareInterface
         array_push($this->roles, $permission->getRole());
     }
     
+    /**
+     * Get rememberMe
+     * @return bool
+     */
+    function getRememberMe()
+    {
+        return $this->rememberMe;
+    }
+
+    /**
+     * Set rememberMe
+     * @param bool $rememberMe
+     * @return \Epsoftware\UserBundle\Entity\User
+     */
+    function setRememberMe($rememberMe)
+    {
+        $this->rememberMe = $rememberMe;
+        
+        return $this;
+    }
+
+        
     /**
      * Get permission
      * @return Collection

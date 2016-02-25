@@ -66,9 +66,9 @@ class PerfilController extends Controller
         
         $form = $this->createForm(ProfileFormType::class, $profile);
         $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
         
         if ($form->isSubmitted() && $form->isValid()):
-            $em = $this->getDoctrine()->getManager();
             $em->persist($profile);
             $this->getUser()->setProfile($profile);
             $em->flush();
