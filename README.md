@@ -13,6 +13,7 @@
  - Sistema completo para registro de novo usuário
  - Sistema de envios de e-mail , para novas senhas
  - Sistema de autenticação de novos usuários através de envios de e-mail
+ - Serviço de encriptação de informações, usado para ids
  - Layout Adminlte 2.3.*, painel administrativo
  - Layout base área institucional.
 
