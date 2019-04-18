@@ -4,7 +4,7 @@
     <li class="dropdown user user-menu">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <img src="{{ asset(image_user) }}" class="user-image user" alt="User image" />
-            <span class="hidden-xs">{{ app.user.profile ? app.user.profile.nome : app.user.username }}</span>
+            <span class="hidden-xs">{{ app.user.profile ? (app.user.profile.nome ~ ' ' ~ app.user.profile.sobrenome): app.user.username }}</span>
         </a>
         <ul class="dropdown-menu">
         <!-- User image -->

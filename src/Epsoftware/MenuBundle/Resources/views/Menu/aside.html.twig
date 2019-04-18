@@ -11,8 +11,8 @@
                 <div class="pull-left image">
                     <img data-url="{{path("alter_image_user_show")}}" title="clique para alterar a imagem" src="{{ asset(image_user) }}" class="user alter-image-user user-image" alt="User image" />
                 </div>
-                <div class="pull-left info">    
-                    <p>{{ app.user.profile ? app.user.profile.nome : app.user.username }}</p>
+                <div class="pull-left info">
+                    <p>{{ app.user.profile ? (app.user.profile.nome ~ ' ' ~ app.user.profile.sobrenome) : app.user.username }}</p>
                 </div>
             </div>
 
