@@ -20,7 +20,7 @@ var dataTable = {
             "infoPostFix": "",
             "thousands": ",",
             "lengthMenu": "Mostrar _MENU_ entradas",
-            "loadingRecords": "Produrando...",
+            "loadingRecords": "Procurando...",
             "processing": "Processando...",
             "search": "Pesquisar:",
             "zeroRecords": "Nenhum registro correspondente encontrado",

@@ -138,7 +138,7 @@ abstract class UploadImage
     {
         // the absolute directory path where uploaded
         // documents should be saved
-        return __DIR__.'/../../../../public_html/'.$this->getUploadDir();
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
     }
 
     public abstract function getUploadDir();

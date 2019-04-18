@@ -43,7 +43,7 @@ framework:
     
 #assetics
 assetic:
-    read_from: '%kernel.root_dir%/../public_html'
+    read_from: '%kernel.root_dir%/../web'
     debug:          '%kernel.debug%'
     use_controller: '%kernel.debug%'
     filters:

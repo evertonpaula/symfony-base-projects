@@ -1,0 +1,60 @@
+version: '3'
+services:
+  php:
+    container_name: application-symfony-php
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    networks:
+      application_api:
+        ipv4_address: 198.155.120.13
+    extra_hosts:
+    - "__DATABASE_URL__:198.155.120.15"
+    - "mailer.application.local:155.168.120.16"
+    volumes:
+    - "./:/var/www/application"
+  web:
+    container_name: application-symfony-web
+    image: nginx:latest
+    networks:
+      application_api:
+        ipv4_address: 198.155.120.14
+    ports:
+    - "80:80"
+    extra_hosts:
+    - "api.application.local:127.0.0.1"
+    volumes:
+    - ".:/var/www/application"
+    - "./docker/nginx/conf.d:/etc/nginx/conf.d"
+  db:
+    container_name: application-symfony-db
+    image: mariadb:latest
+    networks:
+      application_api:
+        ipv4_address: 198.155.120.15
+    ports:
+    - "3306:3306"
+    extra_hosts:
+    - "__DATABASE_URL__:127.0.0.1"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+    - "./docker/db-data:/var/lib/mysql"
+  mailer:
+    container_name: application-symfony-mailer
+    image: schickling/mailcatcher
+    networks:
+      application_api:
+        ipv4_address: 198.155.120.16
+    ports:
+    - '1025:1025'
+    - '1080:1080'
+    extra_hosts:
+    - 'mailer.application.local:127.0.0.1'
+networks:
+  application_api:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 198.155.120.0/24
